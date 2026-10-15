@@ -6,10 +6,16 @@
     <title>Minecraft Hardcore Tracker</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* ===== ПОДКЛЮЧЕНИЕ ШРИФТА ===== */
         @font-face {
             font-family: 'Minecraft';
             src: url('https://treemale.github.io/Minecraft/fonts/minecraft.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'MinecraftTitle';
+            src: url('https://treemale.github.io/Minecraft/fonts/minecraft_title.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
             font-display: swap;
@@ -28,7 +34,10 @@
             background: rgba(15, 23, 42, 0.85);
             z-index: -1;
         }
-        .mc-green { color: #4ade80; }
+        .mc-green { 
+            color: #4ade80; 
+            font-family: 'MinecraftTitle', 'Minecraft', sans-serif;
+        }
         .mc-bg { background-color: #22c55e; }
         .pack-bg { background-color: #8b5cf6; }
         .card { 
@@ -382,11 +391,19 @@
             75%  { content: '...'; }
             100% { content: ''; }
         }
+
+        .table-container {
+            overflow-x: visible;
+        }
+        .table-container table {
+            width: 100%;
+            table-layout: auto;
+        }
     </style>
 </head>
 <body class="p-4 md:p-8 max-w-7xl mx-auto">
     <header class="text-center mb-12">
-        <h1 class="text-4xl md:text-5xl font-bold mc-green mb-3">МАЙНКРАФТ ВАЙБИК | ДОП. ДОСТИЖЕНИЯ</h1>
+        <h1 class="text-4xl md:text-5xl font-bold mc-green mb-3" style="font-family: 'MinecraftTitle', 'Minecraft', sans-serif;">МАЙНКРАФТ ВАЙБИК | ДОП. ДОСТИЖЕНИЯ</h1>
         <p class="text-slate-400 text-lg">История забегов, смертей и список используемых модификаций</p>
     </header>
 
@@ -396,38 +413,38 @@
         <h2 class="text-2xl font-bold mb-6 border-b border-slate-700 pb-2 flex items-center justify-center gap-2">
             <span>&#x1F4DC;</span> История забегов и смертей
         </h2>
-        <div class="overflow-x-auto rounded-lg border border-slate-700">
+        <div class="rounded-lg border border-slate-700 table-container">
             <table class="w-full text-center border-collapse text-sm">
                 <thead class="bg-slate-800 text-slate-300">
                     <tr>
-                        <th class="p-3 whitespace-nowrap">#</th>
-                        <th class="p-3 whitespace-nowrap">&#x1F30D; Мир</th>
-                        <th class="p-3 whitespace-nowrap">&#x2764;&#xFE0F; Прожито</th>
-                        <th class="p-3 whitespace-nowrap">&#x1F3C6; Достижения</th>
-                        <th class="p-3 whitespace-nowrap">&#x2753; Причина смерти</th>
-                        <th class="p-3 whitespace-nowrap">&#x2757; Описание ситуации</th>
-                        <th class="p-3 whitespace-nowrap">&#x1F39E;&#xFE0F; Видео</th>
+                        <th class="p-3">#</th>
+                        <th class="p-3">🌍 Мир</th>
+                        <th class="p-3">❤️ Прожито</th>
+                        <th class="p-3"> Достижения</th>
+                        <th class="p-3">❓ Причина смерти</th>
+                        <th class="p-3"> Описание ситуации</th>
+                        <th class="p-3">🎞️ Видео</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-800 bg-slate-900/50">
 
                     <!-- МИР 1 -->
                     <tr class="hover:bg-slate-800/50 transition">
-                        <td class="p-3 font-bold mc-green whitespace-nowrap">1</td>
-                        <td class="p-3 whitespace-nowrap">
+                        <td class="p-3 font-bold mc-green">1</td>
+                        <td class="p-3">
                             <span class="world-name" data-seed="1234567890" onclick="copySeed(this)">#мирвайба1</span>
                             <button class="compare-btn" onclick="toggleComparison(1)">Картинки</button>
                         </td>
-                        <td class="p-3 whitespace-nowrap">4 ч. 36 мин.</td>
-                        <td class="p-3 whitespace-nowrap">
+                        <td class="p-3">4 ч. 36 мин.</td>
+                        <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span>61 (4,8%)</span>
                                 <div class="w-full bg-slate-700 rounded-full h-1"><div class="progress-bar" style="width: 4.8%"></div></div>
                             </div>
                         </td>
-                        <td class="p-3 text-red-400 font-semibold whitespace-nowrap">ЭНДЕРМЕН</td>
-                        <td class="p-3 text-slate-300 whitespace-nowrap">Пошёл искать шахту ночью, а там оно...</td>
-                        <td class="p-3 text-slate-500 whitespace-nowrap">-</td>
+                        <td class="p-3 text-red-400 font-semibold">ЭНДЕРМЕН</td>
+                        <td class="p-3 text-slate-300">Пошёл искать шахту ночью, а там оно...</td>
+                        <td class="p-3 text-slate-500">-</td>
                     </tr>
                     <tr id="comp-row-1" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
@@ -461,21 +478,21 @@
 
                     <!-- МИР 2 -->
                     <tr class="hover:bg-slate-800/50 transition">
-                        <td class="p-3 font-bold mc-green whitespace-nowrap">2</td>
-                        <td class="p-3 whitespace-nowrap">
+                        <td class="p-3 font-bold mc-green">2</td>
+                        <td class="p-3">
                             <span class="world-name" data-seed="9876543210" onclick="copySeed(this)">#мирвайба2</span>
                             <button class="compare-btn" onclick="toggleComparison(2)">Картинки</button>
                         </td>
-                        <td class="p-3 whitespace-nowrap">14 ч. 9 мин.</td>
-                        <td class="p-3 whitespace-nowrap">
+                        <td class="p-3">14 ч. 9 мин.</td>
+                        <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span>178 (14,1%)</span>
                                 <div class="w-full bg-slate-700 rounded-full h-1"><div class="progress-bar" style="width: 14.1%"></div></div>
                             </div>
                         </td>
-                        <td class="p-3 text-red-400 font-semibold whitespace-nowrap">КРИПЕР</td>
-                        <td class="p-3 text-slate-300 whitespace-nowrap">Взорвал со спины пока рубил дерево, щит не спас.</td>
-                        <td class="p-3 text-slate-500 whitespace-nowrap">-</td>
+                        <td class="p-3 text-red-400 font-semibold">КРИПЕР</td>
+                        <td class="p-3 text-slate-300">Взорвал со спины пока рубил дерево, щит не спас.</td>
+                        <td class="p-3 text-slate-500">-</td>
                     </tr>
                     <tr id="comp-row-2" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
@@ -509,21 +526,21 @@
 
                     <!-- МИР 3 -->
                     <tr class="hover:bg-slate-800/50 transition">
-                        <td class="p-3 font-bold mc-green whitespace-nowrap">3</td>
-                        <td class="p-3 whitespace-nowrap">
+                        <td class="p-3 font-bold mc-green">3</td>
+                        <td class="p-3">
                             <span class="world-name" data-seed="1122334455" onclick="copySeed(this)">#мирвайба3</span>
                             <button class="compare-btn" onclick="toggleComparison(3)">Картинки</button>
                         </td>
-                        <td class="p-3 whitespace-nowrap">19 ч. 55 мин.</td>
-                        <td class="p-3 whitespace-nowrap">
+                        <td class="p-3">19 ч. 55 мин.</td>
+                        <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span>284 (22,5%)</span>
                                 <div class="w-full bg-slate-700 rounded-full h-1"><div class="progress-bar" style="width: 22.5%"></div></div>
                             </div>
                         </td>
-                        <td class="p-3 text-red-400 font-semibold whitespace-nowrap">ПУСТОТА</td>
-                        <td class="p-3 text-slate-300 whitespace-nowrap">Настраивал моды, включил читы и упал сквозь мир, ануак.</td>
-                        <td class="p-3 text-slate-500 whitespace-nowrap">-</td>
+                        <td class="p-3 text-red-400 font-semibold">ПУСТОТА</td>
+                        <td class="p-3 text-slate-300">Настраивал моды, включил читы и упал сквозь мир, ануак.</td>
+                        <td class="p-3 text-slate-500">-</td>
                     </tr>
                     <tr id="comp-row-3" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
@@ -558,21 +575,21 @@
 
                     <!-- МИР 4 -->
                     <tr class="hover:bg-slate-800/50 transition">
-                        <td class="p-3 font-bold mc-green whitespace-nowrap">4</td>
-                        <td class="p-3 whitespace-nowrap">
+                        <td class="p-3 font-bold mc-green">4</td>
+                        <td class="p-3">
                             <span class="world-name" data-seed="5566778899" onclick="copySeed(this)">#мирвайба4</span>
                             <button class="compare-btn" onclick="toggleComparison(4)">Картинки</button>
                         </td>
-                        <td class="p-3 whitespace-nowrap">16 ч. 5 мин.</td>
-                        <td class="p-3 whitespace-nowrap">
+                        <td class="p-3">16 ч. 5 мин.</td>
+                        <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span>196 (15,5%)</span>
                                 <div class="w-full bg-slate-700 rounded-full h-1"><div class="progress-bar" style="width: 15.5%"></div></div>
                             </div>
                         </td>
-                        <td class="p-3 text-red-400 font-semibold whitespace-nowrap">ЗОМБИ-ЖИТЕЛЬ</td>
-                        <td class="p-3 text-slate-300 whitespace-nowrap">Зашел в иглу, исцелить зомби-жителя, но он отказал.</td>
-                        <td class="p-3 whitespace-nowrap"><a href="#" class="text-blue-400 hover:underline font-semibold">YouTube</a></td>
+                        <td class="p-3 text-red-400 font-semibold">ЗОМБИ-ЖИТЕЛЬ</td>
+                        <td class="p-3 text-slate-300">Зашел в иглу, исцелить зомби-жителя, но он отказал.</td>
+                        <td class="p-3"><a href="#" class="text-blue-400 hover:underline font-semibold">YouTube</a></td>
                     </tr>
                     <tr id="comp-row-4" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
@@ -604,23 +621,23 @@
                         </td>
                     </tr>
 
-                    <!-- МИР 5 (кнопка неактивна) -->
+                    <!-- МИР 5 -->
                     <tr class="hover:bg-slate-800/50 transition">
-                        <td class="p-3 font-bold mc-green whitespace-nowrap">5</td>
-                        <td class="p-3 whitespace-nowrap">
+                        <td class="p-3 font-bold mc-green">5</td>
+                        <td class="p-3">
                             <span class="world-name" data-seed="1010101010" onclick="copySeed(this)">#мирвайба5</span>
                             <button class="compare-btn disabled" disabled title="Картинки пока не добавлены">Картинки</button>
                         </td>
-                        <td class="p-3 whitespace-nowrap">5 ч. 47 мин.</td>
-                        <td class="p-3 whitespace-nowrap">
+                        <td class="p-3">5 ч. 47 мин.</td>
+                        <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span>136 (10,8%)</span>
                                 <div class="w-full bg-slate-700 rounded-full h-1"><div class="progress-bar" style="width: 10.8%"></div></div>
                             </div>
                         </td>
-                        <td class="p-3 text-slate-500 whitespace-nowrap">-</td>
-                        <td class="p-3 text-slate-500 whitespace-nowrap">-</td>
-                        <td class="p-3 text-slate-500 whitespace-nowrap">-</td>
+                        <td class="p-3 text-slate-500">-</td>
+                        <td class="p-3 text-slate-500">-</td>
+                        <td class="p-3 text-slate-500">-</td>
                     </tr>
                     <tr id="comp-row-5" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
