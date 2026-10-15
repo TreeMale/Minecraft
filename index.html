@@ -563,7 +563,8 @@
             5: { before: 'https://treemale.github.io/Minecraft/3_5-0_1394.5-84--2137.5--153.2-18.webp', after: 'https://treemale.github.io/Minecraft/3_5-1_1394.5-84--2137.5--153.2-18.webp' }
         };
 
-        let currentSet = { 1: 1, 2: 1, 3: 1 };
+        // ВАЖНО: 0 означает "ни один набор не активен" — это гарантирует загрузку первого набора при открытии
+        let currentSet = { 1: 0, 2: 0, 3: 0 };
         const preloadedImages = {};
         let isLoading = false;
 
@@ -601,7 +602,7 @@
                 positionTooltip(el);
                 setTimeout(() => { el.classList.remove('copied'); tooltip.textContent = defaultTooltipText; }, 2000);
             }).catch(() => {
-                tooltip.textContent = ' Ошибка копирования';
+                tooltip.textContent = '❌ Ошибка копирования';
                 tooltip.classList.add('visible');
                 positionTooltip(el);
                 setTimeout(() => { tooltip.textContent = defaultTooltipText; }, 2000);
