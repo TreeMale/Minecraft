@@ -10,7 +10,6 @@
             background-color: #0f172a; 
             color: #e2e8f0; 
             font-family: 'Segoe UI', system-ui, sans-serif;
-            /* Убрано фоновое изображение Unsplash — оно блокируется в некоторых регионах */
         }
         body::before {
             content: '';
@@ -556,7 +555,6 @@
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
                             <div id="comp-4" class="comparison-container">
                                 <div class="comparison-wrapper" oncontextmenu="return false;">
-                                    <!-- Заглушка — картинка из мира 1 -->
                                     <img src="https://treemale.github.io/Minecraft/1_1-0_75.5-95--170.5-141-23.8.webp" class="after-image" alt="После" draggable="false">
                                     <img src="https://treemale.github.io/Minecraft/1_1-1_75.5-95--170.5-141-23.8.webp" class="before-image" id="before-img-4" alt="До" draggable="false">
                                     <div class="slider-handle" id="slider-4"></div>
@@ -591,7 +589,6 @@
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
                             <div id="comp-5" class="comparison-container">
                                 <div class="comparison-wrapper" oncontextmenu="return false;">
-                                    <!-- Заглушка — картинка из мира 2 -->
                                     <img src="https://treemale.github.io/Minecraft/2_1-0_1410.5-101--1255.5-59.7-36.5.webp" class="after-image" alt="После" draggable="false">
                                     <img src="https://treemale.github.io/Minecraft/2_1-1_1410.5-101--1255.5-59.7-36.5.webp" class="before-image" id="before-img-5" alt="До" draggable="false">
                                     <div class="slider-handle" id="slider-5"></div>
@@ -644,10 +641,28 @@
             5: { before: 'https://treemale.github.io/Minecraft/3_5-0_1394.5-84--2137.5--153.2-18.webp', after: 'https://treemale.github.io/Minecraft/3_5-1_1394.5-84--2137.5--153.2-18.webp' }
         };
 
+        // URL картинок блоков анимации загрузки (предзагружаются при старте)
+        const LOADER_BLOCK_URLS = [
+            'https://treemale.github.io/Minecraft/grass_block.webp',
+            'https://treemale.github.io/Minecraft/oak_planks.webp',
+            'https://treemale.github.io/Minecraft/cobblestone.webp'
+        ];
+
         let currentSet = { 1: 0, 2: 0, 3: 0 };
         const preloadedImages = {};
-        let isLoading = false;
+        // Отдельный флаг загрузки для каждого мира (вместо глобального)
+        const isLoadingPerWorld = { 1: false, 2: false, 3: false };
 
+        // ===== ПРЕДЗАГРУЗКА БЛОКОВ АНИМАЦИИ ПРИ СТАРТЕ =====
+        (function preloadLoaderBlocks() {
+            LOADER_BLOCK_URLS.forEach(url => {
+                const img = new Image();
+                img.src = url;
+                img.onload = () => { preloadedImages[url] = img; };
+            });
+        })();
+
+        // ===== TOOLTIP =====
         const tooltip = document.getElementById('global-tooltip');
         const defaultTooltipText = 'Нажми, чтобы скопировать сид';
         let tooltipTimeout = null;
@@ -671,6 +686,7 @@
             tooltip.style.left = (rect.left + rect.width / 2) + 'px';
         }
 
+        // ===== КОПИРОВАНИЕ СИДА =====
         function copySeed(el) {
             const seed = el.getAttribute('data-seed');
             navigator.clipboard.writeText(seed).then(() => {
@@ -687,6 +703,7 @@
             });
         }
 
+        // ===== ПРЕДЗАГРУЗКА КАРТИНОК =====
         function preloadImage(url) {
             if (preloadedImages[url]) return Promise.resolve(preloadedImages[url]);
             return new Promise((resolve, reject) => {
@@ -716,8 +733,8 @@
                 .catch(() => { if (btn) btn.classList.remove('preloading'); });
         }
 
+        // ===== ПЕРЕКЛЮЧЕНИЕ НАБОРОВ (без глобальной блокировки) =====
         function switchImageSet(worldNum, setNum) {
-            if (isLoading) return;
             const beforeImg = document.getElementById('before-img-' + worldNum);
             const afterImg = document.getElementById('after-img-' + worldNum);
             const loader = document.getElementById('loader-' + worldNum);
@@ -731,9 +748,10 @@
             const set = imageSets[setNum];
             
             if (!beforeImg || !afterImg || !set) return;
+            // Защита только от повторного клика на ТОТ ЖЕ набор
             if (currentSet[worldNum] === setNum) return;
             
-            isLoading = true;
+            // Показываем лоадер и сбрасываем анимацию блоков
             if (loader) {
                 loader.classList.add('visible');
                 const blocks = loader.querySelectorAll('.loader-block');
@@ -766,7 +784,6 @@
                     
                     updateActiveButton(worldNum, setNum);
                     currentSet[worldNum] = setNum;
-                    isLoading = false;
                 });
             };
             
@@ -778,7 +795,6 @@
                     .catch(err => {
                         console.error('Ошибка загрузки:', err);
                         if (loader) loader.classList.remove('visible');
-                        isLoading = false;
                     });
             }
         }
@@ -792,6 +808,7 @@
             });
         }
 
+        // ===== ОТКРЫТИЕ СРАВНЕНИЯ =====
         function toggleComparison(num) {
             const row = document.getElementById('comp-row-' + num);
             if (row.style.display === 'none' || row.style.display === '') {
@@ -847,6 +864,7 @@
             }
         }
 
+        // ===== МОДЫ И ПАКИ =====
         const mods = [
             {n: "Animated Mojang Logo", d: "Заменяет старый скучный экран загрузки Minecraft на приятную анимацию."},
             {n: "Visual Health", d: "Добавляет наглядные визуальные повреждения (раны и синяки) на модели существ."},
