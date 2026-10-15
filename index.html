@@ -266,7 +266,7 @@
             50% { opacity: 0.5; transform: scale(0.8); }
         }
         
-        /* ===== MINECRAFT LOADER С ТВОИМИ КАРТИНКАМИ ===== */
+        /* ===== MINECRAFT LOADER ===== */
         .loader {
             position: absolute;
             top: 50%;
@@ -277,8 +277,13 @@
             flex-direction: column;
             align-items: center;
             gap: 16px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-        .loader.visible { display: flex; }
+        .loader.visible { 
+            display: flex; 
+            opacity: 1;
+        }
         
         .loader-blocks {
             display: flex;
@@ -289,17 +294,17 @@
         .loader-block {
             width: 48px;
             height: 48px;
-            /* Пиксельное масштабирование — чёткие края как в Minecraft */
             image-rendering: pixelated;
             image-rendering: -moz-crisp-edges;
             image-rendering: crisp-edges;
-            animation: blockBounce 1.4s ease-in-out infinite;
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);
             border: 2px solid rgba(0,0,0,0.4);
             border-radius: 2px;
+            /* Плавное появление без дёрганья */
+            animation: blockBounce 1.4s ease-in-out infinite;
+            animation-fill-mode: both;
         }
         
-        /* Блок травы — твоя картинка */
         .loader-block.grass {
             background-image: url('https://treemale.github.io/Minecraft/grass_block.webp');
             background-size: 100% 100%;
@@ -308,7 +313,6 @@
             animation-delay: 0s;
         }
         
-        /* Доски дуба — твоя картинка */
         .loader-block.planks {
             background-image: url('https://treemale.github.io/Minecraft/oak_planks.webp');
             background-size: 100% 100%;
@@ -317,7 +321,6 @@
             animation-delay: 0.2s;
         }
         
-        /* Булыжник — твоя картинка */
         .loader-block.cobblestone {
             background-image: url('https://treemale.github.io/Minecraft/cobblestone.webp');
             background-size: 100% 100%;
@@ -326,30 +329,43 @@
             animation-delay: 0.4s;
         }
         
+        /* Наклон в разные стороны для динамичности */
         @keyframes blockBounce {
             0%, 100% { 
-                transform: translateY(-24px); 
+                transform: translateY(-24px) rotate(-8deg); 
                 opacity: 0.4;
             }
             50% { 
-                transform: translateY(0); 
+                transform: translateY(0) rotate(8deg); 
                 opacity: 1;
             }
         }
         
+        /* Текст с анимированными точками */
         .loader-text {
             font-size: 14px;
             color: #4ade80;
             font-weight: 600;
             letter-spacing: 2px;
             text-transform: uppercase;
-            animation: textPulse 1.4s ease-in-out infinite;
             text-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
         }
         
-        @keyframes textPulse {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 1; }
+        .loader-text::after {
+            content: '';
+            display: inline-block;
+            width: 3ch;
+            text-align: left;
+            animation: dots 1.4s steps(4, end) infinite;
+            vertical-align: bottom;
+        }
+        
+        @keyframes dots {
+            0%   { content: ''; }
+            25%  { content: '.'; }
+            50%  { content: '..'; }
+            75%  { content: '...'; }
+            100% { content: ''; }
         }
     </style>
 </head>
@@ -411,7 +427,7 @@
                                             <div class="loader-block planks"></div>
                                             <div class="loader-block cobblestone"></div>
                                         </div>
-                                        <div class="loader-text">Загрузка мира...</div>
+                                        <div class="loader-text">ЗАГРУЗКА</div>
                                     </div>
                                     <div class="comparison-labels">
                                         <span class="comparison-label before" onclick="showFullImage(1, 'before')">До</span>
@@ -459,7 +475,7 @@
                                             <div class="loader-block planks"></div>
                                             <div class="loader-block cobblestone"></div>
                                         </div>
-                                        <div class="loader-text">Загрузка мира...</div>
+                                        <div class="loader-text">ЗАГРУЗКА</div>
                                     </div>
                                     <div class="comparison-labels">
                                         <span class="comparison-label before" onclick="showFullImage(2, 'before')">До</span>
@@ -507,7 +523,7 @@
                                             <div class="loader-block planks"></div>
                                             <div class="loader-block cobblestone"></div>
                                         </div>
-                                        <div class="loader-text">Загрузка мира...</div>
+                                        <div class="loader-text">ЗАГРУЗКА</div>
                                     </div>
                                     <div class="comparison-labels">
                                         <span class="comparison-label before" onclick="showFullImage(3, 'before')">До</span>
@@ -669,7 +685,7 @@
                 positionTooltip(el);
                 setTimeout(() => { el.classList.remove('copied'); tooltip.textContent = defaultTooltipText; }, 2000);
             }).catch(() => {
-                tooltip.textContent = '❌ Ошибка копирования';
+                tooltip.textContent = ' Ошибка копирования';
                 tooltip.classList.add('visible');
                 positionTooltip(el);
                 setTimeout(() => { tooltip.textContent = defaultTooltipText; }, 2000);
@@ -723,7 +739,16 @@
             if (currentSet[worldNum] === setNum) return;
             
             isLoading = true;
-            if (loader) loader.classList.add('visible');
+            if (loader) {
+                loader.classList.add('visible');
+                // Сбрасываем анимацию блоков при каждом показе — убирает дёрганье
+                const blocks = loader.querySelectorAll('.loader-block');
+                blocks.forEach(block => {
+                    block.style.animation = 'none';
+                    block.offsetHeight; // force reflow
+                    block.style.animation = '';
+                });
+            }
             beforeImg.classList.remove('loaded');
             afterImg.classList.remove('loaded');
             
