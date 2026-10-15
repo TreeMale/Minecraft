@@ -169,7 +169,7 @@
         
         .comparison-labels {
             position: absolute;
-            bottom: 65px;  /* Было 50px, стало 65px — поднимаем выше */
+            bottom: 65px;
             left: 0;
             right: 0;
             display: flex;
@@ -555,12 +555,26 @@
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
                             <div id="comp-4" class="comparison-container">
                                 <div class="comparison-wrapper" oncontextmenu="return false;">
-                                    <img src="https://treemale.github.io/Minecraft/1_1-0_75.5-95--170.5-141-23.8.webp" class="after-image" alt="После" draggable="false">
-                                    <img src="https://treemale.github.io/Minecraft/1_1-1_75.5-95--170.5-141-23.8.webp" class="before-image" id="before-img-4" alt="До" draggable="false">
+                                    <img src="" class="after-image" id="after-img-4" alt="После" decoding="async" draggable="false">
+                                    <img src="" class="before-image" id="before-img-4" alt="До" decoding="async" draggable="false">
                                     <div class="slider-handle" id="slider-4"></div>
+                                    <div class="loader" id="loader-4">
+                                        <div class="loader-blocks">
+                                            <div class="loader-block grass"></div>
+                                            <div class="loader-block planks"></div>
+                                            <div class="loader-block cobblestone"></div>
+                                        </div>
+                                        <div class="loader-text">ЗАГРУЗКА</div>
+                                    </div>
                                     <div class="comparison-labels">
                                         <span class="comparison-label before" onclick="showFullImage(4, 'before')">До</span>
                                         <span class="comparison-label after" onclick="showFullImage(4, 'after')">После</span>
+                                    </div>
+                                    <div class="image-set-buttons">
+                                        <button class="set-btn active" onclick="switchImageSet(4, 1)" onmouseenter="preloadSet(4, 1)">1<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(4, 2)" onmouseenter="preloadSet(4, 2)">2<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(4, 3)" onmouseenter="preloadSet(4, 3)">3<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(4, 4)" onmouseenter="preloadSet(4, 4)">4<span class="loading-dot"></span></button>
                                     </div>
                                 </div>
                             </div>
@@ -641,19 +655,23 @@
             5: { before: 'https://treemale.github.io/Minecraft/3_5-0_1394.5-84--2137.5--153.2-18.webp', after: 'https://treemale.github.io/Minecraft/3_5-1_1394.5-84--2137.5--153.2-18.webp' }
         };
 
-        // URL картинок блоков анимации загрузки (предзагружаются при старте)
+        const world4ImageSets = {
+            1: { before: 'https://treemale.github.io/Minecraft/4_1-0_1169.5-69-2062.5-136.7-10.4.webp', after: 'https://treemale.github.io/Minecraft/4_1-1_1169.5-69-2062.5-136.7-10.4.webp' },
+            2: { before: 'https://treemale.github.io/Minecraft/4_2-0_1164.5-85-2053.5--83.9-17.9.webp', after: 'https://treemale.github.io/Minecraft/4_2-1_1164.5-85-2053.5--83.9-17.9.webp' },
+            3: { before: 'https://treemale.github.io/Minecraft/4_3-0_1157.5-69-2084.5-23.1-13.6.webp', after: 'https://treemale.github.io/Minecraft/4_3-1_1157.5-69-2084.5-23.1-13.6.webp' },
+            4: { before: 'https://treemale.github.io/Minecraft/4_4-0_1151.5-81-2081.5-104-10.9.webp', after: 'https://treemale.github.io/Minecraft/4_4-1_1151.5-81-2081.5-104-10.9.webp' }
+        };
+
         const LOADER_BLOCK_URLS = [
             'https://treemale.github.io/Minecraft/grass_block.webp',
             'https://treemale.github.io/Minecraft/oak_planks.webp',
             'https://treemale.github.io/Minecraft/cobblestone.webp'
         ];
 
-        let currentSet = { 1: 0, 2: 0, 3: 0 };
+        let currentSet = { 1: 0, 2: 0, 3: 0, 4: 0 };
         const preloadedImages = {};
-        // Отдельный флаг загрузки для каждого мира (вместо глобального)
-        const isLoadingPerWorld = { 1: false, 2: false, 3: false };
 
-        // ===== ПРЕДЗАГРУЗКА БЛОКОВ АНИМАЦИИ ПРИ СТАРТЕ =====
+        // Предзагрузка блоков анимации при старте
         (function preloadLoaderBlocks() {
             LOADER_BLOCK_URLS.forEach(url => {
                 const img = new Image();
@@ -662,7 +680,6 @@
             });
         })();
 
-        // ===== TOOLTIP =====
         const tooltip = document.getElementById('global-tooltip');
         const defaultTooltipText = 'Нажми, чтобы скопировать сид';
         let tooltipTimeout = null;
@@ -686,7 +703,6 @@
             tooltip.style.left = (rect.left + rect.width / 2) + 'px';
         }
 
-        // ===== КОПИРОВАНИЕ СИДА =====
         function copySeed(el) {
             const seed = el.getAttribute('data-seed');
             navigator.clipboard.writeText(seed).then(() => {
@@ -703,7 +719,6 @@
             });
         }
 
-        // ===== ПРЕДЗАГРУЗКА КАРТИНОК =====
         function preloadImage(url) {
             if (preloadedImages[url]) return Promise.resolve(preloadedImages[url]);
             return new Promise((resolve, reject) => {
@@ -720,6 +735,7 @@
             if (worldNum === 1) imageSets = world1ImageSets;
             else if (worldNum === 2) imageSets = world2ImageSets;
             else if (worldNum === 3) imageSets = world3ImageSets;
+            else if (worldNum === 4) imageSets = world4ImageSets;
             else return;
             
             const set = imageSets[setNum];
@@ -733,7 +749,6 @@
                 .catch(() => { if (btn) btn.classList.remove('preloading'); });
         }
 
-        // ===== ПЕРЕКЛЮЧЕНИЕ НАБОРОВ (без глобальной блокировки) =====
         function switchImageSet(worldNum, setNum) {
             const beforeImg = document.getElementById('before-img-' + worldNum);
             const afterImg = document.getElementById('after-img-' + worldNum);
@@ -743,6 +758,7 @@
             if (worldNum === 1) imageSets = world1ImageSets;
             else if (worldNum === 2) imageSets = world2ImageSets;
             else if (worldNum === 3) imageSets = world3ImageSets;
+            else if (worldNum === 4) imageSets = world4ImageSets;
             else return;
             
             const set = imageSets[setNum];
@@ -750,11 +766,10 @@
             if (!beforeImg || !afterImg || !set) return;
             if (currentSet[worldNum] === setNum) return;
             
-            // СРАЗУ делаем кнопку активной и обновляем состояние
+            // Сразу делаем кнопку активной
             updateActiveButton(worldNum, setNum);
             currentSet[worldNum] = setNum;
             
-            // Показываем лоадер и сбрасываем анимацию блоков
             if (loader) {
                 loader.classList.add('visible');
                 const blocks = loader.querySelectorAll('.loader-block');
@@ -808,7 +823,6 @@
             });
         }
 
-        // ===== ОТКРЫТИЕ СРАВНЕНИЯ =====
         function toggleComparison(num) {
             const row = document.getElementById('comp-row-' + num);
             if (row.style.display === 'none' || row.style.display === '') {
@@ -819,6 +833,7 @@
                     if (num === 1) switchImageSet(1, 1);
                     else if (num === 2) switchImageSet(2, 1);
                     else if (num === 3) switchImageSet(3, 1);
+                    else if (num === 4) switchImageSet(4, 1);
                 }, 50);
             } else {
                 row.style.display = 'none';
@@ -864,7 +879,6 @@
             }
         }
 
-        // ===== МОДЫ И ПАКИ =====
         const mods = [
             {n: "Animated Mojang Logo", d: "Заменяет старый скучный экран загрузки Minecraft на приятную анимацию."},
             {n: "Visual Health", d: "Добавляет наглядные визуальные повреждения (раны и синяки) на модели существ."},
