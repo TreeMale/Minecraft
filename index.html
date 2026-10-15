@@ -88,6 +88,17 @@
             background: rgba(74, 222, 128, 0.4);
             transform: scale(1.05);
         }
+        .compare-btn.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            border-color: #64748b;
+            color: #64748b;
+            background: rgba(100, 116, 139, 0.2);
+        }
+        .compare-btn.disabled:hover {
+            transform: none;
+            background: rgba(100, 116, 139, 0.2);
+        }
 
         .comparison-container {
             position: relative;
@@ -387,6 +398,7 @@
                 </thead>
                 <tbody class="divide-y divide-slate-800 bg-slate-900/50">
 
+                    <!-- МИР 1 -->
                     <tr class="hover:bg-slate-800/50 transition">
                         <td class="p-3 font-bold mc-green whitespace-nowrap">1</td>
                         <td class="p-3 whitespace-nowrap">
@@ -434,6 +446,7 @@
                         </td>
                     </tr>
 
+                    <!-- МИР 2 -->
                     <tr class="hover:bg-slate-800/50 transition">
                         <td class="p-3 font-bold mc-green whitespace-nowrap">2</td>
                         <td class="p-3 whitespace-nowrap">
@@ -481,6 +494,7 @@
                         </td>
                     </tr>
 
+                    <!-- МИР 3 -->
                     <tr class="hover:bg-slate-800/50 transition">
                         <td class="p-3 font-bold mc-green whitespace-nowrap">3</td>
                         <td class="p-3 whitespace-nowrap">
@@ -529,6 +543,7 @@
                         </td>
                     </tr>
 
+                    <!-- МИР 4 -->
                     <tr class="hover:bg-slate-800/50 transition">
                         <td class="p-3 font-bold mc-green whitespace-nowrap">4</td>
                         <td class="p-3 whitespace-nowrap">
@@ -576,11 +591,12 @@
                         </td>
                     </tr>
 
+                    <!-- МИР 5 (кнопка неактивна) -->
                     <tr class="hover:bg-slate-800/50 transition">
                         <td class="p-3 font-bold mc-green whitespace-nowrap">5</td>
                         <td class="p-3 whitespace-nowrap">
                             <span class="world-name" data-seed="1010101010" onclick="copySeed(this)">#мирвайба5</span>
-                            <button class="compare-btn" onclick="toggleComparison(5)">Картинки</button>
+                            <button class="compare-btn disabled" disabled title="Картинки пока не добавлены">Картинки</button>
                         </td>
                         <td class="p-3 whitespace-nowrap">5 ч. 47 мин.</td>
                         <td class="p-3 whitespace-nowrap">
