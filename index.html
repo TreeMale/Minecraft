@@ -34,10 +34,7 @@
             background: rgba(15, 23, 42, 0.85);
             z-index: -1;
         }
-        .mc-green { 
-            color: #4ade80; 
-            font-family: 'MinecraftTitle', 'Minecraft', sans-serif;
-        }
+        .mc-green { color: #4ade80; }
         .mc-bg { background-color: #22c55e; }
         .pack-bg { background-color: #8b5cf6; }
         .card { 
@@ -399,11 +396,32 @@
             width: 100%;
             table-layout: auto;
         }
+
+        /* Заголовок — только MinecraftTitle, в одну строку */
+        h1 {
+            font-family: 'MinecraftTitle', 'Minecraft', sans-serif !important;
+            white-space: nowrap;
+        }
+
+        /* Заголовки таблицы — в одну строку */
+        th {
+            white-space: nowrap;
+        }
+
+        /* Колонка "Прожито" — в одну строку */
+        td:nth-child(3) {
+            white-space: nowrap;
+        }
+
+        /* Колонка "Причина смерти" — в одну строку */
+        td:nth-child(5) {
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body class="p-4 md:p-8 max-w-7xl mx-auto">
     <header class="text-center mb-12">
-        <h1 class="text-4xl md:text-5xl font-bold mc-green mb-3" style="font-family: 'MinecraftTitle', 'Minecraft', sans-serif;">МАЙНКРАФТ ВАЙБИК | ДОП. ДОСТИЖЕНИЯ</h1>
+        <h1 class="text-4xl md:text-5xl font-bold mc-green mb-3">МАЙНКРАФТ ВАЙБИК | ДОП. ДОСТИЖЕНИЯ</h1>
         <p class="text-slate-400 text-lg">История забегов, смертей и список используемых модификаций</p>
     </header>
 
@@ -420,9 +438,9 @@
                         <th class="p-3">#</th>
                         <th class="p-3">🌍 Мир</th>
                         <th class="p-3">❤️ Прожито</th>
-                        <th class="p-3"> Достижения</th>
+                        <th class="p-3">🏆 Достижения</th>
                         <th class="p-3">❓ Причина смерти</th>
-                        <th class="p-3"> Описание ситуации</th>
+                        <th class="p-3">❗ Описание ситуации</th>
                         <th class="p-3">🎞️ Видео</th>
                     </tr>
                 </thead>
