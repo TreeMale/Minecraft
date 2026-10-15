@@ -174,11 +174,14 @@
         
         .comparison-labels {
             position: absolute;
-            bottom: 50px; left: 0; right: 0;
+            bottom: 50px;
+            left: 0;
+            right: 0;
             display: flex;
             justify-content: space-between;
-            padding: 0 16px;
+            padding: 0 24px;
             z-index: 5;
+            pointer-events: none;
         }
         .comparison-label {
             background: rgba(15, 23, 42, 0.85);
@@ -192,6 +195,7 @@
             cursor: pointer;
             transition: all 0.2s;
             user-select: none;
+            pointer-events: auto;
         }
         .comparison-label:hover { transform: scale(1.05); }
         .comparison-label.before { border-left: 3px solid #4ade80; }
