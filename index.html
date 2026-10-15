@@ -261,7 +261,6 @@
             50% { opacity: 0.5; transform: scale(0.8); }
         }
         
-        /* ===== MINECRAFT LOADER ===== */
         .loader {
             position: absolute;
             top: 50%;
@@ -300,7 +299,7 @@
         }
         
         .loader-block.grass {
-            background-image: url('https://treemale.github.io/Minecraft/grass_block.webp');
+            background-image: url('https://treemale.github.io/Minecraft/images/loader/grass_block.webp');
             background-size: 100% 100%;
             background-position: center;
             background-repeat: no-repeat;
@@ -308,7 +307,7 @@
         }
         
         .loader-block.planks {
-            background-image: url('https://treemale.github.io/Minecraft/oak_planks.webp');
+            background-image: url('https://treemale.github.io/Minecraft/images/loader/oak_planks.webp');
             background-size: 100% 100%;
             background-position: center;
             background-repeat: no-repeat;
@@ -316,7 +315,7 @@
         }
         
         .loader-block.cobblestone {
-            background-image: url('https://treemale.github.io/Minecraft/cobblestone.webp');
+            background-image: url('https://treemale.github.io/Minecraft/images/loader/cobblestone.webp');
             background-size: 100% 100%;
             background-position: center;
             background-repeat: no-repeat;
@@ -388,7 +387,6 @@
                 </thead>
                 <tbody class="divide-y divide-slate-800 bg-slate-900/50">
 
-                    <!-- МИР 1 -->
                     <tr class="hover:bg-slate-800/50 transition">
                         <td class="p-3 font-bold mc-green whitespace-nowrap">1</td>
                         <td class="p-3 whitespace-nowrap">
@@ -436,7 +434,6 @@
                         </td>
                     </tr>
 
-                    <!-- МИР 2 -->
                     <tr class="hover:bg-slate-800/50 transition">
                         <td class="p-3 font-bold mc-green whitespace-nowrap">2</td>
                         <td class="p-3 whitespace-nowrap">
@@ -484,7 +481,6 @@
                         </td>
                     </tr>
 
-                    <!-- МИР 3 -->
                     <tr class="hover:bg-slate-800/50 transition">
                         <td class="p-3 font-bold mc-green whitespace-nowrap">3</td>
                         <td class="p-3 whitespace-nowrap">
@@ -533,7 +529,6 @@
                         </td>
                     </tr>
 
-                    <!-- МИР 4 -->
                     <tr class="hover:bg-slate-800/50 transition">
                         <td class="p-3 font-bold mc-green whitespace-nowrap">4</td>
                         <td class="p-3 whitespace-nowrap">
@@ -581,7 +576,6 @@
                         </td>
                     </tr>
 
-                    <!-- МИР 5 -->
                     <tr class="hover:bg-slate-800/50 transition">
                         <td class="p-3 font-bold mc-green whitespace-nowrap">5</td>
                         <td class="p-3 whitespace-nowrap">
@@ -603,8 +597,8 @@
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
                             <div id="comp-5" class="comparison-container">
                                 <div class="comparison-wrapper" oncontextmenu="return false;">
-                                    <img src="https://treemale.github.io/Minecraft/2_1-0_1410.5-101--1255.5-59.7-36.5.webp" class="after-image" alt="После" draggable="false">
-                                    <img src="https://treemale.github.io/Minecraft/2_1-1_1410.5-101--1255.5-59.7-36.5.webp" class="before-image" id="before-img-5" alt="До" draggable="false">
+                                    <img src="https://treemale.github.io/Minecraft/images/world/2/2_1-0_1410.5-101--1255.5-59.7-36.5.webp" class="after-image" alt="После" draggable="false">
+                                    <img src="https://treemale.github.io/Minecraft/images/world/2/2_1-1_1410.5-101--1255.5-59.7-36.5.webp" class="before-image" id="before-img-5" alt="До" draggable="false">
                                     <div class="slider-handle" id="slider-5"></div>
                                     <div class="comparison-labels">
                                         <span class="comparison-label before" onclick="showFullImage(5, 'before')">До</span>
@@ -671,7 +665,6 @@
         let currentSet = { 1: 0, 2: 0, 3: 0, 4: 0 };
         const preloadedImages = {};
 
-        // Предзагрузка блоков анимации при старте
         (function preloadLoaderBlocks() {
             LOADER_BLOCK_URLS.forEach(url => {
                 const img = new Image();
@@ -766,7 +759,6 @@
             if (!beforeImg || !afterImg || !set) return;
             if (currentSet[worldNum] === setNum) return;
             
-            // Сразу делаем кнопку активной
             updateActiveButton(worldNum, setNum);
             currentSet[worldNum] = setNum;
             
