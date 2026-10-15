@@ -10,11 +10,7 @@
             background-color: #0f172a; 
             color: #e2e8f0; 
             font-family: 'Segoe UI', system-ui, sans-serif;
-            background-image: url('https://images.unsplash.com/photo-1587573089734-09cb69c0f2b4?w=1920&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
+            /* Убрано фоновое изображение Unsplash — оно блокируется в некоторых регионах */
         }
         body::before {
             content: '';
@@ -300,7 +296,6 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);
             border: 2px solid rgba(0,0,0,0.4);
             border-radius: 2px;
-            /* Плавное появление без дёрганья */
             animation: blockBounce 1.4s ease-in-out infinite;
             animation-fill-mode: both;
         }
@@ -329,7 +324,6 @@
             animation-delay: 0.4s;
         }
         
-        /* Наклон в разные стороны для динамичности */
         @keyframes blockBounce {
             0%, 100% { 
                 transform: translateY(-24px) rotate(-8deg); 
@@ -341,7 +335,6 @@
             }
         }
         
-        /* Текст с анимированными точками */
         .loader-text {
             font-size: 14px;
             color: #4ade80;
@@ -563,8 +556,9 @@
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
                             <div id="comp-4" class="comparison-container">
                                 <div class="comparison-wrapper" oncontextmenu="return false;">
-                                    <img src="https://via.placeholder.com/900x506/1e293b/8b5cf6?text=Мир+4+С+МОДАМИ" class="after-image" alt="После" draggable="false">
-                                    <img src="https://via.placeholder.com/900x506/0f172a/60a5fa?text=Мир+4+СТАНДАРТНЫЙ" class="before-image" id="before-img-4" alt="До" draggable="false">
+                                    <!-- Заглушка — картинка из мира 1 -->
+                                    <img src="https://treemale.github.io/Minecraft/1_1-0_75.5-95--170.5-141-23.8.webp" class="after-image" alt="После" draggable="false">
+                                    <img src="https://treemale.github.io/Minecraft/1_1-1_75.5-95--170.5-141-23.8.webp" class="before-image" id="before-img-4" alt="До" draggable="false">
                                     <div class="slider-handle" id="slider-4"></div>
                                     <div class="comparison-labels">
                                         <span class="comparison-label before" onclick="showFullImage(4, 'before')">До</span>
@@ -597,8 +591,9 @@
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
                             <div id="comp-5" class="comparison-container">
                                 <div class="comparison-wrapper" oncontextmenu="return false;">
-                                    <img src="https://via.placeholder.com/900x506/1e293b/8b5cf6?text=Мир+5+С+МОДАМИ" class="after-image" alt="После" draggable="false">
-                                    <img src="https://via.placeholder.com/900x506/0f172a/60a5fa?text=Мир+5+СТАНДАРТНЫЙ" class="before-image" id="before-img-5" alt="До" draggable="false">
+                                    <!-- Заглушка — картинка из мира 2 -->
+                                    <img src="https://treemale.github.io/Minecraft/2_1-0_1410.5-101--1255.5-59.7-36.5.webp" class="after-image" alt="После" draggable="false">
+                                    <img src="https://treemale.github.io/Minecraft/2_1-1_1410.5-101--1255.5-59.7-36.5.webp" class="before-image" id="before-img-5" alt="До" draggable="false">
                                     <div class="slider-handle" id="slider-5"></div>
                                     <div class="comparison-labels">
                                         <span class="comparison-label before" onclick="showFullImage(5, 'before')">До</span>
@@ -685,7 +680,7 @@
                 positionTooltip(el);
                 setTimeout(() => { el.classList.remove('copied'); tooltip.textContent = defaultTooltipText; }, 2000);
             }).catch(() => {
-                tooltip.textContent = ' Ошибка копирования';
+                tooltip.textContent = '❌ Ошибка копирования';
                 tooltip.classList.add('visible');
                 positionTooltip(el);
                 setTimeout(() => { tooltip.textContent = defaultTooltipText; }, 2000);
@@ -741,11 +736,10 @@
             isLoading = true;
             if (loader) {
                 loader.classList.add('visible');
-                // Сбрасываем анимацию блоков при каждом показе — убирает дёрганье
                 const blocks = loader.querySelectorAll('.loader-block');
                 blocks.forEach(block => {
                     block.style.animation = 'none';
-                    block.offsetHeight; // force reflow
+                    block.offsetHeight;
                     block.style.animation = '';
                 });
             }
