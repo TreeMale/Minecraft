@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Hardcore Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { 
+            background-color: #0f172a; 
+            color: #e2e8f0; 
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-image: url('https://images.unsplash.com/photo-1587573089734-09cb69c0f2b4?w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.85);
+            z-index: -1;
+        }
+        .mc-green { color: #4ade80; }
+        .mc-bg { background-color: #22c55e; }
+        .pack-bg { background-color: #8b5cf6; }
+        .card { 
+            background-color: rgba(30, 41, 59, 0.9); 
+            border: 1px solid #334155; 
+            transition: all 0.2s;
+            backdrop-filter: blur(10px);
+        }
+        .card:hover { transform: translateY(-3px); border-color: #4ade80; box-shadow: 0 4px 12px rgba(74, 222, 128, 0.1); }
+        .card-pack:hover { border-color: #8b5cf6; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.1); }
+        .progress-bar { background-color: #22c55e; height: 4px; border-radius: 2px; }
+        
+        .world-name {
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            color: #60a5fa;
+            font-weight: 600;
+        }
+        .world-name:hover {
+            color: #93c5fd;
+            text-decoration: underline;
+            text-shadow: 0 0 8px rgba(96, 165, 250, 0.5);
+        }
+        .world-name.copied { color: #4ade80 !important; }
+        
+        .tooltip {
+            position: fixed;
+            background: rgba(15, 23, 42, 0.95);
+            color: #e2e8f0;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.15s;
+            border: 1px solid #334155;
+            z-index: 9999;
+            transform: translateX(-50%);
+        }
+        .tooltip.visible { opacity: 1; }
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: #334155;
+        }
+
+        .compare-btn {
+            background: rgba(74, 222, 128, 0.2);
+            border: 1px solid #4ade80;
+            color: #4ade80;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+            margin-left: 8px;
+        }
+        .compare-btn:hover {
+            background: rgba(74, 222, 128, 0.4);
+            transform: scale(1.05);
+        }
+
+        .comparison-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            border: 2px solid #334155;
+            animation: slideDown 0.3s ease-out;
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .comparison-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            user-select: none;
+            -webkit-user-select: none;
+            background: #0f172a;
+        }
+        .after-image, .before-image {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            -webkit-user-drag: none;
+            user-select: none;
+        }
+        .after-image.loaded, .before-image.loaded {
+            opacity: 1;
+        }
+        .after-image { z-index: 1; }
+        .before-image {
+            z-index: 2;
+            clip-path: inset(0 50% 0 0);
+        }
+        .slider-handle {
+            position: absolute;
+            top: 0; left: 50%;
+            width: 2px;
+            height: 100%;
+            background: rgba(74, 222, 128, 0.8);
+            cursor: ew-resize;
+            z-index: 3;
+            transform: translateX(-50%);
+            box-shadow: 0 0 8px rgba(74, 222, 128, 0.5);
+            pointer-events: auto;
+        }
+        .slider-handle::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 28px; height: 28px;
+            background: rgba(74, 222, 128, 0.9);
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+        .slider-handle::before {
+            content: '\27F7';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            color: #0f172a;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 4;
+            pointer-events: none;
+        }
+        .slider-handle:hover { background: rgba(74, 222, 128, 1); }
+        .slider-handle:hover::after { background: #4ade80; }
+        
+        .comparison-labels {
+            position: absolute;
+            bottom: 50px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: 5;
+        }
+        .comparison-label {
+            background: rgba(15, 23, 42, 0.85);
+            color: #e2e8f0;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid #334155;
+            backdrop-filter: blur(4px);
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+            pointer-events: auto;
+        }
+        .comparison-label:hover { transform: scale(1.05); }
+        .comparison-label.before { border-left: 3px solid #4ade80; }
+        .comparison-label.before:hover { background: rgba(74, 222, 128, 0.3); }
+        .comparison-label.after { border-right: 3px solid #8b5cf6; }
+        .comparison-label.after:hover { background: rgba(139, 92, 246, 0.3); }
+        
+        .image-set-buttons {
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            z-index: 6;
+            overflow-x: auto;
+            overflow-y: visible;
+            flex-wrap: nowrap;
+            padding: 12px 16px 8px 16px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            pointer-events: auto;
+        }
+        .image-set-buttons::-webkit-scrollbar {
+            display: none;
+        }
+        .set-btn {
+            background: rgba(15, 23, 42, 0.85);
+            border: 2px solid #4ade80;
+            color: #e2e8f0;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            backdrop-filter: blur(4px);
+            position: relative;
+            flex-shrink: 0;
+            white-space: nowrap;
+            pointer-events: auto;
+        }
+        .set-btn:hover {
+            background: rgba(74, 222, 128, 0.3);
+            transform: translateY(-2px);
+        }
+        .set-btn.active {
+            background: rgba(74, 222, 128, 0.5);
+            border-color: #22c55e;
+            box-shadow: 0 0 12px rgba(74, 222, 128, 0.5);
+        }
+        .set-btn .loading-dot {
+            display: none;
+            width: 6px;
+            height: 6px;
+            background: #4ade80;
+            border-radius: 50%;
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            animation: pulse 1s infinite;
+        }
+        .set-btn.preloading .loading-dot {
+            display: block;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+        
+        .loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            display: none;
+            text-align: center;
+        }
+        .loader.visible { display: block; }
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(74, 222, 128, 0.2);
+            border-top-color: #4ade80;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loader-text {
+            margin-top: 12px;
+            font-size: 13px;
+            color: #4ade80;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 max-w-7xl mx-auto">
+    <header class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold mc-green mb-3">МАЙНКРАФТ ВАЙБИК | ДОП. ДОСТИЖЕНИЯ</h1>
+        <p class="text-slate-400 text-lg">История забегов, смертей и список используемых модификаций</p>
+    </header>
+
+    <div id="global-tooltip" class="tooltip">Нажми, чтобы скопировать сид</div>
+
+    <section class="mb-16">
+        <h2 class="text-2xl font-bold mb-6 border-b border-slate-700 pb-2 flex items-center justify-center gap-2">
+            <span>&#x1F4DC;</span> История забегов и смертей
+        </h2>
+        <div class="overflow-x-auto rounded-lg border border-slate-700">
+            <table class="w-full text-center border-collapse text-sm">
+                <thead class="bg-slate-800 text-slate-300">
+                    <tr>
+                        <th class="p-3 whitespace-nowrap">#</th>
+                        <th class="p-3 whitespace-nowrap">&#x1F30D; Мир</th>
+                        <th class="p-3 whitespace-nowrap">&#x2764;&#xFE0F; Прожито</th>
+                        <th class="p-3 whitespace-nowrap">&#x1F3C6; Достижения</th>
+                        <th class="p-3 whitespace-nowrap">&#x2753; Причина смерти</th>
+                        <th class="p-3 whitespace-nowrap">&#x2757; Описание ситуации</th>
+                        <th class="p-3 whitespace-nowrap">&#x1F39E;&#xFE0F; Видео</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800 bg-slate-900/50">
+
+                    <!-- МИР 1 -->
+                    <tr class="hover:bg-slate-800/50 transition">
+                        <td class="p-3 font-bold mc-green whitespace-nowrap">1</td>
+                        <td class="p-3 whitespace-nowrap">
+                            <span class="world-name" data-seed="1234567890" onclick="copySeed(this)">#мирвайба1</span>
+                            <button class="compare-btn" onclick="toggleComparison(1)">Картинки</button>
+                        </td>
+                        <td class="p-3 whitespace-nowrap">4 ч. 36 мин.</td>
+                        <td class="p-3 whitespace-nowrap">
+                            <div class="flex flex-col items-center gap-1">
+                                <span>61 (4,8%)</span>
+                                <div class="w-full bg-slate-700 rounded-full h-1"><div class="progress-bar" style="width: 4.8%"></div></div>
+                            </div>
+                        </td>
+                        <td class="p-3 text-red-400 font-semibold whitespace-nowrap">ЭНДЕРМЕН</td>
+                        <td class="p-3 text-slate-300 whitespace-nowrap">Пошёл искать шахту ночью, а там оно...</td>
+                        <td class="p-3 text-slate-500 whitespace-nowrap">-</td>
+                    </tr>
+                    <tr id="comp-row-1" style="display: none;">
+                        <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
+                            <div id="comp-1" class="comparison-container">
+                                <div class="comparison-wrapper" oncontextmenu="return false;">
+                                    <img src="" class="after-image" id="after-img-1" alt="После" decoding="async" draggable="false">
+                                    <img src="" class="before-image" id="before-img-1" alt="До" decoding="async" draggable="false">
+                                    <div class="slider-handle" id="slider-1"></div>
+                                    <div class="loader" id="loader-1">
+                                        <div class="loader-spinner"></div>
+                                        <div class="loader-text">Загрузка...</div>
+                                    </div>
+                                    <div class="comparison-labels">
+                                        <span class="comparison-label before" onclick="showFullImage(1, 'before')">До</span>
+                                        <span class="comparison-label after" onclick="showFullImage(1, 'after')">После</span>
+                                    </div>
+                                    <div class="image-set-buttons">
+                                        <button class="set-btn active" onclick="switchImageSet(1, 1)" onmouseenter="preloadSet(1, 1)">1<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(1, 2)" onmouseenter="preloadSet(1, 2)">2<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(1, 3)" onmouseenter="preloadSet(1, 3)">3<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(1, 4)" onmouseenter="preloadSet(1, 4)">4<span class="loading-dot"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- МИР 2 -->
+                    <tr class="hover:bg-slate-800/50 transition">
+                        <td class="p-3 font-bold mc-green whitespace-nowrap">2</td>
+                        <td class="p-3 whitespace-nowrap">
+                            <span class="world-name" data-seed="9876543210" onclick="copySeed(this)">#мирвайба2</span>
+                            <button class="compare-btn" onclick="toggleComparison(2)">Картинки</button>
+                        </td>
+                        <td class="p-3 whitespace-nowrap">14 ч. 9 мин.</td>
+                        <td class="p-3 whitespace-nowrap">
+                            <div class="flex flex-col items-center gap-1">
+                                <span>178 (14,1%)</span>
+                                <div class="w-full bg-slate-700 rounded-full h-1"><div class="progress-bar" style="width: 14.1%"></div></div>
+                            </div>
+                        </td>
+                        <td class="p-3 text-red-400 font-semibold whitespace-nowrap">КРИПЕР</td>
+                        <td class="p-3 text-slate-300 whitespace-nowrap">Взорвал со спины пока рубил дерево, щит не спас.</td>
+                        <td class="p-3 text-slate-500 whitespace-nowrap">-</td>
+                    </tr>
+                    <tr id="comp-row-2" style="display: none;">
+                        <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
+                            <div id="comp-2" class="comparison-container">
+                                <div class="comparison-wrapper" oncontextmenu="return false;">
+                                    <img src="" class="after-image" id="after-img-2" alt="После" decoding="async" draggable="false">
+                                    <img src="" class="before-image" id="before-img-2" alt="До" decoding="async" draggable="false">
+                                    <div class="slider-handle" id="slider-2"></div>
+                                    <div class="loader" id="loader-2">
+                                        <div class="loader-spinner"></div>
+                                        <div class="loader-text">Загрузка...</div>
+                                    </div>
+                                    <div class="comparison-labels">
+                                        <span class="comparison-label before" onclick="showFullImage(2, 'before')">До</span>
+                                        <span class="comparison-label after" onclick="showFullImage(2, 'after')">После</span>
+                                    </div>
+                                    <div class="image-set-buttons">
+                                        <button class="set-btn active" onclick="switchImageSet(2, 1)" onmouseenter="preloadSet(2, 1)">1<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(2, 2)" onmouseenter="preloadSet(2, 2)">2<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(2, 3)" onmouseenter="preloadSet(2, 3)">3<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(2, 4)" onmouseenter="preloadSet(2, 4)">4<span class="loading-dot"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- МИР 3 -->
+                    <tr class="hover:bg-slate-800/50 transition">
+                        <td class="p-3 font-bold mc-green whitespace-nowrap">3</td>
+                        <td class="p-3 whitespace-nowrap">
+                            <span class="world-name" data-seed="1122334455" onclick="copySeed(this)">#мирвайба3</span>
+                            <button class="compare-btn" onclick="toggleComparison(3)">Картинки</button>
+                        </td>
+                        <td class="p-3 whitespace-nowrap">19 ч. 55 мин.</td>
+                        <td class="p-3 whitespace-nowrap">
+                            <div class="flex flex-col items-center gap-1">
+                                <span>284 (22,5%)</span>
+                                <div class="w-full bg-slate-700 rounded-full h-1"><div class="progress-bar" style="width: 22.5%"></div></div>
+                            </div>
+                        </td>
+                        <td class="p-3 text-red-400 font-semibold whitespace-nowrap">ПУСТОТА</td>
+                        <td class="p-3 text-slate-300 whitespace-nowrap">Настраивал моды, включил читы и упал сквозь мир, ануак.</td>
+                        <td class="p-3 text-slate-500 whitespace-nowrap">-</td>
+                    </tr>
+                    <tr id="comp-row-3" style="display: none;">
+                        <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
+                            <div id="comp-3" class="comparison-container">
+                                <div class="comparison-wrapper" oncontextmenu="return false;">
+                                    <img src="" class="after-image" id="after-img-3" alt="После" decoding="async" draggable="false">
+                                    <img src="" class="before-image" id="before-img-3" alt="До" decoding="async" draggable="false">
+                                    <div class="slider-handle" id="slider-3"></div>
+                                    <div class="loader" id="loader-3">
+                                        <div class="loader-spinner"></div>
+                                        <div class="loader-text">Загрузка...</div>
+                                    </div>
+                                    <div class="comparison-labels">
+                                        <span class="comparison-label before" onclick="showFullImage(3, 'before')">До</span>
+                                        <span class="comparison-label after" onclick="showFullImage(3, 'after')">После</span>
+                                    </div>
+                                    <div class="image-set-buttons">
+                                        <button class="set-btn active" onclick="switchImageSet(3, 1)" onmouseenter="preloadSet(3, 1)">1<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(3, 2)" onmouseenter="preloadSet(3, 2)">2<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(3, 3)" onmouseenter="preloadSet(3, 3)">3<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(3, 4)" onmouseenter="preloadSet(3, 4)">4<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(3, 5)" onmouseenter="preloadSet(3, 5)">5<span class="loading-dot"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- МИР 4 -->
+                    <tr class="hover:bg-slate-800/50 transition">
+                        <td class="p-3 font-bold mc-green whitespace-nowrap">4</td>
+                        <td class="p-3 whitespace-nowrap">
+                            <span class="world-name" data-seed="5566778899" onclick="copySeed(this)">#мирвайба4</span>
+                            <button class="compare-btn" onclick="toggleComparison(4)">Картинки</button>
+                        </td>
+                        <td class="p-3 whitespace-nowrap">16 ч. 5 мин.</td>
+                        <td class="p-3 whitespace-nowrap">
+                            <div class="flex flex-col items-center gap-1">
+                                <span>196 (15,5%)</span>
+                                <div class="w-full bg-slate-700 rounded-full h-1"><div class="progress-bar" style="width: 15.5%"></div></div>
+                            </div>
+                        </td>
+                        <td class="p-3 text-red-400 font-semibold whitespace-nowrap">ЗОМБИ-ЖИТЕЛЬ</td>
+                        <td class="p-3 text-slate-300 whitespace-nowrap">Зашел в иглу, исцелить зомби-жителя, но он отказал.</td>
+                        <td class="p-3 whitespace-nowrap"><a href="#" class="text-blue-400 hover:underline font-semibold">YouTube</a></td>
+                    </tr>
+                    <tr id="comp-row-4" style="display: none;">
+                        <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
+                            <div id="comp-4" class="comparison-container">
+                                <div class="comparison-wrapper" oncontextmenu="return false;">
+                                    <img src="https://via.placeholder.com/900x506/1e293b/8b5cf6?text=Мир+4+С+МОДАМИ" class="after-image" alt="После" draggable="false">
+                                    <img src="https://via.placeholder.com/900x506/0f172a/60a5fa?text=Мир+4+СТАНДАРТНЫЙ" class="before-image" id="before-img-4" alt="До" draggable="false">
+                                    <div class="slider-handle" id="slider-4"></div>
+                                    <div class="comparison-labels">
+                                        <span class="comparison-label before" onclick="showFullImage(4, 'before')">До</span>
+                                        <span class="comparison-label after" onclick="showFullImage(4, 'after')">После</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- МИР 5 -->
+                    <tr class="hover:bg-slate-800/50 transition">
+                        <td class="p-3 font-bold mc-green whitespace-nowrap">5</td>
+                        <td class="p-3 whitespace-nowrap">
+                            <span class="world-name" data-seed="1010101010" onclick="copySeed(this)">#мирвайба5</span>
+                            <button class="compare-btn" onclick="toggleComparison(5)">Картинки</button>
+                        </td>
+                        <td class="p-3 whitespace-nowrap">5 ч. 47 мин.</td>
+                        <td class="p-3 whitespace-nowrap">
+                            <div class="flex flex-col items-center gap-1">
+                                <span>136 (10,8%)</span>
+                                <div class="w-full bg-slate-700 rounded-full h-1"><div class="progress-bar" style="width: 10.8%"></div></div>
+                            </div>
+                        </td>
+                        <td class="p-3 text-slate-500 whitespace-nowrap">-</td>
+                        <td class="p-3 text-slate-500 whitespace-nowrap">-</td>
+                        <td class="p-3 text-slate-500 whitespace-nowrap">-</td>
+                    </tr>
+                    <tr id="comp-row-5" style="display: none;">
+                        <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
+                            <div id="comp-5" class="comparison-container">
+                                <div class="comparison-wrapper" oncontextmenu="return false;">
+                                    <img src="https://via.placeholder.com/900x506/1e293b/8b5cf6?text=Мир+5+С+МОДАМИ" class="after-image" alt="После" draggable="false">
+                                    <img src="https://via.placeholder.com/900x506/0f172a/60a5fa?text=Мир+5+СТАНДАРТНЫЙ" class="before-image" id="before-img-5" alt="До" draggable="false">
+                                    <div class="slider-handle" id="slider-5"></div>
+                                    <div class="comparison-labels">
+                                        <span class="comparison-label before" onclick="showFullImage(5, 'before')">До</span>
+                                        <span class="comparison-label after" onclick="showFullImage(5, 'after')">После</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="mb-16">
+        <div class="flex flex-wrap items-end justify-center gap-8 mb-6 border-b border-slate-700 pb-2">
+            <h2 class="text-2xl font-bold flex items-center gap-2">
+                <span>&#x1F9E9;</span> Моды (<span id="mod-count" class="mc-green text-lg"></span>)
+            </h2>
+            <h2 class="text-2xl font-bold flex items-center gap-2">
+                <span>&#x1F4E6;</span> Ресурс-паки (<span id="pack-count" class="text-purple-400 text-lg"></span>)
+            </h2>
+        </div>
+        <div id="all-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    </section>
+
+    <script>
+        // ===== НАБОРЫ КАРТИНОК =====
+        const world1ImageSets = {
+            1: { before: 'https://treemale.github.io/Minecraft/1_1-0_75.5-95--170.5-141-23.8.webp', after: 'https://treemale.github.io/Minecraft/1_1-1_75.5-95--170.5-141-23.8.webp' },
+            2: { before: 'https://treemale.github.io/Minecraft/1_2-0_137.5-76--148.5--82.5-41.7.webp', after: 'https://treemale.github.io/Minecraft/1_2-1_137.5-76--148.5--82.5-41.7.webp' },
+            3: { before: 'https://treemale.github.io/Minecraft/1_3-0_202.5-78--157.5--125.6-14.8.webp', after: 'https://treemale.github.io/Minecraft/1_3-1_202.5-78--157.5--125.6-14.8.webp' },
+            4: { before: 'https://treemale.github.io/Minecraft/1_4-0_113.5-82--199.5--145.1-17.webp', after: 'https://treemale.github.io/Minecraft/1_4-1_113.5-82--199.5--145.1-17.webp' }
+        };
+
+        const world2ImageSets = {
+            1: { before: 'https://treemale.github.io/Minecraft/2_1-0_1410.5-101--1255.5-59.7-36.5.webp', after: 'https://treemale.github.io/Minecraft/2_1-1_1410.5-101--1255.5-59.7-36.5.webp' },
+            2: { before: 'https://treemale.github.io/Minecraft/2_2-0_1344.5-74--1285.5-137--17.9.webp', after: 'https://treemale.github.io/Minecraft/2_2-1_1344.5-74--1285.5-137--17.9.webp' },
+            3: { before: 'https://treemale.github.io/Minecraft/2_3-0_1364.5-69--1304.5--159.6-1.6.webp', after: 'https://treemale.github.io/Minecraft/2_3-1_1364.5-69--1304.5--159.6-1.6.webp' },
+            4: { before: 'https://treemale.github.io/Minecraft/2_4-0_1421.5-86--1295.5--142.4-20.1.webp', after: 'https://treemale.github.io/Minecraft/2_4-1_1421.5-86--1295.5--142.4-20.1.webp' }
+        };
+
+        const world3ImageSets = {
+            1: { before: 'https://treemale.github.io/Minecraft/3_1-0_1396.5-92--2086.5-92.2-10.4.webp', after: 'https://treemale.github.io/Minecraft/3_1-1_1396.5-92--2086.5-92.2-10.4.webp' },
+            2: { before: 'https://treemale.github.io/Minecraft/3_2-0_1385.5-88--2083.5--22.1-32.9.webp', after: 'https://treemale.github.io/Minecraft/3_2-1_1385.5-88--2083.5--22.1-32.9.webp' },
+            3: { before: 'https://treemale.github.io/Minecraft/3_3-0_1395.5-81--2110.5--179-14.9.webp', after: 'https://treemale.github.io/Minecraft/3_3-1_1395.5-81--2110.5--179-14.9.webp' },
+            4: { before: 'https://treemale.github.io/Minecraft/3_4-0_1406.5-84--2121.5--59.8-17.8.webp', after: 'https://treemale.github.io/Minecraft/3_4-1_1406.5-84--2121.5--59.8-17.8.webp' },
+            5: { before: 'https://treemale.github.io/Minecraft/3_5-0_1394.5-84--2137.5--153.2-18.webp', after: 'https://treemale.github.io/Minecraft/3_5-1_1394.5-84--2137.5--153.2-18.webp' }
+        };
+
+        let currentSet = { 1: 1, 2: 1, 3: 1 };
+        const preloadedImages = {};
+        let isLoading = false;
+
+        // ===== TOOLTIP =====
+        const tooltip = document.getElementById('global-tooltip');
+        const defaultTooltipText = 'Нажми, чтобы скопировать сид';
+        let tooltipTimeout = null;
+
+        document.querySelectorAll('.world-name').forEach(el => {
+            el.addEventListener('mouseenter', function() {
+                clearTimeout(tooltipTimeout);
+                tooltip.textContent = defaultTooltipText;
+                tooltip.classList.add('visible');
+                positionTooltip(this);
+            });
+            el.addEventListener('mousemove', function() { positionTooltip(this); });
+            el.addEventListener('mouseleave', function() {
+                tooltipTimeout = setTimeout(() => { tooltip.classList.remove('visible'); }, 100);
+            });
+        });
+
+        function positionTooltip(el) {
+            const rect = el.getBoundingClientRect();
+            tooltip.style.top = (rect.top - tooltip.offsetHeight - 8) + 'px';
+            tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+        }
+
+        // ===== КОПИРОВАНИЕ СИДА =====
+        function copySeed(el) {
+            const seed = el.getAttribute('data-seed');
+            navigator.clipboard.writeText(seed).then(() => {
+                el.classList.add('copied');
+                tooltip.textContent = '✅ Сид скопирован: ' + seed;
+                tooltip.classList.add('visible');
+                positionTooltip(el);
+                setTimeout(() => { el.classList.remove('copied'); tooltip.textContent = defaultTooltipText; }, 2000);
+            }).catch(() => {
+                tooltip.textContent = ' Ошибка копирования';
+                tooltip.classList.add('visible');
+                positionTooltip(el);
+                setTimeout(() => { tooltip.textContent = defaultTooltipText; }, 2000);
+            });
+        }
+
+        // ===== ПРЕДЗАГРУЗКА =====
+        function preloadImage(url) {
+            if (preloadedImages[url]) return Promise.resolve(preloadedImages[url]);
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.fetchPriority = "high";
+                img.onload = () => { preloadedImages[url] = img; resolve(img); };
+                img.onerror = () => reject(new Error('Не удалось загрузить: ' + url));
+                img.src = url;
+            });
+        }
+
+        function preloadSet(worldNum, setNum) {
+            let imageSets;
+            if (worldNum === 1) imageSets = world1ImageSets;
+            else if (worldNum === 2) imageSets = world2ImageSets;
+            else if (worldNum === 3) imageSets = world3ImageSets;
+            else return;
+            
+            const set = imageSets[setNum];
+            if (!set) return;
+            
+            const btn = event.target.closest('.set-btn');
+            if (btn && !btn.classList.contains('active')) btn.classList.add('preloading');
+            
+            Promise.all([preloadImage(set.before), preloadImage(set.after)])
+                .then(() => { if (btn) btn.classList.remove('preloading'); })
+                .catch(() => { if (btn) btn.classList.remove('preloading'); });
+        }
+
+        // ===== ПЕРЕКЛЮЧЕНИЕ НАБОРОВ =====
+        function switchImageSet(worldNum, setNum) {
+            if (isLoading) return;
+            const beforeImg = document.getElementById('before-img-' + worldNum);
+            const afterImg = document.getElementById('after-img-' + worldNum);
+            const loader = document.getElementById('loader-' + worldNum);
+            
+            let imageSets;
+            if (worldNum === 1) imageSets = world1ImageSets;
+            else if (worldNum === 2) imageSets = world2ImageSets;
+            else if (worldNum === 3) imageSets = world3ImageSets;
+            else return;
+            
+            const set = imageSets[setNum];
+            
+            if (!beforeImg || !afterImg || !set) return;
+            if (currentSet[worldNum] === setNum) return;
+            
+            isLoading = true;
+            if (loader) loader.classList.add('visible');
+            beforeImg.classList.remove('loaded');
+            afterImg.classList.remove('loaded');
+            
+            const beforeCached = preloadedImages[set.before];
+            const afterCached = preloadedImages[set.after];
+            
+            const applyImages = () => {
+                beforeImg.src = set.before;
+                afterImg.src = set.after;
+                
+                requestAnimationFrame(() => {
+                    beforeImg.classList.add('loaded');
+                    afterImg.classList.add('loaded');
+                    if (loader) loader.classList.remove('visible');
+                    
+                    const slider = document.getElementById('slider-' + worldNum);
+                    if (slider) {
+                        beforeImg.style.clipPath = 'inset(0 50% 0 0)';
+                        slider.style.left = '50%';
+                    }
+                    
+                    updateActiveButton(worldNum, setNum);
+                    currentSet[worldNum] = setNum;
+                    isLoading = false;
+                });
+            };
+            
+            if (beforeCached && afterCached) {
+                applyImages();
+            } else {
+                Promise.all([preloadImage(set.before), preloadImage(set.after)])
+                    .then(applyImages)
+                    .catch(err => {
+                        console.error('Ошибка загрузки:', err);
+                        if (loader) loader.classList.remove('visible');
+                        isLoading = false;
+                    });
+            }
+        }
+
+        function updateActiveButton(worldNum, setNum) {
+            const container = document.getElementById('comp-' + worldNum);
+            if (!container) return;
+            const buttons = container.querySelectorAll('.set-btn');
+            buttons.forEach((btn, index) => {
+                btn.classList.toggle('active', index + 1 === setNum);
+            });
+        }
+
+        // ===== ОТКРЫТИЕ СРАВНЕНИЯ =====
+        function toggleComparison(num) {
+            const row = document.getElementById('comp-row-' + num);
+            if (row.style.display === 'none' || row.style.display === '') {
+                for (let i = 1; i <= 5; i++) document.getElementById('comp-row-' + i).style.display = 'none';
+                row.style.display = 'table-row';
+                setTimeout(() => { 
+                    setupSlider(num);
+                    // Загружаем первый набор при открытии
+                    if (num === 1) switchImageSet(1, 1);
+                    else if (num === 2) switchImageSet(2, 1);
+                    else if (num === 3) switchImageSet(3, 1);
+                }, 50);
+            } else {
+                row.style.display = 'none';
+            }
+        }
+
+        function setupSlider(num) {
+            const wrapper = document.querySelector('#comp-' + num + ' .comparison-wrapper');
+            const beforeImg = document.getElementById('before-img-' + num);
+            const slider = document.getElementById('slider-' + num);
+            if (!wrapper || !beforeImg || !slider) return;
+
+            let isDragging = false;
+            function updatePosition(clientX) {
+                const rect = wrapper.getBoundingClientRect();
+                let percent = Math.max(0, Math.min(100, ((clientX - rect.left) / rect.width) * 100));
+                beforeImg.style.clipPath = 'inset(0 ' + (100 - percent) + '% 0 0)';
+                slider.style.left = percent + '%';
+            }
+
+            slider.onmousedown = e => { isDragging = true; e.preventDefault(); };
+            document.onmousemove = e => { if (isDragging) updatePosition(e.clientX); };
+            document.onmouseup = () => { isDragging = false; };
+            wrapper.onclick = e => {
+                if (e.target === slider || slider.contains(e.target) || e.target.classList.contains('comparison-label') || e.target.closest('.set-btn')) return;
+                updatePosition(e.clientX);
+            };
+            slider.ontouchstart = e => { isDragging = true; e.preventDefault(); };
+            document.ontouchmove = e => { if (isDragging) updatePosition(e.touches[0].clientX); };
+            document.ontouchend = () => { isDragging = false; };
+        }
+
+        function showFullImage(num, side) {
+            const beforeImg = document.getElementById('before-img-' + num);
+            const slider = document.getElementById('slider-' + num);
+            if (!beforeImg || !slider) return;
+            if (side === 'before') {
+                beforeImg.style.clipPath = 'inset(0 0% 0 0)';
+                slider.style.left = '100%';
+            } else {
+                beforeImg.style.clipPath = 'inset(0 100% 0 0)';
+                slider.style.left = '0%';
+            }
+        }
+
+        // ===== МОДЫ И ПАКИ =====
+        const mods = [
+            {n: "Animated Mojang Logo", d: "Заменяет старый скучный экран загрузки Minecraft на приятную анимацию."},
+            {n: "Visual Health", d: "Добавляет наглядные визуальные повреждения (раны и синяки) на модели существ."},
+            {n: "Vanilla Outsider Bed Chat Hider", d: "Отключает автоматический фокус чата во время сна."},
+            {n: "Uku's Armor HUD", d: "Добавляет виджет HUD, отображающий текущий набор предметов брони."},
+            {n: "Swinging Lanterns", d: "Добавляет анимацию движения фонарей от ветра."},
+            {n: "Surface Particles", d: "Делает частицы блоков при взаимодействии текстурированными в соответствии с тем, что вы видите."},
+            {n: "Status Effect Bars", d: "Добавляет полосы наложение эффектов состояния, отображающие оставшееся время действия."},
+            {n: "Sound Physics Remastered", d: "Обеспечит реалистичное затухание, реверберацию и поглощение звука блоками."},
+            {n: "Smooth Swapping", d: "Плавная анимация при перекладывании предметов."},
+            {n: "Smooth Scrolling", d: "Плавная анимация при пролистывании графического интерфейса."},
+            {n: "Smooth GUI", d: "Плавная анимация при открытии графического интерфейса."},
+            {n: "Skin Layers 3D", d: "Отображает слой скина игрока в 3D."},
+            {n: "Real Arrow Tip", d: "Исправляет визуальное отображение стрел, заставляя лук и арбалет показывать правильный наконечник."},
+            {n: "Pickup Notifications", d: "Показывает всплывающие уведомления при получении предметов."},
+            {n: "Particle Effects", d: "Добавляет уникальные текстурированные частицы для каждого эффекта зелий."},
+            {n: "No More Pop-ups", d: "Удаляет все встроеные уведовления в Minecraft (предупреждения, рецепты крафта и советы)."},
+            {n: "My Totem Doll", d: "Заменяет стандартные тотемы на 2D или 3D тотемы со скином игрока."},
+            {n: "Modern Advancements", d: "Увеличивает окно достижений, считает прогресс и позволяет закреплять достижения как цели на экране."},
+            {n: "Mod Menu", d: "Добавляет удобный GUI интерфейс для просмотра и управления всеми установленными в игре модами."},
+            {n: "Lambda Better Grass", d: "Добавляет в игру улучшенную траву и снег при их переходе."},
+            {n: "Item Drops", d: "Изменяет внешний вид анимации выпадающих предметов и блоков (лежат на земле)."},
+            {n: "Inventory Particles", d: "Красивые эффекты для предметов вашего инвентаря при перемещении."},
+            {n: "Improved Weather", d: "Улучшает погоду и добавляет новые погодные условия."},
+            {n: "Imprint", d: "Добавит частицы следов на земле от шагов игроков и мобов."},
+            {n: "Immersive Hotbar", d: "Добавляет анимацию к панели быстрого доступа."},
+            {n: "Hover Items", d: "Добавляет небольшую анимацию при наведении курсора на элементы."},
+            {n: "Held Item Info", d: "Отображает информацию (например, о зачарованиях) о удерживаемом предмете под его названием."},
+            {n: "Fancy Toasts", d: "Добавляет функционал позволяющий изменить анимацию и звуки у выполненных достижений, испытаний и целей."},
+            {n: "Fancy Block Particles Reforged", d: "Изменяет эффекты частиц для разрушающихся блоков (3D-частицы)."},
+            {n: "Falling Leaves", d: "Добавляет эффект падающих листьев из блоков листвы."},
+            {n: "Durability Tooltip", d: "Добавляет цифровой показатель прочности для всех инструментов, брони и оружия."},
+            {n: "Dark Loading Screen", d: "Делает экран загрузки Mojang темнее."},
+            {n: "Cursors Extended", d: "Меняет стандартный курсор на стилизованый под игру."},
+            {n: "Chat Signing Hider", d: "Скрывает все, что связано с подписыванием чата (уведомления в углу)."},
+            {n: "Blur+", d: "Оживляет скучный стандартный эффект размытия с помощью анимации."},
+            {n: "Better Statistics Screen", d: "Заменяет стандартный экран статистики игры, делает его более наглядным, понятным и простым."},
+            {n: "Apple Skin", d: "Добавляет полезную информацию о еде/голоде в интерфейс пользователя (отображает уровень насыщения)."},
+            {n: "Concurrent Chunk Management Engine", d: "Набор функций для улучшения производительности прогрузки чанков в Minecraft."},
+            {n: "Smart Particles", d: "Оптимизация производительности, которая улучшает отрисовку частиц и настраивает их лимиты."},
+            {n: "TCD Commons API", d: "Библиотека API для моддинга Minecraft, которая включает в себя собственную систему GUI."},
+            {n: "Sodium", d: "Высокопроизводительная замена движка рендеринга для Minecraft, которая повышает частоту кадров."},
+            {n: "Entity Culling", d: "Повышает производительность, позволяя не прогружать не видимые игроку объекты в игре."},
+            {n: "Cerulean Fork", d: "Набор функций для улучшения производительности игры при работе с достижениями."},
+            {n: "SuperMartijn642's Config Lib", d: "Библиотека инструментов для работы модов."},
+            {n: "Lithium", d: "Набор функций, улучшающий производительность сервера игры."},
+            {n: "Iris Shaders", d: "Добавляет поддержку существующих шейдеров в игру."},
+            {n: "Yet Another Config Lib", d: "Библиотека инструментов для работы модов."},
+            {n: "Ferrite Core", d: "Оптимизация использования оперативной памяти."},
+            {n: "Cloth Config API", d: "Библиотека инструментов для работы модов."},
+            {n: "Placeholder API", d: "Библиотека инструментов для работы модов."},
+            {n: "Creative Core", d: "Библиотека инструментов для работы модов."},
+            {n: "Timeless Lib", d: "Библиотека инструментов для работы модов."},
+            {n: "Fabric API", d: "Библиотека инструментов для работы модов."},
+            {n: "Collective", d: "Библиотека инструментов для работы модов."},
+            {n: "Mossy Lib", d: "Библиотека инструментов для работы модов."},
+            {n: "Dasik Lib", d: "Библиотека инструментов для работы модов."},
+            {n: "Uku Lib", d: "Библиотека инструментов для работы модов."}
+        ];
+
+        const packs = [
+            {n: "BlazeandCave's Advancements Pack", d: "Пак добавляет в игру более 1000 новых достижений различной сложности."},
+            {n: "BlazeandCave's Advancements Pack Bossbar", d: "Вводит команды и создает полоску прогресса для достижений."},
+            {n: "BlazeandCave's Advancements Pack Hardcore", d: "Убирает достижения, которые нельзя выполнить без смерти."},
+            {n: "BlazeandCave's Advancements Pack Language Pack", d: "Переводит описание у достижений на другой язык."},
+            {n: "Better Leaves", d: "Изменяет текстуры листвы, добавляя больше пышности по краям блока."},
+            {n: "Round Trees", d: "Изменяет текстуры блоков древесины, делает их круглыми."},
+            {n: "Crops 3D", d: "Добавляет 3D текстуры для всех растений на грядках и грибов."},
+            {n: "Tasty Items", d: "Добавляет анимацию при поедании чего-либо."}
+        ];
+
+        const allGrid = document.getElementById('all-grid');
+        document.getElementById('mod-count').innerText = mods.length;
+        document.getElementById('pack-count').innerText = packs.length;
+
+        mods.forEach(mod => {
+            allGrid.innerHTML += '<div class="card p-4 rounded-lg"><h3 class="font-bold text-slate-200 mb-2 flex items-center gap-2 text-sm md:text-base"><span class="w-2 h-2 rounded-full mc-bg flex-shrink-0"></span> ' + mod.n + '</h3><p class="text-xs md:text-sm text-slate-400 leading-relaxed">' + mod.d + '</p></div>';
+        });
+        packs.forEach(pack => {
+            allGrid.innerHTML += '<div class="card card-pack p-4 rounded-lg"><h3 class="font-bold text-slate-200 mb-2 flex items-center gap-2 text-sm md:text-base"><span class="w-2 h-2 rounded-full pack-bg flex-shrink-0"></span> ' + pack.n + '</h3><p class="text-xs md:text-sm text-slate-400 leading-relaxed">' + pack.d + '</p></div>';
+        });
+    </script>
+</body>
+</html>
