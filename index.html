@@ -28,14 +28,126 @@
             max-width: 1400px;
             margin: 0 auto;
         }
+
+        /* ===== АНИМИРОВАННЫЙ ФОН С БЛОКАМИ ===== */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        .floating-block {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            opacity: 0.07;
+            animation: float 20s infinite ease-in-out;
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+
+        .floating-block:nth-child(1) {
+            background-image: url('https://treemale.github.io/Minecraft/images/loader/grass_block.webp');
+            background-size: cover;
+            left: 5%;
+            top: 15%;
+            animation-delay: 0s;
+            animation-duration: 25s;
+        }
+
+        .floating-block:nth-child(2) {
+            background-image: url('https://treemale.github.io/Minecraft/images/loader/cobblestone.webp');
+            background-size: cover;
+            left: 85%;
+            top: 55%;
+            animation-delay: -5s;
+            animation-duration: 30s;
+        }
+
+        .floating-block:nth-child(3) {
+            background-image: url('https://treemale.github.io/Minecraft/images/loader/oak_planks.webp');
+            background-size: cover;
+            left: 45%;
+            top: 75%;
+            animation-delay: -10s;
+            animation-duration: 22s;
+        }
+
+        .floating-block:nth-child(4) {
+            background-image: url('https://treemale.github.io/Minecraft/images/loader/grass_block.webp');
+            background-size: cover;
+            left: 15%;
+            top: 65%;
+            animation-delay: -15s;
+            animation-duration: 28s;
+        }
+
+        .floating-block:nth-child(5) {
+            background-image: url('https://treemale.github.io/Minecraft/images/loader/cobblestone.webp');
+            background-size: cover;
+            left: 75%;
+            top: 25%;
+            animation-delay: -8s;
+            animation-duration: 26s;
+        }
+
+        .floating-block:nth-child(6) {
+            background-image: url('https://treemale.github.io/Minecraft/images/loader/oak_planks.webp');
+            background-size: cover;
+            left: 35%;
+            top: 40%;
+            animation-delay: -12s;
+            animation-duration: 32s;
+        }
+
+        .floating-block:nth-child(7) {
+            background-image: url('https://treemale.github.io/Minecraft/images/loader/grass_block.webp');
+            background-size: cover;
+            left: 60%;
+            top: 85%;
+            animation-delay: -3s;
+            animation-duration: 24s;
+        }
+
+        .floating-block:nth-child(8) {
+            background-image: url('https://treemale.github.io/Minecraft/images/loader/cobblestone.webp');
+            background-size: cover;
+            left: 90%;
+            top: 10%;
+            animation-delay: -18s;
+            animation-duration: 29s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(60px, -40px) rotate(8deg);
+            }
+            50% {
+                transform: translate(-40px, -70px) rotate(-6deg);
+            }
+            75% {
+                transform: translate(-60px, 40px) rotate(4deg);
+            }
+        }
+
         body::before {
             content: '';
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.85);
+            background: rgba(15, 23, 42, 0.82);
             z-index: -1;
         }
+
         .mc-green { color: #4ade80; }
         .mc-bg { background-color: #22c55e; }
         .pack-bg { background-color: #8b5cf6; }
@@ -409,9 +521,6 @@
         h1 {
             font-family: 'MinecraftTitle', 'Minecraft', sans-serif !important;
             white-space: nowrap;
-            text-align: center;
-            display: block;
-            width: 100%;
         }
 
         /* Заголовки таблицы — в одну строку */
@@ -444,8 +553,23 @@
     </style>
 </head>
 <body class="p-4 md:p-8 mx-auto">
+
+    <!-- Анимированный фон с плавающими блоками -->
+    <div class="animated-bg">
+        <div class="floating-block"></div>
+        <div class="floating-block"></div>
+        <div class="floating-block"></div>
+        <div class="floating-block"></div>
+        <div class="floating-block"></div>
+        <div class="floating-block"></div>
+        <div class="floating-block"></div>
+        <div class="floating-block"></div>
+    </div>
+
     <header class="text-center mb-12">
-        <h1 class="text-4xl md:text-5xl font-bold mc-green mb-3">МАЙНКРАФТ ВАЙБИК | ДОП. ДОСТИЖЕНИЯ</h1>
+        <div class="flex justify-center">
+            <h1 class="text-4xl md:text-5xl font-bold mc-green mb-3">МАЙНКРАФТ ВАЙБИК | ДОП. ДОСТИЖЕНИЯ</h1>
+        </div>
         <p class="text-slate-400 text-lg">История забегов, смертей и список используемых модификаций</p>
     </header>
 
@@ -460,12 +584,12 @@
                 <thead class="bg-slate-800 text-slate-300">
                     <tr>
                         <th class="p-3 text-center align-middle">#</th>
-                        <th class="p-3 text-center align-middle">🌍 Мир</th>
+                        <th class="p-3 text-center align-middle"> Мир</th>
                         <th class="p-3 text-center align-middle">❤️ Прожито</th>
                         <th class="p-3 text-center align-middle">🏆 Достижения</th>
                         <th class="p-3 text-center align-middle">❓ Причина смерти</th>
                         <th class="p-3 text-center align-middle">❗ Описание ситуации</th>
-                        <th class="p-3 text-center align-middle">🎞️ Видео</th>
+                        <th class="p-3 text-center align-middle">️ Видео</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-800 bg-slate-900/50">
