@@ -399,10 +399,10 @@
                                         <span class="comparison-label after" onclick="showFullImage(2, 'after')">После</span>
                                     </div>
                                     <div class="image-set-buttons">
-                                        <button class="set-btn active" onclick="switchImageSet(2, 1)" onmouseenter="preloadSet(2, 1)">Острова вайба<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(2, 2)" onmouseenter="preloadSet(2, 2)">Ферма булыжника<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(2, 3)" onmouseenter="preloadSet(2, 3)">Ферма железа<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(2, 4)" onmouseenter="preloadSet(2, 4)">Ферма жителей<span class="loading-dot"></span></button>
+                                        <button class="set-btn active" onclick="switchImageSet(2, 1)" onmouseenter="preloadSet(2, 1)">1<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(2, 2)" onmouseenter="preloadSet(2, 2)">2<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(2, 3)" onmouseenter="preloadSet(2, 3)">3<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(2, 4)" onmouseenter="preloadSet(2, 4)">4<span class="loading-dot"></span></button>
                                     </div>
                                 </div>
                             </div>
@@ -715,7 +715,10 @@
                 row.style.display = 'table-row';
                 setTimeout(() => { 
                     setupSlider(num);
-                    if (num === 1 || num === 2 || num === 3) switchImageSet(num, 1);
+                    // Загружаем первый набор при открытии
+                    if (num === 1) switchImageSet(1, 1);
+                    else if (num === 2) switchImageSet(2, 1);
+                    else if (num === 3) switchImageSet(3, 1);
                 }, 50);
             } else {
                 row.style.display = 'none';
