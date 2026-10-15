@@ -6,10 +6,19 @@
     <title>Minecraft Hardcore Tracker</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* ===== ПОДКЛЮЧЕНИЕ ШРИФТА ===== */
+        @font-face {
+            font-family: 'Minecraft';
+            src: url('https://treemale.github.io/Minecraft/fonts/minecraft.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
         body { 
             background-color: #0f172a; 
             color: #e2e8f0; 
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
         }
         body::before {
             content: '';
@@ -83,6 +92,7 @@
             font-weight: 600;
             transition: all 0.2s;
             margin-left: 8px;
+            font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
         }
         .compare-btn:hover {
             background: rgba(74, 222, 128, 0.4);
@@ -201,6 +211,7 @@
             transition: all 0.2s;
             user-select: none;
             pointer-events: auto;
+            font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
         }
         .comparison-label:hover { transform: scale(1.05); }
         .comparison-label.before { border-left: 3px solid #4ade80; }
@@ -243,6 +254,7 @@
             flex-shrink: 0;
             white-space: nowrap;
             pointer-events: auto;
+            font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
         }
         .set-btn:hover {
             background: rgba(74, 222, 128, 0.3);
@@ -351,6 +363,7 @@
             letter-spacing: 2px;
             text-transform: uppercase;
             text-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
+            font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
         }
         
         .loader-text::after {
