@@ -100,7 +100,7 @@
             max-width: 900px;
             margin: 0 auto;
             border-radius: 12px;
-            overflow: hidden;
+            overflow: hidden; /* Обрезка по краям делается здесь */
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
             border: 2px solid #334155;
             animation: slideDown 0.3s ease-out;
@@ -113,10 +113,10 @@
             position: relative;
             width: 100%;
             aspect-ratio: 16 / 9;
-            overflow: hidden;
             user-select: none;
             -webkit-user-select: none;
             background: #0f172a;
+            /* Убраны overflow: hidden и pointer-events: none, чтобы не мешать кликам и hover-эффектам */
         }
         .after-image, .before-image {
             position: absolute;
@@ -147,6 +147,7 @@
             z-index: 3;
             transform: translateX(-50%);
             box-shadow: 0 0 8px rgba(74, 222, 128, 0.5);
+            pointer-events: auto;
         }
         .slider-handle::after {
             content: '';
@@ -181,7 +182,6 @@
             justify-content: space-between;
             padding: 0 24px;
             z-index: 5;
-            pointer-events: none;
         }
         .comparison-label {
             background: rgba(15, 23, 42, 0.85);
@@ -195,7 +195,7 @@
             cursor: pointer;
             transition: all 0.2s;
             user-select: none;
-            pointer-events: auto;
+            pointer-events: auto; /* Гарантирует работу наведения и клика */
         }
         .comparison-label:hover { transform: scale(1.05); }
         .comparison-label.before { border-left: 3px solid #4ade80; }
@@ -218,6 +218,7 @@
             padding: 12px 16px 8px 16px;
             scrollbar-width: none;
             -ms-overflow-style: none;
+            pointer-events: auto;
         }
         .image-set-buttons::-webkit-scrollbar {
             display: none;
@@ -236,6 +237,7 @@
             position: relative;
             flex-shrink: 0;
             white-space: nowrap;
+            pointer-events: auto;
         }
         .set-btn:hover {
             background: rgba(74, 222, 128, 0.3);
@@ -581,7 +583,7 @@
                 positionTooltip(el);
                 setTimeout(() => { el.classList.remove('copied'); tooltip.textContent = defaultTooltipText; }, 2000);
             }).catch(() => {
-                tooltip.textContent = ' Ошибка копирования';
+                tooltip.textContent = '❌ Ошибка копирования';
                 tooltip.classList.add('visible');
                 positionTooltip(el);
                 setTimeout(() => { tooltip.textContent = defaultTooltipText; }, 2000);
