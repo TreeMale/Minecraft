@@ -198,10 +198,9 @@
         .comparison-label.after { border-right: 3px solid #8b5cf6; }
         .comparison-label.after:hover { background: rgba(139, 92, 246, 0.3); }
         
-        /* Прокручиваемый список кнопок */
         .image-set-buttons {
             position: absolute;
-            bottom: 12px;
+            bottom: 8px;
             left: 0;
             right: 0;
             display: flex;
@@ -209,9 +208,9 @@
             gap: 8px;
             z-index: 6;
             overflow-x: auto;
-            overflow-y: hidden;
+            overflow-y: visible;
             flex-wrap: nowrap;
-            padding: 0 16px;
+            padding: 12px 16px 8px 16px;
             scrollbar-width: none;
             -ms-overflow-style: none;
         }
