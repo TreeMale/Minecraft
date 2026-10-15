@@ -748,8 +748,11 @@
             const set = imageSets[setNum];
             
             if (!beforeImg || !afterImg || !set) return;
-            // Защита только от повторного клика на ТОТ ЖЕ набор
             if (currentSet[worldNum] === setNum) return;
+            
+            // СРАЗУ делаем кнопку активной и обновляем состояние
+            updateActiveButton(worldNum, setNum);
+            currentSet[worldNum] = setNum;
             
             // Показываем лоадер и сбрасываем анимацию блоков
             if (loader) {
@@ -781,9 +784,6 @@
                         beforeImg.style.clipPath = 'inset(0 50% 0 0)';
                         slider.style.left = '50%';
                     }
-                    
-                    updateActiveButton(worldNum, setNum);
-                    currentSet[worldNum] = setNum;
                 });
             };
             
