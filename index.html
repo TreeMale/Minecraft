@@ -115,6 +115,7 @@
             aspect-ratio: 16 / 9;
             overflow: hidden;
             user-select: none;
+            -webkit-user-select: none;
             background: #0f172a;
         }
         .after-image, .before-image {
@@ -124,6 +125,9 @@
             object-fit: cover;
             opacity: 0;
             transition: opacity 0.4s ease;
+            pointer-events: none;
+            -webkit-user-drag: none;
+            user-select: none;
         }
         .after-image.loaded, .before-image.loaded {
             opacity: 1;
@@ -194,6 +198,7 @@
         .comparison-label.after { border-right: 3px solid #8b5cf6; }
         .comparison-label.after:hover { background: rgba(139, 92, 246, 0.3); }
         
+        /* Прокручиваемый список кнопок */
         .image-set-buttons {
             position: absolute;
             bottom: 12px;
@@ -203,7 +208,15 @@
             justify-content: center;
             gap: 8px;
             z-index: 6;
-            flex-wrap: wrap;
+            overflow-x: auto;
+            overflow-y: hidden;
+            flex-wrap: nowrap;
+            padding: 0 16px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .image-set-buttons::-webkit-scrollbar {
+            display: none;
         }
         .set-btn {
             background: rgba(15, 23, 42, 0.85);
@@ -217,6 +230,8 @@
             transition: all 0.2s;
             backdrop-filter: blur(4px);
             position: relative;
+            flex-shrink: 0;
+            white-space: nowrap;
         }
         .set-btn:hover {
             background: rgba(74, 222, 128, 0.3);
@@ -322,9 +337,9 @@
                     <tr id="comp-row-1" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
                             <div id="comp-1" class="comparison-container">
-                                <div class="comparison-wrapper">
-                                    <img src="" class="after-image" id="after-img-1" alt="После" decoding="async">
-                                    <img src="" class="before-image" id="before-img-1" alt="До" decoding="async">
+                                <div class="comparison-wrapper" oncontextmenu="return false;">
+                                    <img src="" class="after-image" id="after-img-1" alt="После" decoding="async" draggable="false">
+                                    <img src="" class="before-image" id="before-img-1" alt="До" decoding="async" draggable="false">
                                     <div class="slider-handle" id="slider-1"></div>
                                     <div class="loader" id="loader-1">
                                         <div class="loader-spinner"></div>
@@ -335,10 +350,10 @@
                                         <span class="comparison-label after" onclick="showFullImage(1, 'after')">После</span>
                                     </div>
                                     <div class="image-set-buttons">
-                                        <button class="set-btn active" onclick="switchImageSet(1, 1)" onmouseenter="preloadSet(1, 1)">1<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(1, 2)" onmouseenter="preloadSet(1, 2)">2<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(1, 3)" onmouseenter="preloadSet(1, 3)">3<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(1, 4)" onmouseenter="preloadSet(1, 4)">4<span class="loading-dot"></span></button>
+                                        <button class="set-btn active" onclick="switchImageSet(1, 1)" onmouseenter="preloadSet(1, 1)">Название 1<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(1, 2)" onmouseenter="preloadSet(1, 2)">Название 2<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(1, 3)" onmouseenter="preloadSet(1, 3)">Название 3<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(1, 4)" onmouseenter="preloadSet(1, 4)">Название 4<span class="loading-dot"></span></button>
                                     </div>
                                 </div>
                             </div>
@@ -366,9 +381,9 @@
                     <tr id="comp-row-2" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
                             <div id="comp-2" class="comparison-container">
-                                <div class="comparison-wrapper">
-                                    <img src="" class="after-image" id="after-img-2" alt="После" decoding="async">
-                                    <img src="" class="before-image" id="before-img-2" alt="До" decoding="async">
+                                <div class="comparison-wrapper" oncontextmenu="return false;">
+                                    <img src="" class="after-image" id="after-img-2" alt="После" decoding="async" draggable="false">
+                                    <img src="" class="before-image" id="before-img-2" alt="До" decoding="async" draggable="false">
                                     <div class="slider-handle" id="slider-2"></div>
                                     <div class="loader" id="loader-2">
                                         <div class="loader-spinner"></div>
@@ -410,9 +425,9 @@
                     <tr id="comp-row-3" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
                             <div id="comp-3" class="comparison-container">
-                                <div class="comparison-wrapper">
-                                    <img src="https://via.placeholder.com/900x506/1e293b/8b5cf6?text=Мир+3+С+МОДАМИ" class="after-image" alt="После">
-                                    <img src="https://via.placeholder.com/900x506/0f172a/60a5fa?text=Мир+3+СТАНДАРТНЫЙ" class="before-image" id="before-img-3" alt="До">
+                                <div class="comparison-wrapper" oncontextmenu="return false;">
+                                    <img src="https://via.placeholder.com/900x506/1e293b/8b5cf6?text=Мир+3+С+МОДАМИ" class="after-image" alt="После" draggable="false">
+                                    <img src="https://via.placeholder.com/900x506/0f172a/60a5fa?text=Мир+3+СТАНДАРТНЫЙ" class="before-image" id="before-img-3" alt="До" draggable="false">
                                     <div class="slider-handle" id="slider-3"></div>
                                     <div class="comparison-labels">
                                         <span class="comparison-label before" onclick="showFullImage(3, 'before')">До</span>
@@ -444,9 +459,9 @@
                     <tr id="comp-row-4" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
                             <div id="comp-4" class="comparison-container">
-                                <div class="comparison-wrapper">
-                                    <img src="https://via.placeholder.com/900x506/1e293b/8b5cf6?text=Мир+4+С+МОДАМИ" class="after-image" alt="После">
-                                    <img src="https://via.placeholder.com/900x506/0f172a/60a5fa?text=Мир+4+СТАНДАРТНЫЙ" class="before-image" id="before-img-4" alt="До">
+                                <div class="comparison-wrapper" oncontextmenu="return false;">
+                                    <img src="https://via.placeholder.com/900x506/1e293b/8b5cf6?text=Мир+4+С+МОДАМИ" class="after-image" alt="После" draggable="false">
+                                    <img src="https://via.placeholder.com/900x506/0f172a/60a5fa?text=Мир+4+СТАНДАРТНЫЙ" class="before-image" id="before-img-4" alt="До" draggable="false">
                                     <div class="slider-handle" id="slider-4"></div>
                                     <div class="comparison-labels">
                                         <span class="comparison-label before" onclick="showFullImage(4, 'before')">До</span>
@@ -478,9 +493,9 @@
                     <tr id="comp-row-5" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
                             <div id="comp-5" class="comparison-container">
-                                <div class="comparison-wrapper">
-                                    <img src="https://via.placeholder.com/900x506/1e293b/8b5cf6?text=Мир+5+С+МОДАМИ" class="after-image" alt="После">
-                                    <img src="https://via.placeholder.com/900x506/0f172a/60a5fa?text=Мир+5+СТАНДАРТНЫЙ" class="before-image" id="before-img-5" alt="До">
+                                <div class="comparison-wrapper" oncontextmenu="return false;">
+                                    <img src="https://via.placeholder.com/900x506/1e293b/8b5cf6?text=Мир+5+С+МОДАМИ" class="after-image" alt="После" draggable="false">
+                                    <img src="https://via.placeholder.com/900x506/0f172a/60a5fa?text=Мир+5+СТАНДАРТНЫЙ" class="before-image" id="before-img-5" alt="До" draggable="false">
                                     <div class="slider-handle" id="slider-5"></div>
                                     <div class="comparison-labels">
                                         <span class="comparison-label before" onclick="showFullImage(5, 'before')">До</span>
@@ -511,12 +526,12 @@
     <script>
         // ===== НАБОРЫ КАРТИНОК =====
         const world1ImageSets = {
-            1: { before: 'https://treemale.github.io/Minecraft/1_1-0_75.5-95--170.5-141-23.8.webp', after: 'https://treemale.github.io/Minecraft/1_1-1_75.5-95--170.5-141-23.8.webp' },
+            1: { before: 'https://treemale.github.io/Minecraft/1_1-0_75.5-95--170.5-141.webp', after: 'https://treemale.github.io/Minecraft/1_1-1_75.5-95--170.5-141-23.8.webp' },
             2: { before: 'https://treemale.github.io/Minecraft/1_2-0_137.5-76--148.5--82.5-41.7.webp', after: 'https://treemale.github.io/Minecraft/1_2-1_137.5-76--148.5--82.5-41.7.webp' },
             3: { before: 'https://treemale.github.io/Minecraft/1_3-0_202.5-78--157.5--125.6-14.8.webp', after: 'https://treemale.github.io/Minecraft/1_3-1_202.5-78--157.5--125.6-14.8.webp' },
             4: { before: 'https://treemale.github.io/Minecraft/1_4-0_113.5-82--199.5--145.1-17.webp', after: 'https://treemale.github.io/Minecraft/1_4-1_113.5-82--199.5--145.1-17.webp' }
         };
-        
+
         const world2ImageSets = {
             1: { before: 'https://treemale.github.io/Minecraft/2_1-0_1410.5-101--1255.5-59.7-36.5.webp', after: 'https://treemale.github.io/Minecraft/2_1-1_1410.5-101--1255.5-59.7-36.5.webp' },
             2: { before: 'https://treemale.github.io/Minecraft/2_2-0_1344.5-74--1285.5-137--17.9.webp', after: 'https://treemale.github.io/Minecraft/2_2-1_1344.5-74--1285.5-137--17.9.webp' },
@@ -562,7 +577,7 @@
                 positionTooltip(el);
                 setTimeout(() => { el.classList.remove('copied'); tooltip.textContent = defaultTooltipText; }, 2000);
             }).catch(() => {
-                tooltip.textContent = '❌ Ошибка копирования';
+                tooltip.textContent = ' Ошибка копирования';
                 tooltip.classList.add('visible');
                 positionTooltip(el);
                 setTimeout(() => { tooltip.textContent = defaultTooltipText; }, 2000);
