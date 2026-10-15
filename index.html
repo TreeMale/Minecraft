@@ -323,8 +323,8 @@
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
                             <div id="comp-1" class="comparison-container">
                                 <div class="comparison-wrapper">
-                                    <img src="" class="after-image" id="after-img-1" alt="После">
-                                    <img src="" class="before-image" id="before-img-1" alt="До">
+                                    <img src="" class="after-image" id="after-img-1" alt="После" decoding="async">
+                                    <img src="" class="before-image" id="before-img-1" alt="До" decoding="async">
                                     <div class="slider-handle" id="slider-1"></div>
                                     <div class="loader" id="loader-1">
                                         <div class="loader-spinner"></div>
@@ -367,8 +367,8 @@
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
                             <div id="comp-2" class="comparison-container">
                                 <div class="comparison-wrapper">
-                                    <img src="" class="after-image" id="after-img-2" alt="После">
-                                    <img src="" class="before-image" id="before-img-2" alt="До">
+                                    <img src="" class="after-image" id="after-img-2" alt="После" decoding="async">
+                                    <img src="" class="before-image" id="before-img-2" alt="До" decoding="async">
                                     <div class="slider-handle" id="slider-2"></div>
                                     <div class="loader" id="loader-2">
                                         <div class="loader-spinner"></div>
@@ -512,16 +512,16 @@
         // ===== НАБОРЫ КАРТИНОК =====
         const world1ImageSets = {
             1: { before: 'https://treemale.github.io/Minecraft/%231_1-0_75.5-95--170.5-141-23.8.png', after: 'https://treemale.github.io/Minecraft/%231_1-1_75.5-95--170.5-141-23.8.png' },
-            2: { before: 'https://raw.githubusercontent.com/TreeMale/Minecraft/main/%231_2-0_137.5-76--148.5--82.5-41.7.png', after: 'https://raw.githubusercontent.com/TreeMale/Minecraft/main/%231_2-1_137.5-76--148.5--82.5-41.7.png' },
-            3: { before: 'https://raw.githubusercontent.com/TreeMale/Minecraft/main/%231_3-0_202.5-78--157.5--125.6-14.8.png', after: 'https://raw.githubusercontent.com/TreeMale/Minecraft/main/%231_3-1_202.5-78--157.5--125.6-14.8.png' },
-            4: { before: 'https://raw.githubusercontent.com/TreeMale/Minecraft/main/%231_4-0_113.5-82--199.5--145.1-17.png', after: 'https://raw.githubusercontent.com/TreeMale/Minecraft/main/%231_4-1_113.5-82--199.5--145.1-17.png' }
+            2: { before: 'https://treemale.github.io/Minecraft/%231_2-0_137.5-76--148.5--82.5-41.7.png', after: 'https://treemale.github.io/Minecraft/%231_2-1_137.5-76--148.5--82.5-41.7.png' },
+            3: { before: 'https://treemale.github.io/Minecraft/%231_3-0_202.5-78--157.5--125.6-14.8.png', after: 'https://treemale.github.io/Minecraft/%231_3-1_202.5-78--157.5--125.6-14.8.png' },
+            4: { before: 'https://treemale.github.io/Minecraft/%231_4-0_113.5-82--199.5--145.1-17.png', after: 'https://treemale.github.io/Minecraft/%231_4-1_113.5-82--199.5--145.1-17.png' }
         };
 
         const world2ImageSets = {
-            1: { before: 'https://raw.githubusercontent.com/TreeMale/Minecraft/main/%232_1-0_1410.5-101--1255.5-59.7-36.5.png', after: 'https://raw.githubusercontent.com/TreeMale/Minecraft/main/%231_1-1_75.5-95--170.5-141-23.8.png' },
-            2: { before: 'https://raw.githubusercontent.com/TreeMale/Minecraft/main/%231_2-0_137.5-76--148.5--82.5-41.7.png', after: 'https://raw.githubusercontent.com/TreeMale/Minecraft/main/%231_2-1_137.5-76--148.5--82.5-41.7.png' },
-            3: { before: 'https://raw.githubusercontent.com/TreeMale/Minecraft/main/%232_3-0_1364.5-69--1304.5--159.6-1.6.png', after: 'https://raw.githubusercontent.com/TreeMale/Minecraft/main/%232_3-1_1364.5-69--1304.5--159.6-1.6.png' },
-            4: { before: 'https://raw.githubusercontent.com/TreeMale/Minecraft/main/%232_4-0_1421.5-86--1295.5--142.4-20.1.png', after: 'https://raw.githubusercontent.com/TreeMale/Minecraft/main/%232_4-1_1421.5-86--1295.5--142.4-20.1.png' }
+            1: { before: 'https://treemale.github.io/Minecraft/%232_1-0_1410.5-101--1255.5-59.7-36.5.png', after: 'https://treemale.github.io/Minecraft/%231_1-1_75.5-95--170.5-141-23.8.png' },
+            2: { before: 'https://treemale.github.io/Minecraft/%231_2-0_137.5-76--148.5--82.5-41.7.png', after: 'https://treemale.github.io/Minecraft/%231_2-1_137.5-76--148.5--82.5-41.7.png' },
+            3: { before: 'https://treemale.github.io/Minecraft/%232_3-0_1364.5-69--1304.5--159.6-1.6.png', after: 'https://treemale.github.io/Minecraft/%232_3-1_1364.5-69--1304.5--159.6-1.6.png' },
+            4: { before: 'https://treemale.github.io/Minecraft/%232_4-0_1421.5-86--1295.5--142.4-20.1.png', after: 'https://treemale.github.io/Minecraft/%232_4-1_1421.5-86--1295.5--142.4-20.1.png' }
         };
 
         let currentSet = { 1: 1, 2: 1 };
@@ -562,7 +562,7 @@
                 positionTooltip(el);
                 setTimeout(() => { el.classList.remove('copied'); tooltip.textContent = defaultTooltipText; }, 2000);
             }).catch(() => {
-                tooltip.textContent = ' Ошибка копирования';
+                tooltip.textContent = '❌ Ошибка копирования';
                 tooltip.classList.add('visible');
                 positionTooltip(el);
                 setTimeout(() => { tooltip.textContent = defaultTooltipText; }, 2000);
@@ -574,9 +574,10 @@
             if (preloadedImages[url]) return Promise.resolve(preloadedImages[url]);
             return new Promise((resolve, reject) => {
                 const img = new Image();
+                img.fetchPriority = "high";
                 img.onload = () => { preloadedImages[url] = img; resolve(img); };
                 img.onerror = () => reject(new Error('Не удалось загрузить: ' + url));
-                img.src = url + '?v=' + Date.now();
+                img.src = url;
             });
         }
 
@@ -615,8 +616,8 @@
             const afterCached = preloadedImages[set.after];
             
             const applyImages = () => {
-                beforeImg.src = set.before + '?v=' + Date.now();
-                afterImg.src = set.after + '?v=' + Date.now();
+                beforeImg.src = set.before;
+                afterImg.src = set.after;
                 
                 requestAnimationFrame(() => {
                     beforeImg.classList.add('loaded');
