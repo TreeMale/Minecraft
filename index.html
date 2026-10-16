@@ -500,9 +500,9 @@
                         <th class="p-3 text-center align-middle">#</th>
                         <th class="p-3 text-center align-middle">🌍 Мир</th>
                         <th class="p-3 text-center align-middle">❤️ Прожито</th>
-                        <th class="p-3 text-center align-middle"> Достижения</th>
+                        <th class="p-3 text-center align-middle">🏆 Достижения</th>
                         <th class="p-3 text-center align-middle">Причина смерти</th>
-                        <th class="p-3 text-center align-middle">❗ Описание ситуации</th>
+                        <th class="p-3 text-center align-middle"> Описание ситуации</th>
                         <th class="p-3 text-center align-middle">🎞️ Видео</th>
                     </tr>
                 </thead>
@@ -760,7 +760,6 @@
     </section>
 
     <script>
-        // ===== КАСТОМНЫЙ КУРСОР С ПОКАЧИВАНИЕМ И УДАРАМИ =====
         const customCursor = document.getElementById('custom-cursor');
         
         let lastMouseX = 0, lastMouseY = 0;
@@ -769,9 +768,8 @@
         let targetSway = 0;
         let isClicking = false;
         let clickStartTime = 0;
-        let sparkTriggered = false;
         let sparkInterval = null;
-        const CLICK_CYCLE = 250; // 0.25 секунды
+        const CLICK_CYCLE = 300; // 0.3 секунды
 
         document.addEventListener('mousemove', (e) => {
             prevMouseX = lastMouseX;
@@ -781,20 +779,16 @@
             customCursor.style.left = (e.clientX - 5) + 'px';
             customCursor.style.top = (e.clientY - 29) + 'px';
             
-            // Покачивание в сторону движения (небольшое, ±8° максимум)
             const deltaX = e.clientX - prevMouseX;
-            targetSway = Math.max(-8, Math.min(8, deltaX * 0.4));
+            targetSway = Math.max(-12, Math.min(12, deltaX * 1.5));
         });
 
         document.addEventListener('mousedown', (e) => {
             isClicking = true;
             clickStartTime = performance.now();
-            sparkTriggered = false;
             
-            // Первый удар сразу
             createSparksAtTip(e.clientX, e.clientY);
             
-            // Цикл искр каждые 250мс
             sparkInterval = setInterval(() => {
                 createSparksAtTip(lastMouseX, lastMouseY);
             }, CLICK_CYCLE);
@@ -802,26 +796,21 @@
 
         document.addEventListener('mouseup', () => {
             isClicking = false;
-            sparkTriggered = false;
             if (sparkInterval) {
                 clearInterval(sparkInterval);
                 sparkInterval = null;
             }
         });
 
-        // Главный цикл анимации курсора
         function animateCursor() {
-            // Плавное затухание покачивания
-            targetSway *= 0.85;
-            swayAngle += (targetSway - swayAngle) * 0.2;
+            targetSway *= 0.9;
+            swayAngle += (targetSway - swayAngle) * 0.15;
             
             let rotation = swayAngle;
             
             if (isClicking) {
                 const elapsed = performance.now() - clickStartTime;
-                const phase = (elapsed % CLICK_CYCLE) / CLICK_CYCLE; // 0..1
-                
-                // Удар: синусоида 0 -> -25° -> 0 за цикл
+                const phase = (elapsed % CLICK_CYCLE) / CLICK_CYCLE;
                 const swingAngle = -25 * Math.sin(phase * Math.PI);
                 rotation += swingAngle;
             }
@@ -831,15 +820,9 @@
         }
         requestAnimationFrame(animateCursor);
 
-        // Искры из конца кирки после наклона
         function createSparksAtTip(mouseX, mouseY) {
-            // Кончик кирки в исходном положении: (5, 29) от верхнего левого угла
-            // Курсор позиционируется как (mouseX - 5, mouseY - 29)
-            // При наклоне на -25° вокруг центра (19.5, 19.5) кончик смещается в (~10, ~34)
-            // Значит в экранных координатах кончик: (mouseX - 5 + 10, mouseY - 29 + 34) = (mouseX + 5, mouseY + 5)
-            // "Немного выше" — вычитаем 8px по Y
             const tipX = mouseX + 5;
-            const tipY = mouseY + 5 - 8;
+            const tipY = mouseY + 5 + 5;
             
             const sparkCount = 3 + Math.floor(Math.random() * 3);
             for (let i = 0; i < sparkCount; i++) {
@@ -852,7 +835,7 @@
             spark.className = 'spark';
             
             const offsetX = (Math.random() - 0.5) * 14;
-            const offsetY = (Math.random() - 0.5) * 10; // меньше разброс по Y, искры ближе к кончику
+            const offsetY = (Math.random() - 0.3) * 12;
             
             spark.style.left = (x + offsetX) + 'px';
             spark.style.top = (y + offsetY) + 'px';
