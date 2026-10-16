@@ -33,15 +33,55 @@
             background-repeat: no-repeat;
             pointer-events: none;
             z-index: 99999;
-            /* Без зеркалирования */
             image-rendering: pixelated;
             image-rendering: -moz-crisp-edges;
             image-rendering: crisp-edges;
+            transition: transform 0.1s ease;
+        }
+
+        /* Наклон при нажатии */
+        #custom-cursor.clicking {
+            transform: rotate(-25deg);
         }
 
         /* Скрываем стандартный курсор на всём сайте */
         * {
             cursor: none !important;
+        }
+
+        /* ===== ИСКРЫ ОТ КИРКИ ===== */
+        .spark {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: #fbbf24;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99998;
+            box-shadow: 0 0 6px #fbbf24, 0 0 10px #f59e0b;
+        }
+
+        .spark::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f59e0b;
+            border-radius: 50%;
+            animation: sparkFade 0.4s ease-out forwards;
+        }
+
+        @keyframes sparkFade {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0);
+            }
         }
 
         body { 
@@ -793,14 +833,63 @@
     </section>
 
     <script>
-        // ===== КАСТОМНЫЙ КУРСОР =====
+        // ===== КАСТОМНЫЙ КУРСОР С ИСКРАМИ =====
         const customCursor = document.getElementById('custom-cursor');
         
+        // Движение курсора
         document.addEventListener('mousemove', (e) => {
-            // Координаты указателя: x=5 (влево), y=29 (вниз) от верхнего левого угла
             customCursor.style.left = (e.clientX - 5) + 'px';
             customCursor.style.top = (e.clientY - 29) + 'px';
         });
+
+        // Наклон при нажатии + искры
+        document.addEventListener('mousedown', (e) => {
+            customCursor.classList.add('clicking');
+            createSparks(e.clientX, e.clientY);
+        });
+
+        document.addEventListener('mouseup', () => {
+            customCursor.classList.remove('clicking');
+        });
+
+        // Создание искр
+        function createSparks(x, y) {
+            // Координаты конца кирки (x=5, y=29 от верха слева)
+            const sparkX = x - 5;
+            const sparkY = y - 29;
+            
+            // Создаем 3-5 искр
+            const sparkCount = 3 + Math.floor(Math.random() * 3);
+            
+            for (let i = 0; i < sparkCount; i++) {
+                createSpark(sparkX, sparkY);
+            }
+        }
+
+        function createSpark(x, y) {
+            const spark = document.createElement('div');
+            spark.className = 'spark';
+            
+            // Случайное смещение для каждой искры
+            const offsetX = (Math.random() - 0.5) * 20;
+            const offsetY = (Math.random() - 0.5) * 20 + 10; // немного вниз
+            
+            spark.style.left = (x + offsetX) + 'px';
+            spark.style.top = (y + offsetY) + 'px';
+            
+            // Случайный цвет искры (желтый/оранжевый)
+            const colors = ['#fbbf24', '#f59e0b', '#fcd34d', '#fb923c'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            spark.style.background = randomColor;
+            spark.style.boxShadow = `0 0 6px ${randomColor}, 0 0 10px ${randomColor}`;
+            
+            document.body.appendChild(spark);
+            
+            // Удаляем искру после анимации
+            setTimeout(() => {
+                spark.remove();
+            }, 400);
+        }
 
         document.addEventListener('mouseleave', () => {
             customCursor.style.display = 'none';
