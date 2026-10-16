@@ -21,9 +21,31 @@
             font-display: swap;
         }
 
-        /* ===== КУРСОР - АЛМАЗНАЯ КИРКА ===== */
+        /* ===== КАСТОМНЫЙ КУРСОР-КИРКА ===== */
+        #custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 48px;  /* 16px × 3 = 48px */
+            height: 48px;
+            background-image: url('https://treemale.github.io/Minecraft/images/cursor/diamond_pickaxe.webp');
+            background-size: contain;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            z-index: 99999;
+            /* Увеличение в 3 раза + отражение по горизонтали */
+            transform: scale(3) scaleX(-1);
+            /* Точка привязки — остриё кирки (верхний левый угол) */
+            transform-origin: top left;
+            /* Скрываем стандартный курсор */
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+
+        /* Скрываем стандартный курсор на всём сайте */
         * {
-            cursor: url('https://treemale.github.io/Minecraft/images/cursor/diamond_pickaxe.webp') 0 0, auto;
+            cursor: none !important;
         }
 
         body { 
@@ -489,14 +511,17 @@
             display: inline-block;
             margin-left: 8px;
             transition: all 0.2s ease;
-            color: #4ade80; /* Зелёная по умолчанию (развёрнуто) */
+            color: #4ade80;
         }
         .toggle-icon.collapsed {
-            color: #ef4444; /* Красная когда свёрнуто */
+            color: #ef4444;
         }
     </style>
 </head>
 <body class="p-4 md:p-8 mx-auto">
+
+    <!-- Кастомный курсор-кирка -->
+    <div id="custom-cursor"></div>
 
     <!-- Фоновая картинка -->
     <div class="custom-bg"></div>
@@ -522,9 +547,9 @@
                         <th class="p-3 text-center align-middle">🌍 Мир</th>
                         <th class="p-3 text-center align-middle">❤️ Прожито</th>
                         <th class="p-3 text-center align-middle">🏆 Достижения</th>
-                        <th class="p-3 text-center align-middle">❓ Причина смерти</th>
+                        <th class="p-3 text-center align-middle"> Причина смерти</th>
                         <th class="p-3 text-center align-middle">❗ Описание ситуации</th>
-                        <th class="p-3 text-center align-middle">️ Видео</th>
+                        <th class="p-3 text-center align-middle">🎞️ Видео</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-800 bg-slate-900/50">
@@ -786,6 +811,24 @@
     </section>
 
     <script>
+        // ===== КАСТОМНЫЙ КУРСОР =====
+        const customCursor = document.getElementById('custom-cursor');
+        
+        document.addEventListener('mousemove', (e) => {
+            // Смещение на -48px по X и Y, чтобы остриё кирки (верхний левый угол после отражения) 
+            // совпадало с реальной позицией мыши
+            customCursor.style.left = (e.clientX - 48) + 'px';
+            customCursor.style.top = (e.clientY - 48) + 'px';
+        });
+
+        // Скрываем курсор когда мышь уходит с окна
+        document.addEventListener('mouseleave', () => {
+            customCursor.style.display = 'none';
+        });
+        document.addEventListener('mouseenter', () => {
+            customCursor.style.display = 'block';
+        });
+
         const world1ImageSets = {
             1: { before: 'https://treemale.github.io/Minecraft/images/world/1/1_1-0_75.5-95--170.5-141-23.8.webp', after: 'https://treemale.github.io/Minecraft/images/world/1/1_1-1_75.5-95--170.5-141-23.8.webp' },
             2: { before: 'https://treemale.github.io/Minecraft/images/world/1/1_2-0_137.5-76--148.5--82.5-41.7.webp', after: 'https://treemale.github.io/Minecraft/images/world/1/1_2-1_137.5-76--148.5--82.5-41.7.webp' },
@@ -1044,13 +1087,12 @@
                 }
             }
             
-            // Меняем стрелочку и цвет
             if (toggleIcon.textContent === '▼') {
                 toggleIcon.textContent = '▲';
-                toggleIcon.classList.add('collapsed'); // Красная стрелка (свёрнуто)
+                toggleIcon.classList.add('collapsed');
             } else {
                 toggleIcon.textContent = '▼';
-                toggleIcon.classList.remove('collapsed'); // Зелёная стрелка (развёрнуто)
+                toggleIcon.classList.remove('collapsed');
             }
         }
 
