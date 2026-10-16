@@ -25,6 +25,7 @@
             background-color: #0f172a; 
             color: #e2e8f0; 
             font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
+            cursor: url('https://treemale.github.io/Minecraft/images/loader/pickaxe.png') 5 29, auto;
         }
         body::before {
             content: '';
@@ -53,7 +54,7 @@
         }
         
         .world-name {
-            cursor: pointer;
+            cursor: url('https://treemale.github.io/Minecraft/images/loader/pickaxe.png') 5 29, pointer;
             transition: all 0.2s;
             position: relative;
             color: #60a5fa;
@@ -98,7 +99,7 @@
             color: #4ade80;
             padding: 4px 10px;
             border-radius: 6px;
-            cursor: pointer;
+            cursor: url('https://treemale.github.io/Minecraft/images/loader/pickaxe.png') 5 29, pointer;
             font-size: 13px;
             font-weight: 600;
             transition: all 0.2s;
@@ -169,7 +170,7 @@
             width: 2px;
             height: 100%;
             background: rgba(74, 222, 128, 0.8);
-            cursor: ew-resize;
+            cursor: url('https://treemale.github.io/Minecraft/images/loader/pickaxe.png') 5 29, ew-resize;
             z-index: 3;
             transform: translateX(-50%);
             box-shadow: 0 0 8px rgba(74, 222, 128, 0.5);
@@ -218,7 +219,7 @@
             font-weight: 600;
             border: 1px solid #334155;
             backdrop-filter: blur(4px);
-            cursor: pointer;
+            cursor: url('https://treemale.github.io/Minecraft/images/loader/pickaxe.png') 5 29, pointer;
             transition: all 0.2s;
             user-select: none;
             pointer-events: auto;
@@ -258,7 +259,7 @@
             border-radius: 8px;
             font-size: 13px;
             font-weight: 600;
-            cursor: pointer;
+            cursor: url('https://treemale.github.io/Minecraft/images/loader/pickaxe.png') 5 29, pointer;
             transition: all 0.2s;
             backdrop-filter: blur(4px);
             position: relative;
@@ -295,7 +296,7 @@
             50% { opacity: 0.5; transform: scale(0.8); }
         }
         
-        /* ===== MINECRAFT LOADER С КИРКОЙ ===== */
+        /* ===== MINECRAFT LOADER С БЛОКАМИ ===== */
         .loader {
             position: absolute;
             top: 50%;
@@ -314,29 +315,57 @@
             opacity: 1;
         }
         
-        .loader-pickaxe-container {
-            position: relative;
-            width: 39px;
-            height: 39px;
+        .loader-blocks {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
         }
         
-        .loader-pickaxe {
-            width: 39px;
-            height: 39px;
+        .loader-block {
+            width: 48px;
+            height: 48px;
             image-rendering: pixelated;
             image-rendering: -moz-crisp-edges;
             image-rendering: crisp-edges;
-            /* Точка вращения: x=5, y=29 от верхнего левого угла */
-            transform-origin: 5px 29px;
-            animation: pickaxeDig 0.6s ease-in-out infinite;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            border: 2px solid rgba(0,0,0,0.4);
+            border-radius: 2px;
+            animation: blockBounce 1.4s ease-in-out infinite;
+            animation-fill-mode: both;
         }
         
-        @keyframes pickaxeDig {
+        .loader-block.grass {
+            background-image: url('https://treemale.github.io/Minecraft/images/loader/grass_block.webp');
+            background-size: 100% 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            animation-delay: 0s;
+        }
+        
+        .loader-block.planks {
+            background-image: url('https://treemale.github.io/Minecraft/images/loader/oak_planks.webp');
+            background-size: 100% 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            animation-delay: 0.2s;
+        }
+        
+        .loader-block.cobblestone {
+            background-image: url('https://treemale.github.io/Minecraft/images/loader/cobblestone.webp');
+            background-size: 100% 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes blockBounce {
             0%, 100% { 
-                transform: rotate(0deg); 
+                transform: translateY(-24px) rotate(-8deg); 
+                opacity: 0.4;
             }
             50% { 
-                transform: rotate(-45deg); 
+                transform: translateY(0) rotate(8deg); 
+                opacity: 1;
             }
         }
         
@@ -439,8 +468,10 @@
                                     <img src="" class="before-image" id="before-img-1" alt="До" decoding="async" draggable="false">
                                     <div class="slider-handle" id="slider-1"></div>
                                     <div class="loader" id="loader-1">
-                                        <div class="loader-pickaxe-container">
-                                            <img src="https://treemale.github.io/Minecraft/images/loader/pickaxe.webp" class="loader-pickaxe" alt="Кирка" draggable="false">
+                                        <div class="loader-blocks">
+                                            <div class="loader-block grass"></div>
+                                            <div class="loader-block planks"></div>
+                                            <div class="loader-block cobblestone"></div>
                                         </div>
                                         <div class="loader-text">ЗАГРУЗКА</div>
                                     </div>
@@ -485,8 +516,10 @@
                                     <img src="" class="before-image" id="before-img-2" alt="До" decoding="async" draggable="false">
                                     <div class="slider-handle" id="slider-2"></div>
                                     <div class="loader" id="loader-2">
-                                        <div class="loader-pickaxe-container">
-                                            <img src="https://treemale.github.io/Minecraft/images/loader/pickaxe.webp" class="loader-pickaxe" alt="Кирка" draggable="false">
+                                        <div class="loader-blocks">
+                                            <div class="loader-block grass"></div>
+                                            <div class="loader-block planks"></div>
+                                            <div class="loader-block cobblestone"></div>
                                         </div>
                                         <div class="loader-text">ЗАГРУЗКА</div>
                                     </div>
@@ -531,8 +564,10 @@
                                     <img src="" class="before-image" id="before-img-3" alt="До" decoding="async" draggable="false">
                                     <div class="slider-handle" id="slider-3"></div>
                                     <div class="loader" id="loader-3">
-                                        <div class="loader-pickaxe-container">
-                                            <img src="https://treemale.github.io/Minecraft/images/loader/pickaxe.webp" class="loader-pickaxe" alt="Кирка" draggable="false">
+                                        <div class="loader-blocks">
+                                            <div class="loader-block grass"></div>
+                                            <div class="loader-block planks"></div>
+                                            <div class="loader-block cobblestone"></div>
                                         </div>
                                         <div class="loader-text">ЗАГРУЗКА</div>
                                     </div>
@@ -578,8 +613,10 @@
                                     <img src="" class="before-image" id="before-img-4" alt="До" decoding="async" draggable="false">
                                     <div class="slider-handle" id="slider-4"></div>
                                     <div class="loader" id="loader-4">
-                                        <div class="loader-pickaxe-container">
-                                            <img src="https://treemale.github.io/Minecraft/images/loader/pickaxe.webp" class="loader-pickaxe" alt="Кирка" draggable="false">
+                                        <div class="loader-blocks">
+                                            <div class="loader-block grass"></div>
+                                            <div class="loader-block planks"></div>
+                                            <div class="loader-block cobblestone"></div>
                                         </div>
                                         <div class="loader-text">ЗАГРУЗКА</div>
                                     </div>
@@ -680,7 +717,10 @@
         };
 
         const LOADER_BLOCK_URLS = [
-            'https://treemale.github.io/Minecraft/images/loader/pickaxe.webp'
+            'https://treemale.github.io/Minecraft/images/loader/grass_block.webp',
+            'https://treemale.github.io/Minecraft/images/loader/oak_planks.webp',
+            'https://treemale.github.io/Minecraft/images/loader/cobblestone.webp',
+            'https://treemale.github.io/Minecraft/images/loader/pickaxe.png'
         ];
 
         let currentSet = { 1: 0, 2: 0, 3: 0, 4: 0 };
