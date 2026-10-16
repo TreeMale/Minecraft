@@ -21,52 +21,11 @@
             font-display: swap;
         }
 
-        /* ===== КАСТОМНЫЙ КУРСОР-КИРКА 26x26 ===== */
-        #custom-cursor {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 26px;
-            height: 26px;
-            background-image: url('https://treemale.github.io/Minecraft/images/cursor/diamond_pickaxe.webp');
-            background-size: contain;
-            background-repeat: no-repeat;
-            pointer-events: none;
-            z-index: 99999;
-            /* Только пиксельная чёткость, без отражения и увеличения */
-            image-rendering: pixelated;
-            image-rendering: -moz-crisp-edges;
-            image-rendering: crisp-edges;
-        }
-
-        /* Скрываем стандартный курсор на всём сайте */
-        * {
-            cursor: none !important;
-        }
-
         body { 
             background-color: #0f172a; 
             color: #e2e8f0; 
             font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
-            max-width: 1400px;
-            margin: 0 auto;
         }
-
-        /* ===== ФОНОВАЯ КАРТИНКА ===== */
-        .custom-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            background-image: url('https://i.pinimg.com/736x/f1/44/59/f14459468f9f65e46c6cbdd10f8796c5.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }
-
         body::before {
             content: '';
             position: fixed;
@@ -75,26 +34,6 @@
             background: rgba(15, 23, 42, 0.85);
             z-index: -1;
         }
-
-        .gradient-title {
-            font-family: 'MinecraftTitle', 'Minecraft', sans-serif !important;
-            white-space: nowrap;
-            background: linear-gradient(135deg, #4ade80 0%, #3b82f6 50%, #8b5cf6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 40px rgba(74, 222, 128, 0.5);
-            filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.5));
-            animation: gradientShift 5s ease infinite;
-            background-size: 200% 200%;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
         .mc-green { color: #4ade80; }
         .mc-bg { background-color: #22c55e; }
         .pack-bg { background-color: #8b5cf6; }
@@ -104,17 +43,17 @@
             transition: all 0.2s;
             backdrop-filter: blur(10px);
         }
-        .card:hover { transform: translateY(-3px); border-color: #4ade80; box-shadow: 0 4px 12px rgba(74, 222, 128, 0.2); }
-        .card-pack { 
-            background-color: rgba(30, 41, 59, 0.9); 
-            border: 1px solid #334155; 
-            transition: all 0.2s;
-            backdrop-filter: blur(10px);
-        }
-        .card-pack:hover { transform: translateY(-3px); border-color: #8b5cf6; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2); }
+        .card:hover { transform: translateY(-3px); border-color: #4ade80; box-shadow: 0 4px 12px rgba(74, 222, 128, 0.1); }
+        .card-pack:hover { border-color: #8b5cf6; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.1); }
         .progress-bar { background-color: #22c55e; height: 4px; border-radius: 2px; }
         
+        h1 {
+            font-family: 'MinecraftTitle', 'Minecraft', sans-serif !important;
+            white-space: nowrap;
+        }
+        
         .world-name {
+            cursor: pointer;
             transition: all 0.2s;
             position: relative;
             color: #60a5fa;
@@ -159,6 +98,7 @@
             color: #4ade80;
             padding: 4px 10px;
             border-radius: 6px;
+            cursor: pointer;
             font-size: 13px;
             font-weight: 600;
             transition: all 0.2s;
@@ -171,6 +111,7 @@
         }
         .compare-btn.disabled {
             opacity: 0.4;
+            cursor: not-allowed;
             border-color: #64748b;
             color: #64748b;
             background: rgba(100, 116, 139, 0.2);
@@ -228,6 +169,7 @@
             width: 2px;
             height: 100%;
             background: rgba(74, 222, 128, 0.8);
+            cursor: ew-resize;
             z-index: 3;
             transform: translateX(-50%);
             box-shadow: 0 0 8px rgba(74, 222, 128, 0.5);
@@ -276,6 +218,7 @@
             font-weight: 600;
             border: 1px solid #334155;
             backdrop-filter: blur(4px);
+            cursor: pointer;
             transition: all 0.2s;
             user-select: none;
             pointer-events: auto;
@@ -315,6 +258,7 @@
             border-radius: 8px;
             font-size: 13px;
             font-weight: 600;
+            cursor: pointer;
             transition: all 0.2s;
             backdrop-filter: blur(4px);
             position: relative;
@@ -351,6 +295,7 @@
             50% { opacity: 0.5; transform: scale(0.8); }
         }
         
+        /* ===== MINECRAFT LOADER С КИРКОЙ ===== */
         .loader {
             position: absolute;
             top: 50%;
@@ -369,57 +314,29 @@
             opacity: 1;
         }
         
-        .loader-blocks {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
+        .loader-pickaxe-container {
+            position: relative;
+            width: 39px;
+            height: 39px;
         }
         
-        .loader-block {
-            width: 48px;
-            height: 48px;
+        .loader-pickaxe {
+            width: 39px;
+            height: 39px;
             image-rendering: pixelated;
             image-rendering: -moz-crisp-edges;
             image-rendering: crisp-edges;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-            border: 2px solid rgba(0,0,0,0.4);
-            border-radius: 2px;
-            animation: blockBounce 1.4s ease-in-out infinite;
-            animation-fill-mode: both;
+            /* Точка вращения: x=5, y=29 от верхнего левого угла */
+            transform-origin: 5px 29px;
+            animation: pickaxeDig 0.6s ease-in-out infinite;
         }
         
-        .loader-block.grass {
-            background-image: url('https://treemale.github.io/Minecraft/images/loader/grass_block.webp');
-            background-size: 100% 100%;
-            background-position: center;
-            background-repeat: no-repeat;
-            animation-delay: 0s;
-        }
-        
-        .loader-block.planks {
-            background-image: url('https://treemale.github.io/Minecraft/images/loader/oak_planks.webp');
-            background-size: 100% 100%;
-            background-position: center;
-            background-repeat: no-repeat;
-            animation-delay: 0.2s;
-        }
-        
-        .loader-block.cobblestone {
-            background-image: url('https://treemale.github.io/Minecraft/images/loader/cobblestone.webp');
-            background-size: 100% 100%;
-            background-position: center;
-            background-repeat: no-repeat;
-            animation-delay: 0.4s;
-        }
-        
-        @keyframes blockBounce {
+        @keyframes pickaxeDig {
             0%, 100% { 
-                transform: translateY(-24px) rotate(-8deg); 
-                opacity: 0.4;
+                transform: rotate(0deg); 
             }
             50% { 
-                transform: translateY(0) rotate(8deg); 
-                opacity: 1;
+                transform: rotate(-45deg); 
             }
         }
         
@@ -450,6 +367,7 @@
             100% { content: ''; }
         }
 
+        /* Таблица — без горизонтального скролла */
         .table-container {
             overflow-x: visible;
         }
@@ -457,66 +375,20 @@
             width: 100%;
             table-layout: auto;
         }
-        .table-container th,
-        .table-container td {
-            text-align: center !important;
-            vertical-align: middle !important;
-        }
-
         th {
             white-space: nowrap;
         }
-
         td:nth-child(3) {
             white-space: nowrap;
         }
-
         td:nth-child(5) {
             white-space: nowrap;
         }
-
-        td:nth-child(6) {
-            white-space: nowrap;
-        }
-
-        .progress-container {
-            min-width: 150px;
-            background-color: #334155;
-            border-radius: 9999px;
-            height: 4px;
-        }
-
-        .section-header {
-            transition: all 0.2s;
-            user-select: none;
-        }
-        .section-header:hover {
-            transform: scale(1.02);
-            opacity: 0.9;
-        }
-        .toggle-icon {
-            display: inline-block;
-            margin-left: 8px;
-            transition: all 0.2s ease;
-            color: #4ade80;
-        }
-        .toggle-icon.collapsed {
-            color: #ef4444;
-        }
     </style>
 </head>
-<body class="p-4 md:p-8 mx-auto">
-
-    <!-- Кастомный курсор-кирка -->
-    <div id="custom-cursor"></div>
-
-    <!-- Фоновая картинка -->
-    <div class="custom-bg"></div>
-
+<body class="p-4 md:p-8 max-w-7xl mx-auto">
     <header class="text-center mb-12">
-        <div class="flex justify-center">
-            <h1 class="text-4xl md:text-5xl gradient-title mb-3">МАЙНКРАФТ ВАЙБИК | ДОП. ДОСТИЖЕНИЯ</h1>
-        </div>
+        <h1 class="text-4xl md:text-5xl font-bold mc-green mb-3">МАЙНКРАФТ ВАЙБИК | ДОП. ДОСТИЖЕНИЯ</h1>
         <p class="text-slate-400 text-lg">История забегов, смертей и список используемых модификаций</p>
     </header>
 
@@ -530,35 +402,34 @@
             <table class="w-full text-center border-collapse text-sm">
                 <thead class="bg-slate-800 text-slate-300">
                     <tr>
-                        <th class="p-3 text-center align-middle">#</th>
-                        <th class="p-3 text-center align-middle">🌍 Мир</th>
-                        <th class="p-3 text-center align-middle">❤️ Прожито</th>
-                        <th class="p-3 text-center align-middle">🏆 Достижения</th>
-                        <th class="p-3 text-center align-middle">❓ Причина смерти</th>
-                        <th class="p-3 text-center align-middle"> Описание ситуации</th>
-                        <th class="p-3 text-center align-middle">🎞️ Видео</th>
+                        <th class="p-3">#</th>
+                        <th class="p-3">🌍 Мир</th>
+                        <th class="p-3">❤️ Прожито</th>
+                        <th class="p-3">🏆 Достижения</th>
+                        <th class="p-3">❓ Причина смерти</th>
+                        <th class="p-3">❗ Описание ситуации</th>
+                        <th class="p-3">🎞️ Видео</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-800 bg-slate-900/50">
 
+                    <!-- МИР 1 -->
                     <tr class="hover:bg-slate-800/50 transition">
-                        <td class="p-3 font-bold mc-green text-center align-middle">1</td>
-                        <td class="p-3 text-center align-middle">
-                            <div class="flex flex-col items-center gap-1">
-                                <span class="world-name" data-seed="1234567890" onclick="copySeed(this)">#мирвайба1</span>
-                                <button class="compare-btn" onclick="toggleComparison(1)">Картинки</button>
-                            </div>
+                        <td class="p-3 font-bold mc-green">1</td>
+                        <td class="p-3">
+                            <span class="world-name" data-seed="1234567890" onclick="copySeed(this)">#мирвайба1</span>
+                            <button class="compare-btn" onclick="toggleComparison(1)">Картинки</button>
                         </td>
-                        <td class="p-3 text-center align-middle">4 ч. 36 мин.</td>
-                        <td class="p-3 text-center align-middle">
+                        <td class="p-3">4 ч. 36 мин.</td>
+                        <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span>61 (4,8%)</span>
-                                <div class="progress-container"><div class="progress-bar" style="width: 4.8%"></div></div>
+                                <div class="w-full bg-slate-700 rounded-full h-1"><div class="progress-bar" style="width: 4.8%"></div></div>
                             </div>
                         </td>
-                        <td class="p-3 text-red-400 font-semibold text-center align-middle">ЭНДЕРМЕН</td>
-                        <td class="p-3 text-slate-300 text-center align-middle">Пошёл искать шахту ночью, а там оно...</td>
-                        <td class="p-3 text-slate-500 text-center align-middle">-</td>
+                        <td class="p-3 text-red-400 font-semibold">ЭНДЕРМЕН</td>
+                        <td class="p-3 text-slate-300">Пошёл искать шахту ночью, а там оно...</td>
+                        <td class="p-3 text-slate-500">-</td>
                     </tr>
                     <tr id="comp-row-1" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
@@ -568,10 +439,8 @@
                                     <img src="" class="before-image" id="before-img-1" alt="До" decoding="async" draggable="false">
                                     <div class="slider-handle" id="slider-1"></div>
                                     <div class="loader" id="loader-1">
-                                        <div class="loader-blocks">
-                                            <div class="loader-block grass"></div>
-                                            <div class="loader-block planks"></div>
-                                            <div class="loader-block cobblestone"></div>
+                                        <div class="loader-pickaxe-container">
+                                            <img src="https://treemale.github.io/Minecraft/images/loader/pickaxe.webp" class="loader-pickaxe" alt="Кирка" draggable="false">
                                         </div>
                                         <div class="loader-text">ЗАГРУЗКА</div>
                                     </div>
@@ -590,24 +459,23 @@
                         </td>
                     </tr>
 
+                    <!-- МИР 2 -->
                     <tr class="hover:bg-slate-800/50 transition">
-                        <td class="p-3 font-bold mc-green text-center align-middle">2</td>
-                        <td class="p-3 text-center align-middle">
-                            <div class="flex flex-col items-center gap-1">
-                                <span class="world-name" data-seed="9876543210" onclick="copySeed(this)">#мирвайба2</span>
-                                <button class="compare-btn" onclick="toggleComparison(2)">Картинки</button>
-                            </div>
+                        <td class="p-3 font-bold mc-green">2</td>
+                        <td class="p-3">
+                            <span class="world-name" data-seed="9876543210" onclick="copySeed(this)">#мирвайба2</span>
+                            <button class="compare-btn" onclick="toggleComparison(2)">Картинки</button>
                         </td>
-                        <td class="p-3 text-center align-middle">14 ч. 9 мин.</td>
-                        <td class="p-3 text-center align-middle">
+                        <td class="p-3">14 ч. 9 мин.</td>
+                        <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span>178 (14,1%)</span>
-                                <div class="progress-container"><div class="progress-bar" style="width: 14.1%"></div></div>
+                                <div class="w-full bg-slate-700 rounded-full h-1"><div class="progress-bar" style="width: 14.1%"></div></div>
                             </div>
                         </td>
-                        <td class="p-3 text-red-400 font-semibold text-center align-middle">КРИПЕР</td>
-                        <td class="p-3 text-slate-300 text-center align-middle">Взорвал со спины пока рубил дерево, щит не спас.</td>
-                        <td class="p-3 text-slate-500 text-center align-middle">-</td>
+                        <td class="p-3 text-red-400 font-semibold">КРИПЕР</td>
+                        <td class="p-3 text-slate-300">Взорвал со спины пока рубил дерево, щит не спас.</td>
+                        <td class="p-3 text-slate-500">-</td>
                     </tr>
                     <tr id="comp-row-2" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
@@ -617,10 +485,8 @@
                                     <img src="" class="before-image" id="before-img-2" alt="До" decoding="async" draggable="false">
                                     <div class="slider-handle" id="slider-2"></div>
                                     <div class="loader" id="loader-2">
-                                        <div class="loader-blocks">
-                                            <div class="loader-block grass"></div>
-                                            <div class="loader-block planks"></div>
-                                            <div class="loader-block cobblestone"></div>
+                                        <div class="loader-pickaxe-container">
+                                            <img src="https://treemale.github.io/Minecraft/images/loader/pickaxe.webp" class="loader-pickaxe" alt="Кирка" draggable="false">
                                         </div>
                                         <div class="loader-text">ЗАГРУЗКА</div>
                                     </div>
@@ -639,24 +505,23 @@
                         </td>
                     </tr>
 
+                    <!-- МИР 3 -->
                     <tr class="hover:bg-slate-800/50 transition">
-                        <td class="p-3 font-bold mc-green text-center align-middle">3</td>
-                        <td class="p-3 text-center align-middle">
-                            <div class="flex flex-col items-center gap-1">
-                                <span class="world-name" data-seed="1122334455" onclick="copySeed(this)">#мирвайба3</span>
-                                <button class="compare-btn" onclick="toggleComparison(3)">Картинки</button>
-                            </div>
+                        <td class="p-3 font-bold mc-green">3</td>
+                        <td class="p-3">
+                            <span class="world-name" data-seed="1122334455" onclick="copySeed(this)">#мирвайба3</span>
+                            <button class="compare-btn" onclick="toggleComparison(3)">Картинки</button>
                         </td>
-                        <td class="p-3 text-center align-middle">19 ч. 55 мин.</td>
-                        <td class="p-3 text-center align-middle">
+                        <td class="p-3">19 ч. 55 мин.</td>
+                        <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span>284 (22,5%)</span>
-                                <div class="progress-container"><div class="progress-bar" style="width: 22.5%"></div></div>
+                                <div class="w-full bg-slate-700 rounded-full h-1"><div class="progress-bar" style="width: 22.5%"></div></div>
                             </div>
                         </td>
-                        <td class="p-3 text-red-400 font-semibold text-center align-middle">ПУСТОТА</td>
-                        <td class="p-3 text-slate-300 text-center align-middle">Настраивал моды, включил читы и упал сквозь мир, ануак.</td>
-                        <td class="p-3 text-slate-500 text-center align-middle">-</td>
+                        <td class="p-3 text-red-400 font-semibold">ПУСТОТА</td>
+                        <td class="p-3 text-slate-300">Настраивал моды, включил читы и упал сквозь мир, ануак.</td>
+                        <td class="p-3 text-slate-500">-</td>
                     </tr>
                     <tr id="comp-row-3" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
@@ -666,10 +531,8 @@
                                     <img src="" class="before-image" id="before-img-3" alt="До" decoding="async" draggable="false">
                                     <div class="slider-handle" id="slider-3"></div>
                                     <div class="loader" id="loader-3">
-                                        <div class="loader-blocks">
-                                            <div class="loader-block grass"></div>
-                                            <div class="loader-block planks"></div>
-                                            <div class="loader-block cobblestone"></div>
+                                        <div class="loader-pickaxe-container">
+                                            <img src="https://treemale.github.io/Minecraft/images/loader/pickaxe.webp" class="loader-pickaxe" alt="Кирка" draggable="false">
                                         </div>
                                         <div class="loader-text">ЗАГРУЗКА</div>
                                     </div>
@@ -689,24 +552,23 @@
                         </td>
                     </tr>
 
+                    <!-- МИР 4 -->
                     <tr class="hover:bg-slate-800/50 transition">
-                        <td class="p-3 font-bold mc-green text-center align-middle">4</td>
-                        <td class="p-3 text-center align-middle">
-                            <div class="flex flex-col items-center gap-1">
-                                <span class="world-name" data-seed="5566778899" onclick="copySeed(this)">#мирвайба4</span>
-                                <button class="compare-btn" onclick="toggleComparison(4)">Картинки</button>
-                            </div>
+                        <td class="p-3 font-bold mc-green">4</td>
+                        <td class="p-3">
+                            <span class="world-name" data-seed="5566778899" onclick="copySeed(this)">#мирвайба4</span>
+                            <button class="compare-btn" onclick="toggleComparison(4)">Картинки</button>
                         </td>
-                        <td class="p-3 text-center align-middle">16 ч. 5 мин.</td>
-                        <td class="p-3 text-center align-middle">
+                        <td class="p-3">16 ч. 5 мин.</td>
+                        <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span>196 (15,5%)</span>
-                                <div class="progress-container"><div class="progress-bar" style="width: 15.5%"></div></div>
+                                <div class="w-full bg-slate-700 rounded-full h-1"><div class="progress-bar" style="width: 15.5%"></div></div>
                             </div>
                         </td>
-                        <td class="p-3 text-red-400 font-semibold text-center align-middle">ЗОМБИ-ЖИТЕЛЬ</td>
-                        <td class="p-3 text-slate-300 text-center align-middle">Зашел в иглу, исцелить зомби-жителя, но он отказал.</td>
-                        <td class="p-3 text-center align-middle"><a href="#" class="text-blue-400 hover:underline font-semibold">YouTube</a></td>
+                        <td class="p-3 text-red-400 font-semibold">ЗОМБИ-ЖИТЕЛЬ</td>
+                        <td class="p-3 text-slate-300">Зашел в иглу, исцелить зомби-жителя, но он отказал.</td>
+                        <td class="p-3"><a href="#" class="text-blue-400 hover:underline font-semibold">YouTube</a></td>
                     </tr>
                     <tr id="comp-row-4" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
@@ -716,10 +578,8 @@
                                     <img src="" class="before-image" id="before-img-4" alt="До" decoding="async" draggable="false">
                                     <div class="slider-handle" id="slider-4"></div>
                                     <div class="loader" id="loader-4">
-                                        <div class="loader-blocks">
-                                            <div class="loader-block grass"></div>
-                                            <div class="loader-block planks"></div>
-                                            <div class="loader-block cobblestone"></div>
+                                        <div class="loader-pickaxe-container">
+                                            <img src="https://treemale.github.io/Minecraft/images/loader/pickaxe.webp" class="loader-pickaxe" alt="Кирка" draggable="false">
                                         </div>
                                         <div class="loader-text">ЗАГРУЗКА</div>
                                     </div>
@@ -738,24 +598,23 @@
                         </td>
                     </tr>
 
+                    <!-- МИР 5 -->
                     <tr class="hover:bg-slate-800/50 transition">
-                        <td class="p-3 font-bold mc-green text-center align-middle">5</td>
-                        <td class="p-3 text-center align-middle">
-                            <div class="flex flex-col items-center gap-1">
-                                <span class="world-name" data-seed="1010101010" onclick="copySeed(this)">#мирвайба5</span>
-                                <button class="compare-btn disabled" disabled title="Картинки пока не добавлены">Картинки</button>
-                            </div>
+                        <td class="p-3 font-bold mc-green">5</td>
+                        <td class="p-3">
+                            <span class="world-name" data-seed="1010101010" onclick="copySeed(this)">#мирвайба5</span>
+                            <button class="compare-btn disabled" disabled title="Картинки пока не добавлены">Картинки</button>
                         </td>
-                        <td class="p-3 text-center align-middle">5 ч. 47 мин.</td>
-                        <td class="p-3 text-center align-middle">
+                        <td class="p-3">5 ч. 47 мин.</td>
+                        <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span>136 (10,8%)</span>
-                                <div class="progress-container"><div class="progress-bar" style="width: 10.8%"></div></div>
+                                <div class="w-full bg-slate-700 rounded-full h-1"><div class="progress-bar" style="width: 10.8%"></div></div>
                             </div>
                         </td>
-                        <td class="p-3 text-slate-500 text-center align-middle">-</td>
-                        <td class="p-3 text-slate-500 text-center align-middle">-</td>
-                        <td class="p-3 text-slate-500 text-center align-middle">-</td>
+                        <td class="p-3 text-slate-500">-</td>
+                        <td class="p-3 text-slate-500">-</td>
+                        <td class="p-3 text-slate-500">-</td>
                     </tr>
                     <tr id="comp-row-5" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
@@ -780,36 +639,17 @@
 
     <section class="mb-16">
         <div class="flex flex-wrap items-end justify-center gap-8 mb-6 border-b border-slate-700 pb-2">
-            <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleSection('mods')">
+            <h2 class="text-2xl font-bold flex items-center gap-2">
                 <span>&#x1F9E9;</span> Моды (<span id="mod-count" class="mc-green text-lg"></span>)
-                <span class="toggle-icon" id="mods-toggle">▼</span>
             </h2>
-            <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleSection('packs')">
+            <h2 class="text-2xl font-bold flex items-center gap-2">
                 <span>&#x1F4E6;</span> Ресурс-паки (<span id="pack-count" class="text-purple-400 text-lg"></span>)
-                <span class="toggle-icon" id="packs-toggle">▼</span>
             </h2>
         </div>
-        <div id="all-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
+        <div id="all-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
     </section>
 
     <script>
-        // ===== КАСТОМНЫЙ КУРСОР =====
-        const customCursor = document.getElementById('custom-cursor');
-        
-        document.addEventListener('mousemove', (e) => {
-            // Остриё кирки находится на X=3, Y=20 (в исходных 26×26 пикселях)
-            // Без отражения и увеличения — смещение равно координатам острия
-            customCursor.style.left = (e.clientX - 3) + 'px';
-            customCursor.style.top = (e.clientY - 20) + 'px';
-        });
-
-        document.addEventListener('mouseleave', () => {
-            customCursor.style.display = 'none';
-        });
-        document.addEventListener('mouseenter', () => {
-            customCursor.style.display = 'block';
-        });
-
         const world1ImageSets = {
             1: { before: 'https://treemale.github.io/Minecraft/images/world/1/1_1-0_75.5-95--170.5-141-23.8.webp', after: 'https://treemale.github.io/Minecraft/images/world/1/1_1-1_75.5-95--170.5-141-23.8.webp' },
             2: { before: 'https://treemale.github.io/Minecraft/images/world/1/1_2-0_137.5-76--148.5--82.5-41.7.webp', after: 'https://treemale.github.io/Minecraft/images/world/1/1_2-1_137.5-76--148.5--82.5-41.7.webp' },
@@ -840,9 +680,7 @@
         };
 
         const LOADER_BLOCK_URLS = [
-            'https://treemale.github.io/Minecraft/images/loader/grass_block.webp',
-            'https://treemale.github.io/Minecraft/images/loader/oak_planks.webp',
-            'https://treemale.github.io/Minecraft/images/loader/cobblestone.webp'
+            'https://treemale.github.io/Minecraft/images/loader/pickaxe.webp'
         ];
 
         let currentSet = { 1: 0, 2: 0, 3: 0, 4: 0 };
@@ -947,12 +785,6 @@
             
             if (loader) {
                 loader.classList.add('visible');
-                const blocks = loader.querySelectorAll('.loader-block');
-                blocks.forEach(block => {
-                    block.style.animation = 'none';
-                    block.offsetHeight;
-                    block.style.animation = '';
-                });
             }
             beforeImg.classList.remove('loaded');
             afterImg.classList.remove('loaded');
@@ -1054,98 +886,75 @@
             }
         }
 
-        function toggleSection(section) {
-            const grid = document.getElementById('all-grid');
-            const toggleIcon = document.getElementById(section + '-toggle');
-            const cards = grid.children;
-            
-            for (let card of cards) {
-                if (section === 'mods' && card.classList.contains('card') && !card.classList.contains('card-pack')) {
-                    card.classList.toggle('hidden');
-                } else if (section === 'packs' && card.classList.contains('card-pack')) {
-                    card.classList.toggle('hidden');
-                }
-            }
-            
-            if (toggleIcon.textContent === '▼') {
-                toggleIcon.textContent = '▲';
-                toggleIcon.classList.add('collapsed');
-            } else {
-                toggleIcon.textContent = '▼';
-                toggleIcon.classList.remove('collapsed');
-            }
-        }
-
         const mods = [
-            {n: "Animated Mojang Logo", d: "Заменяет старый скучный экран загрузки Minecraft на приятную анимацию.", url: "https://modrinth.com/mod/animated-mojang-logo"},
-            {n: "Visual Health", d: "Добавляет наглядные визуальные повреждения (раны и синяки) на модели существ.", url: "https://modrinth.com/mod/visualhealth"},
-            {n: "Vanilla Outsider Bed Chat Hider", d: "Отключает автоматический фокус чата во время сна.", url: "https://www.curseforge.com/minecraft/mc-mods/vo-bed-chat-hider"},
-            {n: "Uku's Armor HUD", d: "Добавляет виджет HUD, отображающий текущий набор предметов брони.", url: "https://modrinth.com/mod/ukus-armor-hud"},
-            {n: "Swinging Lanterns", d: "Добавляет анимацию движения фонарей от ветра.", url: "https://modrinth.com/mod/surface-particles"},
-            {n: "Surface Particles", d: "Делает частицы блоков при взаимодействии текстурированными в соответствии с тем, что вы видите.", url: "https://modrinth.com/mod/surface-particles"},
-            {n: "Status Effect Bars", d: "Добавляет полосы наложения эффектов состояния, отображающие оставшееся время действия.", url: "https://modrinth.com/mod/status-effect-bars"},
-            {n: "Sound Physics Remastered", d: "Обеспечивает реалистичное затухание, реверберацию и поглощение звука блоками.", url: "https://modrinth.com/mod/sound-physics-remastered"},
-            {n: "Smooth Swapping", d: "Плавная анимация при перекладывании предметов.", url: "https://modrinth.com/mod/smooth-swapping"},
-            {n: "Smooth Scrolling", d: "Плавная анимация при пролистывании графического интерфейса.", url: "https://modrinth.com/mod/smooth-scroll"},
-            {n: "Smooth GUI", d: "Плавная анимация при открытии графического интерфейса.", url: "https://modrinth.com/mod/smooth-gui"},
-            {n: "Skin Layers 3D", d: "Отображает слой скина игрока в 3D.", url: "https://modrinth.com/mod/3dskinlayers"},
-            {n: "Real Arrow Tip", d: "Исправляет визуальное отображение стрел, заставляя лук и арбалет показывать правильный наконечник.", url: "https://modrinth.com/mod/real-arrow-tip"},
-            {n: "Pickup Notifications", d: "Показывает всплывающие уведомления при получении предметов.", url: "https://modrinth.com/mod/pickup-notifications"},
-            {n: "Particle Effects", d: "Добавляет уникальные текстурированные частицы для каждого эффекта зелий.", url: "https://modrinth.com/mod/particle-effects"},
-            {n: "No More Pop-ups", d: "Удаляет все встроенные уведомления в Minecraft (предупреждения, рецепты крафта и советы).", url: "https://modrinth.com/mod/no-more-popups"},
-            {n: "My Totem Doll", d: "Заменяет стандартные тотемы на 2D или 3D тотемы со скином игрока.", url: "https://modrinth.com/mod/my_totem_doll"},
-            {n: "Modern Advancements", d: "Увеличивает окно достижений, считает прогресс и позволяет закреплять достижения как цели на экране.", url: "https://www.curseforge.com/minecraft/mc-mods/modern-advancements"},
-            {n: "Mod Menu", d: "Добавляет удобный GUI интерфейс для просмотра и управления всеми установленными в игре модами.", url: "https://modrinth.com/mod/modmenu"},
-            {n: "Lambda Better Grass", d: "Добавляет в игру улучшенную траву и снег при их переходе.", url: "https://modrinth.com/mod/lambdabettergrass"},
-            {n: "Item Drops", d: "Изменяет внешний вид анимации выпадающих предметов и блоков (лежат на земле).", url: "https://modrinth.com/mod/item-drops"},
-            {n: "Inventory Particles", d: "Красивые эффекты для предметов вашего инвентаря при перемещении.", url: "https://modrinth.com/mod/inventory-particles"},
-            {n: "Improved Weather", d: "Улучшает погоду и добавляет новые погодные условия.", url: "https://modrinth.com/mod/improved-weather"},
-            {n: "Imprint", d: "Добавляет частицы следов на земле от шагов игроков и мобов.", url: "https://modrinth.com/mod/imprint"},
-            {n: "Immersive Hotbar", d: "Добавляет анимацию к панели быстрого доступа.", url: "https://modrinth.com/mod/immersive-hotbar"},
-            {n: "Hover Items", d: "Добавляет небольшую анимацию при наведении курсора на элементы.", url: "https://modrinth.com/mod/hover-items"},
-            {n: "Held Item Info", d: "Отображает информацию (например, о зачарованиях) об удерживаемом предмете под его названием.", url: "https://modrinth.com/mod/held-item-info"},
-            {n: "Fancy Toasts", d: "Добавляет функционал позволяющий изменить анимацию и звуки у выполненных достижений, испытаний и целей.", url: "https://modrinth.com/mod/fancy-toasts"},
-            {n: "Fancy Block Particles Reforged", d: "Изменяет эффекты частиц для разрушающихся блоков (3D-частицы).", url: "https://www.curseforge.com/minecraft/mc-mods/fancy-block-particles-reforged"},
-            {n: "Falling Leaves", d: "Добавляет эффект падающих листьев из блоков листвы.", url: "https://modrinth.com/mod/fallingleaves"},
-            {n: "Durability Tooltip", d: "Добавляет цифровой показатель прочности для всех инструментов, брони и оружия.", url: "https://modrinth.com/mod/durability-tooltip"},
-            {n: "Dark Loading Screen", d: "Делает экран загрузки Mojang темнее.", url: "https://modrinth.com/mod/dark-loading-screen"},
-            {n: "Cursors Extended", d: "Меняет стандартный курсор на стилизованный под игру.", url: "https://modrinth.com/mod/minecraft-cursor"},
-            {n: "Chat Signing Hider", d: "Скрывает все, что связано с подписыванием чата (уведомления в углу).", url: "https://modrinth.com/mod/chat-signing-hider"},
-            {n: "Blur+", d: "Оживляет скучный стандартный эффект размытия с помощью анимации.", url: "https://modrinth.com/mod/blur-plus"},
-            {n: "Better Statistics Screen", d: "Заменяет стандартный экран статистики игры, делает его более наглядным, понятным и простым.", url: "https://modrinth.com/mod/better-stats"},
-            {n: "Apple Skin", d: "Добавляет полезную информацию о еде/голоде в интерфейс пользователя (отображает уровень насыщения).", url: "https://modrinth.com/mod/appleskin"},
-            {n: "Concurrent Chunk Management Engine", d: "Набор функций для улучшения производительности прогрузки чанков в Minecraft.", url: "https://modrinth.com/mod/c2me-fabric"},
-            {n: "Smart Particles", d: "Оптимизация производительности, которая улучшает отрисовку частиц и настраивает их лимиты.", url: "https://modrinth.com/mod/smart-particles"},
-            {n: "TCD Commons API", d: "Библиотека API для моддинга Minecraft, которая включает в себя собственную систему GUI.", url: "https://modrinth.com/mod/tcdcommons"},
-            {n: "Sodium", d: "Высокопроизводительная замена движка рендеринга для Minecraft, которая повышает частоту кадров.", url: "https://modrinth.com/mod/sodium"},
-            {n: "Entity Culling", d: "Повышает производительность, позволяя не прогружать невидимые игроку объекты в игре.", url: "https://modrinth.com/mod/entityculling"},
-            {n: "Cerulean Fork", d: "Набор функций для улучшения производительности игры при работе с достижениями.", url: "https://modrinth.com/mod/cerulean-fork"},
-            {n: "SuperMartijn642's Config Lib", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/supermartijn642s-config-lib"},
-            {n: "Lithium", d: "Набор функций, улучшающий производительность сервера игры.", url: "https://modrinth.com/mod/lithium"},
-            {n: "Iris Shaders", d: "Добавляет поддержку существующих шейдеров в игру.", url: "https://modrinth.com/mod/iris"},
-            {n: "Yet Another Config Lib", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/yacl"},
-            {n: "Ferrite Core", d: "Оптимизация использования оперативной памяти.", url: "https://modrinth.com/mod/ferrite-core"},
-            {n: "Cloth Config API", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/cloth-config"},
-            {n: "Placeholder API", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/plugin/placeholderapi"},
-            {n: "Creative Core", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/creativecore"},
-            {n: "Timeless Lib", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/timelesslib"},
-            {n: "Fabric API", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/fabric-api"},
-            {n: "Collective", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/collective"},
-            {n: "Mossy Lib", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/mossylib"},
-            {n: "Dasik Lib", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/dasik-library"},
-            {n: "Uku Lib", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/ukulib"},
-            {n: "Immediately Fast", d: "Оптимизация рендеринга, повышающая FPS за счёт улучшения отрисовки сущностей и частиц.", url: "https://modrinth.com/mod/immediatelyfast"}
+            {n: "Animated Mojang Logo", d: "Заменяет старый скучный экран загрузки Minecraft на приятную анимацию."},
+            {n: "Visual Health", d: "Добавляет наглядные визуальные повреждения (раны и синяки) на модели существ."},
+            {n: "Vanilla Outsider Bed Chat Hider", d: "Отключает автоматический фокус чата во время сна."},
+            {n: "Uku's Armor HUD", d: "Добавляет виджет HUD, отображающий текущий набор предметов брони."},
+            {n: "Swinging Lanterns", d: "Добавляет анимацию движения фонарей от ветра."},
+            {n: "Surface Particles", d: "Делает частицы блоков при взаимодействии текстурированными в соответствии с тем, что вы видите."},
+            {n: "Status Effect Bars", d: "Добавляет полосы наложение эффектов состояния, отображающие оставшееся время действия."},
+            {n: "Sound Physics Remastered", d: "Обеспечит реалистичное затухание, реверберацию и поглощение звука блоками."},
+            {n: "Smooth Swapping", d: "Плавная анимация при перекладывании предметов."},
+            {n: "Smooth Scrolling", d: "Плавная анимация при пролистывании графического интерфейса."},
+            {n: "Smooth GUI", d: "Плавная анимация при открытии графического интерфейса."},
+            {n: "Skin Layers 3D", d: "Отображает слой скина игрока в 3D."},
+            {n: "Real Arrow Tip", d: "Исправляет визуальное отображение стрел, заставляя лук и арбалет показывать правильный наконечник."},
+            {n: "Pickup Notifications", d: "Показывает всплывающие уведомления при получении предметов."},
+            {n: "Particle Effects", d: "Добавляет уникальные текстурированные частицы для каждого эффекта зелий."},
+            {n: "No More Pop-ups", d: "Удаляет все встроеные уведовления в Minecraft (предупреждения, рецепты крафта и советы)."},
+            {n: "My Totem Doll", d: "Заменяет стандартные тотемы на 2D или 3D тотемы со скином игрока."},
+            {n: "Modern Advancements", d: "Увеличивает окно достижений, считает прогресс и позволяет закреплять достижения как цели на экране."},
+            {n: "Mod Menu", d: "Добавляет удобный GUI интерфейс для просмотра и управления всеми установленными в игре модами."},
+            {n: "Lambda Better Grass", d: "Добавляет в игру улучшенную траву и снег при их переходе."},
+            {n: "Item Drops", d: "Изменяет внешний вид анимации выпадающих предметов и блоков (лежат на земле)."},
+            {n: "Inventory Particles", d: "Красивые эффекты для предметов вашего инвентаря при перемещении."},
+            {n: "Improved Weather", d: "Улучшает погоду и добавляет новые погодные условия."},
+            {n: "Imprint", d: "Добавит частицы следов на земле от шагов игроков и мобов."},
+            {n: "Immersive Hotbar", d: "Добавляет анимацию к панели быстрого доступа."},
+            {n: "Hover Items", d: "Добавляет небольшую анимацию при наведении курсора на элементы."},
+            {n: "Held Item Info", d: "Отображает информацию (например, о зачарованиях) о удерживаемом предмете под его названием."},
+            {n: "Fancy Toasts", d: "Добавляет функционал позволяющий изменить анимацию и звуки у выполненных достижений, испытаний и целей."},
+            {n: "Fancy Block Particles Reforged", d: "Изменяет эффекты частиц для разрушающихся блоков (3D-частицы)."},
+            {n: "Falling Leaves", d: "Добавляет эффект падающих листьев из блоков листвы."},
+            {n: "Durability Tooltip", d: "Добавляет цифровой показатель прочности для всех инструментов, брони и оружия."},
+            {n: "Dark Loading Screen", d: "Делает экран загрузки Mojang темнее."},
+            {n: "Cursors Extended", d: "Меняет стандартный курсор на стилизованый под игру."},
+            {n: "Chat Signing Hider", d: "Скрывает все, что связано с подписыванием чата (уведомления в углу)."},
+            {n: "Blur+", d: "Оживляет скучный стандартный эффект размытия с помощью анимации."},
+            {n: "Better Statistics Screen", d: "Заменяет стандартный экран статистики игры, делает его более наглядным, понятным и простым."},
+            {n: "Apple Skin", d: "Добавляет полезную информацию о еде/голоде в интерфейс пользователя (отображает уровень насыщения)."},
+            {n: "Concurrent Chunk Management Engine", d: "Набор функций для улучшения производительности прогрузки чанков в Minecraft."},
+            {n: "Smart Particles", d: "Оптимизация производительности, которая улучшает отрисовку частиц и настраивает их лимиты."},
+            {n: "TCD Commons API", d: "Библиотека API для моддинга Minecraft, которая включает в себя собственную систему GUI."},
+            {n: "Sodium", d: "Высокопроизводительная замена движка рендеринга для Minecraft, которая повышает частоту кадров."},
+            {n: "Entity Culling", d: "Повышает производительность, позволяя не прогружать не видимые игроку объекты в игре."},
+            {n: "Cerulean Fork", d: "Набор функций для улучшения производительности игры при работе с достижениями."},
+            {n: "SuperMartijn642's Config Lib", d: "Библиотека инструментов для работы модов."},
+            {n: "Lithium", d: "Набор функций, улучшающий производительность сервера игры."},
+            {n: "Iris Shaders", d: "Добавляет поддержку существующих шейдеров в игру."},
+            {n: "Yet Another Config Lib", d: "Библиотека инструментов для работы модов."},
+            {n: "Ferrite Core", d: "Оптимизация использования оперативной памяти."},
+            {n: "Cloth Config API", d: "Библиотека инструментов для работы модов."},
+            {n: "Placeholder API", d: "Библиотека инструментов для работы модов."},
+            {n: "Creative Core", d: "Библиотека инструментов для работы модов."},
+            {n: "Timeless Lib", d: "Библиотека инструментов для работы модов."},
+            {n: "Fabric API", d: "Библиотека инструментов для работы модов."},
+            {n: "Collective", d: "Библиотека инструментов для работы модов."},
+            {n: "Mossy Lib", d: "Библиотека инструментов для работы модов."},
+            {n: "Dasik Lib", d: "Библиотека инструментов для работы модов."},
+            {n: "Uku Lib", d: "Библиотека инструментов для работы модов."}
         ];
 
         const packs = [
-            {n: "BlazeandCave's Advancements Pack", d: "Пак добавляет в игру более 1000 новых достижений различной сложности.", url: "https://www.planetminecraft.com/data-pack/blazeandcave-s-advancements-pack-1-12/"},
-            {n: "BlazeandCave's Advancements Pack Bossbar", d: "Вводит команды и создает полоску прогресса для достижений.", url: "https://www.google.com/"},
-            {n: "BlazeandCave's Advancements Pack Hardcore", d: "Убирает достижения, которые нельзя выполнить без смерти.", url: "https://www.planetminecraft.com/data-pack/blazeandcave-s-advancements-pack-hardcore-version/"},
-            {n: "BlazeandCave's Advancements Pack Language Pack", d: "Переводит описание у достижений на другой язык.", url: "https://www.planetminecraft.com/texture-pack/bacap-language-pack/"},
-            {n: "Better Leaves", d: "Изменяет текстуры листвы, добавляя больше пышности по краям блока.", url: "https://www.curseforge.com/minecraft/texture-packs/motschens-better-leaves"},
-            {n: "Round Trees", d: "Изменяет текстуры блоков древесины, делает их круглыми.", url: "https://www.curseforge.com/minecraft/texture-packs/round-trees-mc-vanilla-1-8-1-13"},
-            {n: "Crops 3D", d: "Добавляет 3D текстуры для всех растений на грядках и грибов.", url: "https://www.curseforge.com/minecraft/texture-packs/crops-3d"},
-            {n: "Tasty Items", d: "Добавляет анимацию при поедании чего-либо.", url: "https://modrinth.com/resourcepack/tasty-items"}
+            {n: "BlazeandCave's Advancements Pack", d: "Пак добавляет в игру более 1000 новых достижений различной сложности."},
+            {n: "BlazeandCave's Advancements Pack Bossbar", d: "Вводит команды и создает полоску прогресса для достижений."},
+            {n: "BlazeandCave's Advancements Pack Hardcore", d: "Убирает достижения, которые нельзя выполнить без смерти."},
+            {n: "BlazeandCave's Advancements Pack Language Pack", d: "Переводит описание у достижений на другой язык."},
+            {n: "Better Leaves", d: "Изменяет текстуры листвы, добавляя больше пышности по краям блока."},
+            {n: "Round Trees", d: "Изменяет текстуры блоков древесины, делает их круглыми."},
+            {n: "Crops 3D", d: "Добавляет 3D текстуры для всех растений на грядках и грибов."},
+            {n: "Tasty Items", d: "Добавляет анимацию при поедании чего-либо."}
         ];
 
         const allGrid = document.getElementById('all-grid');
@@ -1153,11 +962,10 @@
         document.getElementById('pack-count').innerText = packs.length;
 
         mods.forEach(mod => {
-            allGrid.innerHTML += '<div class="card p-4 rounded-lg" onclick="window.open(\'' + mod.url + '\', \'_blank\')" title="Перейти к моду"><h3 class="font-bold text-slate-200 mb-2 flex items-center gap-2 text-sm md:text-base"><span class="w-2 h-2 rounded-full mc-bg flex-shrink-0"></span> ' + mod.n + '</h3><p class="text-xs md:text-sm text-slate-400 leading-relaxed">' + mod.d + '</p></div>';
+            allGrid.innerHTML += '<div class="card p-4 rounded-lg"><h3 class="font-bold text-slate-200 mb-2 flex items-center gap-2 text-sm md:text-base"><span class="w-2 h-2 rounded-full mc-bg flex-shrink-0"></span> ' + mod.n + '</h3><p class="text-xs md:text-sm text-slate-400 leading-relaxed">' + mod.d + '</p></div>';
         });
-        
         packs.forEach(pack => {
-            allGrid.innerHTML += '<div class="card card-pack p-4 rounded-lg" onclick="window.open(\'' + pack.url + '\', \'_blank\')" title="Перейти к паку"><h3 class="font-bold text-slate-200 mb-2 flex items-center gap-2 text-sm md:text-base"><span class="w-2 h-2 rounded-full pack-bg flex-shrink-0"></span> ' + pack.n + '</h3><p class="text-xs md:text-sm text-slate-400 leading-relaxed">' + pack.d + '</p></div>';
+            allGrid.innerHTML += '<div class="card card-pack p-4 rounded-lg"><h3 class="font-bold text-slate-200 mb-2 flex items-center gap-2 text-sm md:text-base"><span class="w-2 h-2 rounded-full pack-bg flex-shrink-0"></span> ' + pack.n + '</h3><p class="text-xs md:text-sm text-slate-400 leading-relaxed">' + pack.d + '</p></div>';
         });
     </script>
 </body>
