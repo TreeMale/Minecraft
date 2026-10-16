@@ -21,23 +21,21 @@
             font-display: swap;
         }
 
-        /* ===== КАСТОМНЫЙ КУРСОР-КИРКА ===== */
+        /* ===== КАСТОМНЫЙ КУРСОР-КИРКА 26x26 ===== */
         #custom-cursor {
             position: fixed;
             top: 0;
             left: 0;
-            width: 48px;  /* 16px × 3 = 48px */
-            height: 48px;
+            width: 26px;
+            height: 26px;
             background-image: url('https://treemale.github.io/Minecraft/images/cursor/diamond_pickaxe.webp');
             background-size: contain;
             background-repeat: no-repeat;
             pointer-events: none;
             z-index: 99999;
-            /* Увеличение в 3 раза + отражение по горизонтали */
-            transform: scale(3) scaleX(-1);
-            /* Точка привязки — остриё кирки (верхний левый угол) */
+            /* Только отражение по горизонтали, без увеличения */
+            transform: scaleX(-1);
             transform-origin: top left;
-            /* Скрываем стандартный курсор */
             image-rendering: pixelated;
             image-rendering: -moz-crisp-edges;
             image-rendering: crisp-edges;
@@ -71,7 +69,6 @@
             background-attachment: fixed;
         }
 
-        /* Затемнение фона */
         body::before {
             content: '';
             position: fixed;
@@ -81,7 +78,6 @@
             z-index: -1;
         }
 
-        /* ===== КРАСИВЫЙ ГРАДИЕНТНЫЙ ЗАГОЛОВОК ===== */
         .gradient-title {
             font-family: 'MinecraftTitle', 'Minecraft', sans-serif !important;
             white-space: nowrap;
@@ -456,7 +452,6 @@
             100% { content: ''; }
         }
 
-        /* Таблица */
         .table-container {
             overflow-x: visible;
         }
@@ -470,27 +465,22 @@
             vertical-align: middle !important;
         }
 
-        /* Заголовки таблицы — в одну строку */
         th {
             white-space: nowrap;
         }
 
-        /* Колонка "Прожито" — в одну строку */
         td:nth-child(3) {
             white-space: nowrap;
         }
 
-        /* Колонка "Причина смерти" — в одну строку */
         td:nth-child(5) {
             white-space: nowrap;
         }
 
-        /* Колонка "Описание ситуации" — в одну строку */
         td:nth-child(6) {
             white-space: nowrap;
         }
 
-        /* Полоска прогресса — длиннее на 25% */
         .progress-container {
             min-width: 150px;
             background-color: #334155;
@@ -498,7 +488,6 @@
             height: 4px;
         }
 
-        /* Стили для сворачиваемых секций */
         .section-header {
             transition: all 0.2s;
             user-select: none;
@@ -547,14 +536,13 @@
                         <th class="p-3 text-center align-middle">🌍 Мир</th>
                         <th class="p-3 text-center align-middle">❤️ Прожито</th>
                         <th class="p-3 text-center align-middle">🏆 Достижения</th>
-                        <th class="p-3 text-center align-middle"> Причина смерти</th>
+                        <th class="p-3 text-center align-middle">❓ Причина смерти</th>
                         <th class="p-3 text-center align-middle">❗ Описание ситуации</th>
                         <th class="p-3 text-center align-middle">🎞️ Видео</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-800 bg-slate-900/50">
 
-                    <!-- МИР 1 -->
                     <tr class="hover:bg-slate-800/50 transition">
                         <td class="p-3 font-bold mc-green text-center align-middle">1</td>
                         <td class="p-3 text-center align-middle">
@@ -604,7 +592,6 @@
                         </td>
                     </tr>
 
-                    <!-- МИР 2 -->
                     <tr class="hover:bg-slate-800/50 transition">
                         <td class="p-3 font-bold mc-green text-center align-middle">2</td>
                         <td class="p-3 text-center align-middle">
@@ -654,7 +641,6 @@
                         </td>
                     </tr>
 
-                    <!-- МИР 3 -->
                     <tr class="hover:bg-slate-800/50 transition">
                         <td class="p-3 font-bold mc-green text-center align-middle">3</td>
                         <td class="p-3 text-center align-middle">
@@ -705,7 +691,6 @@
                         </td>
                     </tr>
 
-                    <!-- МИР 4 -->
                     <tr class="hover:bg-slate-800/50 transition">
                         <td class="p-3 font-bold mc-green text-center align-middle">4</td>
                         <td class="p-3 text-center align-middle">
@@ -755,7 +740,6 @@
                         </td>
                     </tr>
 
-                    <!-- МИР 5 -->
                     <tr class="hover:bg-slate-800/50 transition">
                         <td class="p-3 font-bold mc-green text-center align-middle">5</td>
                         <td class="p-3 text-center align-middle">
@@ -815,13 +799,13 @@
         const customCursor = document.getElementById('custom-cursor');
         
         document.addEventListener('mousemove', (e) => {
-            // Смещение на -48px по X и Y, чтобы остриё кирки (верхний левый угол после отражения) 
-            // совпадало с реальной позицией мыши
-            customCursor.style.left = (e.clientX - 48) + 'px';
-            customCursor.style.top = (e.clientY - 48) + 'px';
+            // Остриё кирки находится на X=3, Y=20 (в исходных 26×26 пикселях)
+            // После отражения scaleX(-1): точка X=3 становится на позиции (26-3)=23 от левого края
+            // По Y остаётся 20 от верха
+            customCursor.style.left = (e.clientX - 23) + 'px';
+            customCursor.style.top = (e.clientY - 20) + 'px';
         });
 
-        // Скрываем курсор когда мышь уходит с окна
         document.addEventListener('mouseleave', () => {
             customCursor.style.display = 'none';
         });
@@ -1073,7 +1057,6 @@
             }
         }
 
-        // Функция для сворачивания/разворачивания секций
         function toggleSection(section) {
             const grid = document.getElementById('all-grid');
             const toggleIcon = document.getElementById(section + '-toggle');
