@@ -36,7 +36,9 @@
             image-rendering: pixelated;
             image-rendering: -moz-crisp-edges;
             image-rendering: crisp-edges;
-            transition: transform 0.1s ease;
+            /* Точка вращения = остриё кирки */
+            transform-origin: 5px 29px;
+            transition: transform 0.08s ease;
         }
 
         /* Наклон при нажатии */
@@ -52,13 +54,11 @@
         /* ===== ИСКРЫ ОТ КИРКИ ===== */
         .spark {
             position: fixed;
-            width: 4px;
-            height: 4px;
-            background: #fbbf24;
+            width: 2px;
+            height: 2px;
             border-radius: 50%;
             pointer-events: none;
             z-index: 99998;
-            box-shadow: 0 0 6px #fbbf24, 0 0 10px #f59e0b;
         }
 
         .spark::after {
@@ -68,9 +68,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #f59e0b;
+            background: inherit;
             border-radius: 50%;
-            animation: sparkFade 0.4s ease-out forwards;
+            animation: sparkFade 0.3s ease-out forwards;
         }
 
         @keyframes sparkFade {
@@ -845,6 +845,7 @@
         // Наклон при нажатии + искры
         document.addEventListener('mousedown', (e) => {
             customCursor.classList.add('clicking');
+            // Искры появляются в точке острия кирки (которая совпадает с точкой клика мыши)
             createSparks(e.clientX, e.clientY);
         });
 
@@ -854,15 +855,11 @@
 
         // Создание искр
         function createSparks(x, y) {
-            // Координаты конца кирки (x=5, y=29 от верха слева)
-            const sparkX = x - 5;
-            const sparkY = y - 29;
-            
             // Создаем 3-5 искр
             const sparkCount = 3 + Math.floor(Math.random() * 3);
             
             for (let i = 0; i < sparkCount; i++) {
-                createSpark(sparkX, sparkY);
+                createSpark(x, y);
             }
         }
 
@@ -870,9 +867,9 @@
             const spark = document.createElement('div');
             spark.className = 'spark';
             
-            // Случайное смещение для каждой искры
-            const offsetX = (Math.random() - 0.5) * 20;
-            const offsetY = (Math.random() - 0.5) * 20 + 10; // немного вниз
+            // Случайное смещение для каждой искры (небольшой разброс)
+            const offsetX = (Math.random() - 0.5) * 12;
+            const offsetY = (Math.random() - 0.5) * 12 + 5; // немного вниз
             
             spark.style.left = (x + offsetX) + 'px';
             spark.style.top = (y + offsetY) + 'px';
@@ -881,14 +878,14 @@
             const colors = ['#fbbf24', '#f59e0b', '#fcd34d', '#fb923c'];
             const randomColor = colors[Math.floor(Math.random() * colors.length)];
             spark.style.background = randomColor;
-            spark.style.boxShadow = `0 0 6px ${randomColor}, 0 0 10px ${randomColor}`;
+            spark.style.boxShadow = `0 0 4px ${randomColor}, 0 0 6px ${randomColor}`;
             
             document.body.appendChild(spark);
             
             // Удаляем искру после анимации
             setTimeout(() => {
                 spark.remove();
-            }, 400);
+            }, 300);
         }
 
         document.addEventListener('mouseleave', () => {
