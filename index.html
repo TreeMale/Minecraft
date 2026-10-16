@@ -33,9 +33,7 @@
             background-repeat: no-repeat;
             pointer-events: none;
             z-index: 99999;
-            /* Только отражение по горизонтали, без увеличения */
-            transform: scaleX(-1);
-            transform-origin: top left;
+            /* Только пиксельная чёткость, без отражения и увеличения */
             image-rendering: pixelated;
             image-rendering: -moz-crisp-edges;
             image-rendering: crisp-edges;
@@ -537,7 +535,7 @@
                         <th class="p-3 text-center align-middle">❤️ Прожито</th>
                         <th class="p-3 text-center align-middle">🏆 Достижения</th>
                         <th class="p-3 text-center align-middle">❓ Причина смерти</th>
-                        <th class="p-3 text-center align-middle">❗ Описание ситуации</th>
+                        <th class="p-3 text-center align-middle"> Описание ситуации</th>
                         <th class="p-3 text-center align-middle">🎞️ Видео</th>
                     </tr>
                 </thead>
@@ -800,9 +798,8 @@
         
         document.addEventListener('mousemove', (e) => {
             // Остриё кирки находится на X=3, Y=20 (в исходных 26×26 пикселях)
-            // После отражения scaleX(-1): точка X=3 становится на позиции (26-3)=23 от левого края
-            // По Y остаётся 20 от верха
-            customCursor.style.left = (e.clientX - 23) + 'px';
+            // Без отражения и увеличения — смещение равно координатам острия
+            customCursor.style.left = (e.clientX - 3) + 'px';
             customCursor.style.top = (e.clientY - 20) + 'px';
         });
 
