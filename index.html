@@ -39,9 +39,14 @@
             transition: transform 0.08s ease;
         }
 
-        /* Наклон при нажатии (вокруг центра) */
+        /* Циклическая анимация ударов при зажатии */
         #custom-cursor.clicking {
-            transform: rotate(-25deg);
+            animation: pickaxeSwing 0.3s ease-in-out infinite;
+        }
+
+        @keyframes pickaxeSwing {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-25deg); }
         }
 
         /* Скрываем стандартный курсор на всём сайте */
@@ -833,31 +838,47 @@
     <script>
         // ===== КАСТОМНЫЙ КУРСОР С ИСКРАМИ =====
         const customCursor = document.getElementById('custom-cursor');
-        
+        let sparkInterval = null;
+        let lastMouseX = 0;
+        let lastMouseY = 0;
+
         // Движение курсора
         document.addEventListener('mousemove', (e) => {
+            lastMouseX = e.clientX;
+            lastMouseY = e.clientY;
             customCursor.style.left = (e.clientX - 5) + 'px';
             customCursor.style.top = (e.clientY - 29) + 'px';
         });
 
-        // Наклон при нажатии + искры
+        // При нажатии — запускаем цикл ударов
         document.addEventListener('mousedown', (e) => {
             customCursor.classList.add('clicking');
-            // Искры появляются в новом положении кончика кирки после наклона на -25°
-            // Кончик сместился из (5, 29) в (~10, ~34)
-            createSparks(e.clientX - 5 + 10, e.clientY - 29 + 34);
+            // Первый удар сразу
+            createSparks(e.clientX, e.clientY);
+            // Затем повторяем каждые 300мс (синхронно с анимацией 0.3s)
+            sparkInterval = setInterval(() => {
+                createSparks(lastMouseX, lastMouseY);
+            }, 300);
         });
 
         document.addEventListener('mouseup', () => {
             customCursor.classList.remove('clicking');
+            if (sparkInterval) {
+                clearInterval(sparkInterval);
+                sparkInterval = null;
+            }
         });
 
         // Создание искр
         function createSparks(x, y) {
+            // Искры появляются в новом положении кончика кирки после наклона
+            const sparkX = x - 5 + 10;
+            const sparkY = y - 29 + 34;
+            
             const sparkCount = 3 + Math.floor(Math.random() * 3);
             
             for (let i = 0; i < sparkCount; i++) {
-                createSpark(x, y);
+                createSpark(sparkX, sparkY);
             }
         }
 
