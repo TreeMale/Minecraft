@@ -164,7 +164,7 @@
             border: 1px solid #334155; 
             transition: all 0.2s;
             backdrop-filter: blur(10px);
-            cursor: pointer; /* Добавлен курсор для кликабельности */
+            cursor: pointer;
         }
         .card-pack:hover { transform: translateY(-3px); border-color: #8b5cf6; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2); }
         .progress-bar { background-color: #22c55e; height: 4px; border-radius: 2px; }
@@ -558,6 +558,36 @@
             border-radius: 9999px;
             height: 4px;
         }
+
+        /* Стили для сворачиваемых секций */
+        .section-header {
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .section-header:hover {
+            transform: scale(1.02);
+            opacity: 0.9;
+        }
+        .section-content {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        .section-content.collapsed {
+            max-height: 0;
+            opacity: 0;
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+            padding: 0 !important;
+        }
+        .toggle-icon {
+            display: inline-block;
+            transition: transform 0.3s ease;
+            margin-left: 8px;
+        }
+        .toggle-icon.rotated {
+            transform: rotate(180deg);
+        }
     </style>
 </head>
 <body class="p-4 md:p-8 mx-auto">
@@ -592,7 +622,7 @@
                 <thead class="bg-slate-800 text-slate-300">
                     <tr>
                         <th class="p-3 text-center align-middle">#</th>
-                        <th class="p-3 text-center align-middle">🌍 Мир</th>
+                        <th class="p-3 text-center align-middle"> Мир</th>
                         <th class="p-3 text-center align-middle">❤️ Прожито</th>
                         <th class="p-3 text-center align-middle">🏆 Достижения</th>
                         <th class="p-3 text-center align-middle">❓ Причина смерти</th>
@@ -846,14 +876,16 @@
 
     <section class="mb-16">
         <div class="flex flex-wrap items-end justify-center gap-8 mb-6 border-b border-slate-700 pb-2">
-            <h2 class="text-2xl font-bold flex items-center gap-2">
+            <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleSection('mods')">
                 <span>&#x1F9E9;</span> Моды (<span id="mod-count" class="mc-green text-lg"></span>)
+                <span class="toggle-icon" id="mods-toggle">▼</span>
             </h2>
-            <h2 class="text-2xl font-bold flex items-center gap-2">
+            <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleSection('packs')">
                 <span>&#x1F4E6;</span> Ресурс-паки (<span id="pack-count" class="text-purple-400 text-lg"></span>)
+                <span class="toggle-icon" id="packs-toggle">▼</span>
             </h2>
         </div>
-        <div id="all-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
+        <div id="all-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 section-content" id="grid-content"></div>
     </section>
 
     <script>
@@ -1101,6 +1133,38 @@
             }
         }
 
+        // Функция для сворачивания/разворачивания секций
+        function toggleSection(section) {
+            const grid = document.getElementById('all-grid');
+            const toggleIcon = document.getElementById(section + '-toggle');
+            const cards = grid.children;
+            
+            for (let card of cards) {
+                if (section === 'mods' && card.classList.contains('card') && !card.classList.contains('card-pack')) {
+                    card.classList.toggle('hidden');
+                } else if (section === 'packs' && card.classList.contains('card-pack')) {
+                    card.classList.toggle('hidden');
+                }
+            }
+            
+            // Поворот иконки
+            toggleIcon.classList.toggle('rotated');
+            
+            // Проверка, все ли элементы скрыты
+            const visibleMods = Array.from(cards).filter(c => c.classList.contains('card') && !c.classList.contains('card-pack') && !c.classList.contains('hidden')).length;
+            const visiblePacks = Array.from(cards).filter(c => c.classList.contains('card-pack') && !c.classList.contains('hidden')).length;
+            
+            if (section === 'mods' && visibleMods === 0) {
+                toggleIcon.textContent = '▲';
+            } else if (section === 'mods' && visibleMods > 0) {
+                toggleIcon.textContent = '▼';
+            } else if (section === 'packs' && visiblePacks === 0) {
+                toggleIcon.textContent = '▲';
+            } else if (section === 'packs' && visiblePacks > 0) {
+                toggleIcon.textContent = '▼';
+            }
+        }
+
         const mods = [
             {n: "Animated Mojang Logo", d: "Заменяет старый скучный экран загрузки Minecraft на приятную анимацию.", url: "https://modrinth.com/mod/animated-mojang-logo"},
             {n: "Visual Health", d: "Добавляет наглядные визуальные повреждения (раны и синяки) на модели существ.", url: "https://modrinth.com/mod/visualhealth"},
@@ -1163,14 +1227,14 @@
         ];
 
         const packs = [
-            {n: "BlazeandCave's Advancements Pack", d: "Пак добавляет в игру более 1000 новых достижений различной сложности.", url: "https://www.planetminecraft.com/data-pack/blazeandcave-s-advancements-pack-1-12/"},
-            {n: "BlazeandCave's Advancements Pack Bossbar", d: "Вводит команды и создает полоску прогресса для достижений.", url: "https://www.google.com/"},
-            {n: "BlazeandCave's Advancements Pack Hardcore", d: "Убирает достижения, которые нельзя выполнить без смерти.", url: "https://www.planetminecraft.com/data-pack/blazeandcave-s-advancements-pack-hardcore-version/"},
-            {n: "BlazeandCave's Advancements Pack Language Pack", d: "Переводит описание у достижений на другой язык.", url: "https://www.planetminecraft.com/texture-pack/bacap-language-pack/"},
-            {n: "Better Leaves", d: "Изменяет текстуры листвы, добавляя больше пышности по краям блока.", url: "https://www.curseforge.com/minecraft/texture-packs/motschens-better-leaves"},
-            {n: "Round Trees", d: "Изменяет текстуры блоков древесины, делает их круглыми.", url: "https://www.curseforge.com/minecraft/texture-packs/round-trees-mc-vanilla-1-8-1-13"},
-            {n: "Crops 3D", d: "Добавляет 3D текстуры для всех растений на грядках и грибов.", url: "https://www.curseforge.com/minecraft/texture-packs/crops-3d"},
-            {n: "Tasty Items", d: "Добавляет анимацию при поедании чего-либо.", url: "https://modrinth.com/resourcepack/tasty-items"}
+            {n: "BlazeandCave's Advancements Pack", d: "Пак добавляет в игру более 1000 новых достижений различной сложности.", url: "#"},
+            {n: "BlazeandCave's Advancements Pack Bossbar", d: "Вводит команды и создает полоску прогресса для достижений.", url: "#"},
+            {n: "BlazeandCave's Advancements Pack Hardcore", d: "Убирает достижения, которые нельзя выполнить без смерти.", url: "#"},
+            {n: "BlazeandCave's Advancements Pack Language Pack", d: "Переводит описание у достижений на другой язык.", url: "#"},
+            {n: "Better Leaves", d: "Изменяет текстуры листвы, добавляя больше пышности по краям блока.", url: "#"},
+            {n: "Round Trees", d: "Изменяет текстуры блоков древесины, делает их круглыми.", url: "#"},
+            {n: "Crops 3D", d: "Добавляет 3D текстуры для всех растений на грядках и грибов.", url: "#"},
+            {n: "Tasty Items", d: "Добавляет анимацию при поедании чего-либо.", url: "#"}
         ];
 
         const allGrid = document.getElementById('all-grid');
