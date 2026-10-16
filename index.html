@@ -25,7 +25,6 @@
             background-color: #0f172a; 
             color: #e2e8f0; 
             font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
-            cursor: url('https://treemale.github.io/Minecraft/images/cursor/pickaxe.png') 5 29, auto;
         }
         body::before {
             content: '';
@@ -48,13 +47,14 @@
         .card-pack:hover { border-color: #8b5cf6; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.1); }
         .progress-bar { background-color: #22c55e; height: 4px; border-radius: 2px; }
         
+        /* Заголовок — только MinecraftTitle, в одну строку */
         h1 {
             font-family: 'MinecraftTitle', 'Minecraft', sans-serif !important;
             white-space: nowrap;
         }
         
         .world-name {
-            cursor: url('https://treemale.github.io/Minecraft/images/cursor/pickaxe.png') 5 29, pointer;
+            cursor: pointer;
             transition: all 0.2s;
             position: relative;
             color: #60a5fa;
@@ -99,7 +99,7 @@
             color: #4ade80;
             padding: 4px 10px;
             border-radius: 6px;
-            cursor: url('https://treemale.github.io/Minecraft/images/cursor/pickaxe.png') 5 29, pointer;
+            cursor: pointer;
             font-size: 13px;
             font-weight: 600;
             transition: all 0.2s;
@@ -170,7 +170,7 @@
             width: 2px;
             height: 100%;
             background: rgba(74, 222, 128, 0.8);
-            cursor: url('https://treemale.github.io/Minecraft/images/cursor/pickaxe.png') 5 29, ew-resize;
+            cursor: ew-resize;
             z-index: 3;
             transform: translateX(-50%);
             box-shadow: 0 0 8px rgba(74, 222, 128, 0.5);
@@ -219,7 +219,7 @@
             font-weight: 600;
             border: 1px solid #334155;
             backdrop-filter: blur(4px);
-            cursor: url('https://treemale.github.io/Minecraft/images/cursor/pickaxe.png') 5 29, pointer;
+            cursor: pointer;
             transition: all 0.2s;
             user-select: none;
             pointer-events: auto;
@@ -259,7 +259,7 @@
             border-radius: 8px;
             font-size: 13px;
             font-weight: 600;
-            cursor: url('https://treemale.github.io/Minecraft/images/cursor/pickaxe.png') 5 29, pointer;
+            cursor: pointer;
             transition: all 0.2s;
             backdrop-filter: blur(4px);
             position: relative;
@@ -296,7 +296,6 @@
             50% { opacity: 0.5; transform: scale(0.8); }
         }
         
-        /* ===== MINECRAFT LOADER С БЛОКАМИ ===== */
         .loader {
             position: absolute;
             top: 50%;
@@ -404,12 +403,15 @@
             width: 100%;
             table-layout: auto;
         }
+        /* Заголовки таблицы — в одну строку */
         th {
             white-space: nowrap;
         }
+        /* Время "прожито" — в одну строку */
         td:nth-child(3) {
             white-space: nowrap;
         }
+        /* Причина смерти — в одну строку */
         td:nth-child(5) {
             white-space: nowrap;
         }
@@ -432,7 +434,7 @@
                 <thead class="bg-slate-800 text-slate-300">
                     <tr>
                         <th class="p-3">#</th>
-                        <th class="p-3">🌍 Мир</th>
+                        <th class="p-3"> Мир</th>
                         <th class="p-3">❤️ Прожито</th>
                         <th class="p-3">🏆 Достижения</th>
                         <th class="p-3">❓ Причина смерти</th>
@@ -719,8 +721,7 @@
         const LOADER_BLOCK_URLS = [
             'https://treemale.github.io/Minecraft/images/loader/grass_block.webp',
             'https://treemale.github.io/Minecraft/images/loader/oak_planks.webp',
-            'https://treemale.github.io/Minecraft/images/loader/cobblestone.webp',
-            'https://treemale.github.io/Minecraft/images/cursor/pickaxe.png'
+            'https://treemale.github.io/Minecraft/images/loader/cobblestone.webp'
         ];
 
         let currentSet = { 1: 0, 2: 0, 3: 0, 4: 0 };
@@ -825,6 +826,12 @@
             
             if (loader) {
                 loader.classList.add('visible');
+                const blocks = loader.querySelectorAll('.loader-block');
+                blocks.forEach(block => {
+                    block.style.animation = 'none';
+                    block.offsetHeight;
+                    block.style.animation = '';
+                });
             }
             beforeImg.classList.remove('loaded');
             afterImg.classList.remove('loaded');
