@@ -29,7 +29,7 @@
             margin: 0 auto;
         }
 
-        /* ===== СТАТИЧНЫЙ ФОН (GIF или КАРТИНКА) ===== */
+        /* ===== ФОНОВАЯ КАРТИНКА ===== */
         .custom-bg {
             position: fixed;
             top: 0;
@@ -37,23 +37,41 @@
             width: 100%;
             height: 100%;
             z-index: -2;
-            
-            /* 👇 ВСТАВЬ ССЫЛКУ НА СВОЮ GIF ИЛИ КАРТИНКУ СЮДА 👇 */
-            background-image: url('https://i.pinimg.com/1200x/4e/24/c3/4e24c303c7a8fed33171fbee101917e8.jpg'); 
-            
+            background-image: url('https://i.pinimg.com/736x/f1/44/59/f14459468f9f65e46c6cbdd10f8796c5.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            background-attachment: fixed;
         }
 
-        /* Затемнение фона, чтобы текст читался */
+        /* Затемнение фона */
         body::before {
             content: '';
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.85); /* Можно менять 0.85 на 0.9 (темнее) или 0.7 (светлее) */
+            background: rgba(15, 23, 42, 0.85);
             z-index: -1;
+        }
+
+        /* ===== КРАСИВЫЙ ГРАДИЕНТНЫЙ ЗАГОЛОВОК ===== */
+        .gradient-title {
+            font-family: 'MinecraftTitle', 'Minecraft', sans-serif !important;
+            white-space: nowrap;
+            background: linear-gradient(135deg, #4ade80 0%, #3b82f6 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 40px rgba(74, 222, 128, 0.5);
+            filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.5));
+            animation: gradientShift 5s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .mc-green { color: #4ade80; }
@@ -433,12 +451,6 @@
             vertical-align: middle !important;
         }
 
-        /* Заголовок — только MinecraftTitle, в одну строку, по центру (без жирности) */
-        h1 {
-            font-family: 'MinecraftTitle', 'Minecraft', sans-serif !important;
-            white-space: nowrap;
-        }
-
         /* Заголовки таблицы — в одну строку */
         th {
             white-space: nowrap;
@@ -490,13 +502,12 @@
 </head>
 <body class="p-4 md:p-8 mx-auto">
 
-    <!-- Статичный фон (GIF или картинка) -->
+    <!-- Фоновая картинка -->
     <div class="custom-bg"></div>
 
     <header class="text-center mb-12">
         <div class="flex justify-center">
-            <!-- Убран класс font-bold для снятия жирности -->
-            <h1 class="text-4xl md:text-5xl mc-green mb-3">МАЙНКРАФТ ВАЙБИК | ДОП. ДОСТИЖЕНИЯ</h1>
+            <h1 class="text-4xl md:text-5xl gradient-title mb-3">МАЙНКРАФТ ВАЙБИК | ДОП. ДОСТИЖЕНИЯ</h1>
         </div>
         <p class="text-slate-400 text-lg">История забегов, смертей и список используемых модификаций</p>
     </header>
@@ -517,7 +528,7 @@
                         <th class="p-3 text-center align-middle">🏆 Достижения</th>
                         <th class="p-3 text-center align-middle">❓ Причина смерти</th>
                         <th class="p-3 text-center align-middle">❗ Описание ситуации</th>
-                        <th class="p-3 text-center align-middle">🎞️ Видео</th>
+                        <th class="p-3 text-center align-middle">️ Видео</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-800 bg-slate-900/50">
