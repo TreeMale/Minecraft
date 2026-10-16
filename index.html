@@ -569,24 +569,10 @@
             transform: scale(1.02);
             opacity: 0.9;
         }
-        .section-content {
-            transition: all 0.3s ease;
-            overflow: hidden;
-        }
-        .section-content.collapsed {
-            max-height: 0;
-            opacity: 0;
-            margin-top: 0 !important;
-            margin-bottom: 0 !important;
-            padding: 0 !important;
-        }
         .toggle-icon {
             display: inline-block;
-            transition: transform 0.3s ease;
             margin-left: 8px;
-        }
-        .toggle-icon.rotated {
-            transform: rotate(180deg);
+            transition: all 0.2s ease;
         }
     </style>
 </head>
@@ -622,10 +608,10 @@
                 <thead class="bg-slate-800 text-slate-300">
                     <tr>
                         <th class="p-3 text-center align-middle">#</th>
-                        <th class="p-3 text-center align-middle"> Мир</th>
+                        <th class="p-3 text-center align-middle">🌍 Мир</th>
                         <th class="p-3 text-center align-middle">❤️ Прожито</th>
                         <th class="p-3 text-center align-middle">🏆 Достижения</th>
-                        <th class="p-3 text-center align-middle">❓ Причина смерти</th>
+                        <th class="p-3 text-center align-middle"> Причина смерти</th>
                         <th class="p-3 text-center align-middle">❗ Описание ситуации</th>
                         <th class="p-3 text-center align-middle">🎞️ Видео</th>
                     </tr>
@@ -885,7 +871,7 @@
                 <span class="toggle-icon" id="packs-toggle">▼</span>
             </h2>
         </div>
-        <div id="all-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 section-content" id="grid-content"></div>
+        <div id="all-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
     </section>
 
     <script>
@@ -1147,20 +1133,10 @@
                 }
             }
             
-            // Поворот иконки
-            toggleIcon.classList.toggle('rotated');
-            
-            // Проверка, все ли элементы скрыты
-            const visibleMods = Array.from(cards).filter(c => c.classList.contains('card') && !c.classList.contains('card-pack') && !c.classList.contains('hidden')).length;
-            const visiblePacks = Array.from(cards).filter(c => c.classList.contains('card-pack') && !c.classList.contains('hidden')).length;
-            
-            if (section === 'mods' && visibleMods === 0) {
+            // Меняем стрелочку: ▼ (развёрнуто) ↔ ▲ (свёрнуто)
+            if (toggleIcon.textContent === '▼') {
                 toggleIcon.textContent = '▲';
-            } else if (section === 'mods' && visibleMods > 0) {
-                toggleIcon.textContent = '▼';
-            } else if (section === 'packs' && visiblePacks === 0) {
-                toggleIcon.textContent = '▲';
-            } else if (section === 'packs' && visiblePacks > 0) {
+            } else {
                 toggleIcon.textContent = '▼';
             }
         }
