@@ -29,7 +29,7 @@
             margin: 0 auto;
         }
 
-        /* ===== АНИМИРОВАННЫЙ ФОН С БЛОКАМИ ===== */
+        /* ===== АНИМИРОВАННЫЙ ФОН С ПАДАЮЩИМИ БЛОКАМИ ===== */
         .animated-bg {
             position: fixed;
             top: 0;
@@ -41,101 +41,95 @@
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
         }
 
-        .floating-block {
+        .falling-block {
             position: absolute;
-            width: 80px;
-            height: 80px;
-            opacity: 0.07;
-            animation: float 20s infinite ease-in-out;
+            width: 60px;
+            height: 60px;
+            opacity: 0.08;
             image-rendering: pixelated;
             image-rendering: -moz-crisp-edges;
             image-rendering: crisp-edges;
+            animation: fall linear infinite;
         }
 
-        .floating-block:nth-child(1) {
+        .falling-block:nth-child(1) {
             background-image: url('https://treemale.github.io/Minecraft/images/loader/grass_block.webp');
             background-size: cover;
-            left: 5%;
-            top: 15%;
+            left: 10%;
+            animation-duration: 15s;
             animation-delay: 0s;
-            animation-duration: 25s;
         }
 
-        .floating-block:nth-child(2) {
+        .falling-block:nth-child(2) {
             background-image: url('https://treemale.github.io/Minecraft/images/loader/cobblestone.webp');
             background-size: cover;
-            left: 85%;
-            top: 55%;
+            left: 25%;
+            animation-duration: 18s;
             animation-delay: -5s;
-            animation-duration: 30s;
         }
 
-        .floating-block:nth-child(3) {
+        .falling-block:nth-child(3) {
             background-image: url('https://treemale.github.io/Minecraft/images/loader/oak_planks.webp');
             background-size: cover;
-            left: 45%;
-            top: 75%;
+            left: 40%;
+            animation-duration: 12s;
             animation-delay: -10s;
-            animation-duration: 22s;
         }
 
-        .floating-block:nth-child(4) {
+        .falling-block:nth-child(4) {
+            background-image: url('https://treemale.github.io/Minecraft/images/loader/grass_block.webp');
+            background-size: cover;
+            left: 55%;
+            animation-duration: 20s;
+            animation-delay: -3s;
+        }
+
+        .falling-block:nth-child(5) {
+            background-image: url('https://treemale.github.io/Minecraft/images/loader/cobblestone.webp');
+            background-size: cover;
+            left: 70%;
+            animation-duration: 16s;
+            animation-delay: -8s;
+        }
+
+        .falling-block:nth-child(6) {
+            background-image: url('https://treemale.github.io/Minecraft/images/loader/oak_planks.webp');
+            background-size: cover;
+            left: 85%;
+            animation-duration: 14s;
+            animation-delay: -12s;
+        }
+
+        .falling-block:nth-child(7) {
             background-image: url('https://treemale.github.io/Minecraft/images/loader/grass_block.webp');
             background-size: cover;
             left: 15%;
-            top: 65%;
+            animation-duration: 22s;
             animation-delay: -15s;
-            animation-duration: 28s;
         }
 
-        .floating-block:nth-child(5) {
-            background-image: url('https://treemale.github.io/Minecraft/images/loader/cobblestone.webp');
-            background-size: cover;
-            left: 75%;
-            top: 25%;
-            animation-delay: -8s;
-            animation-duration: 26s;
-        }
-
-        .floating-block:nth-child(6) {
-            background-image: url('https://treemale.github.io/Minecraft/images/loader/oak_planks.webp');
-            background-size: cover;
-            left: 35%;
-            top: 40%;
-            animation-delay: -12s;
-            animation-duration: 32s;
-        }
-
-        .floating-block:nth-child(7) {
-            background-image: url('https://treemale.github.io/Minecraft/images/loader/grass_block.webp');
-            background-size: cover;
-            left: 60%;
-            top: 85%;
-            animation-delay: -3s;
-            animation-duration: 24s;
-        }
-
-        .floating-block:nth-child(8) {
+        .falling-block:nth-child(8) {
             background-image: url('https://treemale.github.io/Minecraft/images/loader/cobblestone.webp');
             background-size: cover;
             left: 90%;
-            top: 10%;
-            animation-delay: -18s;
-            animation-duration: 29s;
+            animation-duration: 17s;
+            animation-delay: -7s;
         }
 
-        @keyframes float {
-            0%, 100% {
-                transform: translate(0, 0) rotate(0deg);
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0;
             }
-            25% {
-                transform: translate(60px, -40px) rotate(8deg);
+            10% {
+                opacity: 0.08;
             }
-            50% {
-                transform: translate(-40px, -70px) rotate(-6deg);
+            90% {
+                opacity: 0.08;
             }
-            75% {
-                transform: translate(-60px, 40px) rotate(4deg);
+            100% {
+                transform: translateY(calc(100vh + 100px)) rotate(360deg);
+                opacity: 0;
             }
         }
 
@@ -582,21 +576,21 @@
 </head>
 <body class="p-4 md:p-8 mx-auto">
 
-    <!-- Анимированный фон с плавающими блоками -->
+    <!-- Анимированный фон с падающими блоками -->
     <div class="animated-bg">
-        <div class="floating-block"></div>
-        <div class="floating-block"></div>
-        <div class="floating-block"></div>
-        <div class="floating-block"></div>
-        <div class="floating-block"></div>
-        <div class="floating-block"></div>
-        <div class="floating-block"></div>
-        <div class="floating-block"></div>
+        <div class="falling-block"></div>
+        <div class="falling-block"></div>
+        <div class="falling-block"></div>
+        <div class="falling-block"></div>
+        <div class="falling-block"></div>
+        <div class="falling-block"></div>
+        <div class="falling-block"></div>
+        <div class="falling-block"></div>
     </div>
 
     <header class="text-center mb-12">
         <div class="flex justify-center">
-            <h1 class="text-4xl md:text-5xl font-bold mc-green mb-3">МАЙНКРАФТ ВАЙБИК | ДОП. ДОСТИЖЕНИЯ</h1>
+            <h1 class="text-4xl md:text-5xl mc-green mb-3">МАЙНКРАФТ ВАЙБИК | ДОП. ДОСТИЖЕНИЯ</h1>
         </div>
         <p class="text-slate-400 text-lg">История забегов, смертей и список используемых модификаций</p>
     </header>
