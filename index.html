@@ -21,21 +21,19 @@
             font-display: swap;
         }
 
-        /* ===== КАСТОМНЫЙ КУРСОР-КИРКА 26x26 ===== */
+        /* ===== КАСТОМНЫЙ КУРСОР-КИРКА 39x39 ===== */
         #custom-cursor {
             position: fixed;
             top: 0;
             left: 0;
-            width: 26px;
-            height: 26px;
+            width: 39px;
+            height: 39px;
             background-image: url('https://treemale.github.io/Minecraft/images/cursor/diamond_pickaxe.png');
             background-size: contain;
             background-repeat: no-repeat;
             pointer-events: none;
             z-index: 99999;
-            /* Только отражение по горизонтали, без увеличения */
-            transform: scaleX(-1);
-            transform-origin: top left;
+            /* Без зеркалирования */
             image-rendering: pixelated;
             image-rendering: -moz-crisp-edges;
             image-rendering: crisp-edges;
@@ -536,7 +534,7 @@
                         <th class="p-3 text-center align-middle">🌍 Мир</th>
                         <th class="p-3 text-center align-middle">❤️ Прожито</th>
                         <th class="p-3 text-center align-middle">🏆 Достижения</th>
-                        <th class="p-3 text-center align-middle">❓ Причина смерти</th>
+                        <th class="p-3 text-center align-middle"> Причина смерти</th>
                         <th class="p-3 text-center align-middle">❗ Описание ситуации</th>
                         <th class="p-3 text-center align-middle">🎞️ Видео</th>
                     </tr>
@@ -799,11 +797,9 @@
         const customCursor = document.getElementById('custom-cursor');
         
         document.addEventListener('mousemove', (e) => {
-            // Остриё кирки находится на X=3, Y=20 (в исходных 26×26 пикселях)
-            // После отражения scaleX(-1): точка X=3 становится на позиции (26-3)=23 от левого края
-            // По Y остаётся 20 от верха
-            customCursor.style.left = (e.clientX - 23) + 'px';
-            customCursor.style.top = (e.clientY - 20) + 'px';
+            // Координаты указателя: x=5 (влево), y=29 (вниз) от верхнего левого угла
+            customCursor.style.left = (e.clientX - 5) + 'px';
+            customCursor.style.top = (e.clientY - 29) + 'px';
         });
 
         document.addEventListener('mouseleave', () => {
@@ -846,7 +842,7 @@
             'https://treemale.github.io/Minecraft/images/loader/grass_block.webp',
             'https://treemale.github.io/Minecraft/images/loader/oak_planks.webp',
             'https://treemale.github.io/Minecraft/images/loader/cobblestone.webp',
-            'https://treemale.github.io/Minecraft/images/cursor/diamond_pickaxe.png' // Добавлена предзагрузка курсора
+            'https://treemale.github.io/Minecraft/images/cursor/diamond_pickaxe.png'
         ];
 
         let currentSet = { 1: 0, 2: 0, 3: 0, 4: 0 };
