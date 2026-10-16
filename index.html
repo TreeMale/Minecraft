@@ -36,12 +36,10 @@
             image-rendering: pixelated;
             image-rendering: -moz-crisp-edges;
             image-rendering: crisp-edges;
-            /* Точка вращения = остриё кирки */
-            transform-origin: 5px 29px;
             transition: transform 0.08s ease;
         }
 
-        /* Наклон при нажатии */
+        /* Наклон при нажатии (вокруг центра) */
         #custom-cursor.clicking {
             transform: rotate(-25deg);
         }
@@ -845,8 +843,9 @@
         // Наклон при нажатии + искры
         document.addEventListener('mousedown', (e) => {
             customCursor.classList.add('clicking');
-            // Искры появляются в точке острия кирки (которая совпадает с точкой клика мыши)
-            createSparks(e.clientX, e.clientY);
+            // Искры появляются в новом положении кончика кирки после наклона на -25°
+            // Кончик сместился из (5, 29) в (~10, ~34)
+            createSparks(e.clientX - 5 + 10, e.clientY - 29 + 34);
         });
 
         document.addEventListener('mouseup', () => {
@@ -855,7 +854,6 @@
 
         // Создание искр
         function createSparks(x, y) {
-            // Создаем 3-5 искр
             const sparkCount = 3 + Math.floor(Math.random() * 3);
             
             for (let i = 0; i < sparkCount; i++) {
@@ -867,14 +865,12 @@
             const spark = document.createElement('div');
             spark.className = 'spark';
             
-            // Случайное смещение для каждой искры (небольшой разброс)
             const offsetX = (Math.random() - 0.5) * 12;
-            const offsetY = (Math.random() - 0.5) * 12 + 5; // немного вниз
+            const offsetY = (Math.random() - 0.5) * 12 + 5;
             
             spark.style.left = (x + offsetX) + 'px';
             spark.style.top = (y + offsetY) + 'px';
             
-            // Случайный цвет искры (желтый/оранжевый)
             const colors = ['#fbbf24', '#f59e0b', '#fcd34d', '#fb923c'];
             const randomColor = colors[Math.floor(Math.random() * colors.length)];
             spark.style.background = randomColor;
@@ -882,7 +878,6 @@
             
             document.body.appendChild(spark);
             
-            // Удаляем искру после анимации
             setTimeout(() => {
                 spark.remove();
             }, 300);
