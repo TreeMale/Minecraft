@@ -61,7 +61,6 @@
             animation: sparkJump var(--duration, 0.15s) ease-out forwards;
         }
 
-        /* Два состояния: 100% → 0% */
         @keyframes sparkJump {
             0% {
                 opacity: 1;
@@ -85,16 +84,30 @@
             margin: 0 auto;
         }
 
+        /* Контейнер для фоновых слайдов */
         .custom-bg {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: -2;
-            background-image: url('https://i.pinimg.com/736x/f1/44/59/f14459468f9f65e46c6cbdd10f8796c5.jpg');
+            overflow: hidden;
+        }
+
+        /* Отдельный слайд фона */
+        .bg-slide {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .bg-slide.active {
+            opacity: 1;
         }
 
         body::before {
@@ -171,6 +184,7 @@
             border: 1px solid #334155;
             z-index: 9999;
             transform: translateX(-50%);
+            font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
         }
         .tooltip.visible { opacity: 1; }
         .tooltip::after {
@@ -191,7 +205,6 @@
             font-size: 13px;
             font-weight: 600;
             transition: all 0.2s;
-            margin-left: 8px;
             font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
         }
         .compare-btn:hover {
@@ -209,26 +222,56 @@
             background: rgba(100, 116, 139, 0.2);
         }
 
-        /* Кнопка скачивания мира */
         .download-btn {
-            background: rgba(74, 222, 128, 0.2);
-            border: 1px solid #4ade80;
-            color: #4ade80;
+            position: relative;
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid #3b82f6;
+            color: #60a5fa;
             width: 32px;
             height: 32px;
             border-radius: 6px;
-            font-size: 16px;
-            font-weight: 600;
             transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-left: 8px;
-            font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
+            margin-right: 8px;
         }
         .download-btn:hover {
-            background: rgba(74, 222, 128, 0.4);
+            background: rgba(59, 130, 246, 0.4);
             transform: scale(1.05);
+            color: #93c5fd;
+        }
+        
+        .download-btn .tooltip-text {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.95);
+            color: #e2e8f0;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            border: 1px solid #334155;
+            font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
+            transition: opacity 0.15s, visibility 0.15s;
+            z-index: 10;
+        }
+        .download-btn .tooltip-text::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: #334155;
+        }
+        .download-btn:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
         }
 
         .comparison-container {
@@ -488,7 +531,7 @@
         }
         
         .col-num { width: 50px; min-width: 50px; }
-        .col-world { width: 140px; min-width: 140px; }
+        .col-world { width: 160px; min-width: 160px; }
         .col-lived { width: 170px; min-width: 170px; }
         .col-achievements { width: 180px; min-width: 180px; }
         .col-death { width: 180px; min-width: 180px; }
@@ -519,7 +562,11 @@
 <body class="p-4 md:p-8 mx-auto">
 
     <div id="custom-cursor"></div>
-    <div class="custom-bg"></div>
+    
+    <!-- Контейнер для фоновых слайдов -->
+    <div class="custom-bg" id="bg-container">
+        <!-- Слайды будут добавлены через JavaScript -->
+    </div>
 
     <header class="text-center mb-12">
         <div class="flex justify-center">
@@ -548,7 +595,7 @@
                 <thead class="bg-slate-800 text-slate-300">
                     <tr>
                         <th class="p-3">#</th>
-                        <th class="p-3">🌍 Мир</th>
+                        <th class="p-3"> Мир</th>
                         <th class="p-3">❤️ Прожито</th>
                         <th class="p-3">🏆 Достижения</th>
                         <th class="p-3">❓ Причина смерти</th>
@@ -563,8 +610,11 @@
                         <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="1021725279" onclick="copySeed(this)">#мирвайба1</span>
-                                <div class="flex gap-2">
-                                    <a href="ССЫЛКА_НА_СКАЧИВАНИЕ_МИРА_1" class="download-btn" title="Скачать мир" download>⬇</a>
+                                <div class="flex items-center">
+                                    <a href="ССЫЛКА_НА_СКАЧИВАНИЕ_МИРА_1" class="download-btn" title="" download>
+                                        <span class="tooltip-text">Скачать мир</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                    </a>
                                     <button class="compare-btn" onclick="toggleComparison(1)">Картинки</button>
                                 </div>
                             </div>
@@ -615,8 +665,11 @@
                         <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="-2075836568" onclick="copySeed(this)">#мирвайба2</span>
-                                <div class="flex gap-2">
-                                    <a href="ССЫЛКА_НА_СКАЧИВАНИЕ_МИРА_2" class="download-btn" title="Скачать мир" download>⬇</a>
+                                <div class="flex items-center">
+                                    <a href="ССЫЛКА_НА_СКАЧИВАНИЕ_МИРА_2" class="download-btn" title="" download>
+                                        <span class="tooltip-text">Скачать мир</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                    </a>
                                     <button class="compare-btn" onclick="toggleComparison(2)">Картинки</button>
                                 </div>
                             </div>
@@ -667,8 +720,11 @@
                         <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="4008466176163305479" onclick="copySeed(this)">#мирвайба3</span>
-                                <div class="flex gap-2">
-                                    <a href="ССЫЛКА_НА_СКАЧИВАНИЕ_МИРА_3" class="download-btn" title="Скачать мир" download>⬇</a>
+                                <div class="flex items-center">
+                                    <a href="ССЫЛКА_НА_СКАЧИВАНИЕ_МИРА_3" class="download-btn" title="" download>
+                                        <span class="tooltip-text">Скачать мир</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                    </a>
                                     <button class="compare-btn" onclick="toggleComparison(3)">Картинки</button>
                                 </div>
                             </div>
@@ -720,8 +776,11 @@
                         <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="34376356" onclick="copySeed(this)">#мирвайба4</span>
-                                <div class="flex gap-2">
-                                    <a href="ССЫЛКА_НА_СКАЧИВАНИЕ_МИРА_4" class="download-btn" title="Скачать мир" download>⬇</a>
+                                <div class="flex items-center">
+                                    <a href="ССЫЛКА_НА_СКАЧИВАНИЕ_МИРА_4" class="download-btn" title="" download>
+                                        <span class="tooltip-text">Скачать мир</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                    </a>
                                     <button class="compare-btn" onclick="toggleComparison(4)">Картинки</button>
                                 </div>
                             </div>
@@ -772,8 +831,11 @@
                         <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="-6728139250759796146" onclick="copySeed(this)">#мирвайба5</span>
-                                <div class="flex gap-2">
-                                    <a href="ССЫЛКА_НА_СКАЧИВАНИЕ_МИРА_5" class="download-btn" title="Скачать мир" download>⬇</a>
+                                <div class="flex items-center">
+                                    <a href="ССЫЛКА_НА_СКАЧИВАНИЕ_МИРА_5" class="download-btn" title="" download>
+                                        <span class="tooltip-text">Скачать мир</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                    </a>
                                     <button class="compare-btn disabled" disabled title="Картинки пока не добавлены">Картинки</button>
                                 </div>
                             </div>
@@ -825,6 +887,19 @@
     </section>
 
     <script>
+        // ================= НАСТРОЙКИ ФОНОВЫХ СЛАЙДОВ =================
+        // Добавь сюда ссылки на свои фоновые картинки с GitHub
+        const backgroundImages = [
+            'https://treemale.github.io/Minecraft/images/bg/slide1.jpg',
+            'https://treemale.github.io/Minecraft/images/bg/slide2.jpg',
+            'https://treemale.github.io/Minecraft/images/bg/slide3.jpg',
+            // Добавляй сколько угодно ссылок
+        ];
+        
+        // Интервал переключения слайдов (в миллисекундах)
+        const SLIDE_INTERVAL = 10000; // 10 секунд
+        // ============================================================
+
         const customCursor = document.getElementById('custom-cursor');
         
         let lastMouseX = 0, lastMouseY = 0;
@@ -832,6 +907,44 @@
         let clickInterval = null;
         const CLICK_CYCLE = 300;
         const SPARK_DELAY = 150;
+
+        // Инициализация фоновых слайдов
+        function initBackgroundSlides() {
+            const container = document.getElementById('bg-container');
+            
+            // Создаём слайды
+            backgroundImages.forEach((url, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'bg-slide';
+                slide.style.backgroundImage = `url('${url}')`;
+                if (index === 0) slide.classList.add('active');
+                container.appendChild(slide);
+            });
+
+            // Запускаем автопереключение
+            if (backgroundImages.length > 1) {
+                startSlideShow();
+            }
+        }
+
+        function startSlideShow() {
+            const slides = document.querySelectorAll('.bg-slide');
+            let currentIndex = 0;
+
+            setInterval(() => {
+                // Убираем active с текущего слайда
+                slides[currentIndex].classList.remove('active');
+                
+                // Переходим к следующему
+                currentIndex = (currentIndex + 1) % slides.length;
+                
+                // Добавляем active новому слайду
+                slides[currentIndex].classList.add('active');
+            }, SLIDE_INTERVAL);
+        }
+
+        // Запускаем инициализацию при загрузке
+        initBackgroundSlides();
 
         document.addEventListener('mousemove', (e) => {
             lastMouseX = e.clientX;
@@ -903,15 +1016,12 @@
             spark.className = 'spark';
             
             const duration = 0.12 + Math.random() * 0.06;
-            
-            // Случайное направление: за киркой (1) или перед ней (-1)
             const direction = Math.random() > 0.5 ? 1 : -1;
             
-            // Разлет уменьшен на 25%, падение увеличено на 3px вниз
             const dx1 = direction * (6 + Math.random() * 12);
-            const dy1 = -3 - Math.random() * 8; // было -6, стало -3 (на 3px выше/меньше вниз)
+            const dy1 = -3 - Math.random() * 8;
             const dx2 = direction * (12 + Math.random() * 12);
-            const dy2 = 5 + Math.random() * 6; // было 2, стало 5 (на 3px ниже/дальше вниз)
+            const dy2 = 5 + Math.random() * 6;
             
             spark.style.setProperty('--duration', duration + 's');
             spark.style.setProperty('--dx1', dx1 + 'px');
@@ -1007,7 +1117,7 @@
                 positionTooltip(el);
                 setTimeout(() => { el.classList.remove('copied'); tooltip.textContent = defaultTooltipText; }, 2000);
             }).catch(() => {
-                tooltip.textContent = '❌ Ошибка копирования';
+                tooltip.textContent = ' Ошибка копирования';
                 tooltip.classList.add('visible');
                 positionTooltip(el);
                 setTimeout(() => { tooltip.textContent = defaultTooltipText; }, 2000);
