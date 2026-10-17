@@ -83,7 +83,7 @@
             background-color: #0f172a; 
             color: #e2e8f0; 
             font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
         }
 
@@ -454,34 +454,31 @@
             100% { content: ''; }
         }
 
-        /* ===== ТАБЛИЦА С ФИКСИРОВАННЫМИ ШИРИНАМИ ===== */
+        /* ===== ТАБЛИЦА — БЕЗ СКРОЛЛА, РАСШИРЕННАЯ ===== */
         .table-container { 
-            overflow-x: auto;
-            max-width: 100%;
+            width: 100%;
         }
         .table-container table { 
-            width: 1410px; /* Фиксированная ширина таблицы */
-            table-layout: fixed;
+            width: 100%;
+            table-layout: auto;
         }
         .table-container th, .table-container td {
             text-align: center !important;
             vertical-align: middle !important;
             white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
         
         /* Ширины столбцов */
-        .col-num { width: 50px; }
-        .col-world { width: 140px; }
-        .col-lived { width: 170px; }
-        .col-achievements { width: 130px; }
-        .col-death { width: 180px; }
-        .col-description { width: 540px; }
-        .col-video { width: 100px; }
+        .col-num { width: 50px; min-width: 50px; }
+        .col-world { width: 140px; min-width: 140px; }
+        .col-lived { width: 170px; min-width: 170px; }
+        .col-achievements { width: 180px; min-width: 180px; }
+        .col-death { width: 180px; min-width: 180px; }
+        .col-description { width: auto; }
+        .col-video { width: 100px; min-width: 100px; }
 
         .progress-container {
-            min-width: 100px;
+            min-width: 120px;
             background-color: #334155;
             border-radius: 9999px;
             height: 4px;
@@ -538,7 +535,7 @@
                         <th class="p-3">🏆 Достижения</th>
                         <th class="p-3">❓ Причина смерти</th>
                         <th class="p-3">❗ Описание ситуации</th>
-                        <th class="p-3">🎞️ Видео</th>
+                        <th class="p-3">️ Видео</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-800 bg-slate-900/50">
@@ -795,7 +792,6 @@
     </section>
 
     <script>
-        // ===== КАСТОМНЫЙ КУРСОР (БЕЗ АНИМАЦИИ ДВИЖЕНИЯ) =====
         const customCursor = document.getElementById('custom-cursor');
         
         let lastMouseX = 0, lastMouseY = 0;
@@ -807,8 +803,6 @@
         document.addEventListener('mousemove', (e) => {
             lastMouseX = e.clientX;
             lastMouseY = e.clientY;
-            
-            // Просто позиционируем курсор без анимации
             customCursor.style.left = (e.clientX - 5) + 'px';
             customCursor.style.top = (e.clientY - 29) + 'px';
         });
@@ -816,9 +810,7 @@
         document.addEventListener('mousedown', (e) => {
             isClicking = true;
             clickStartTime = performance.now();
-            
             createSparksAtTip(e.clientX, e.clientY);
-            
             sparkInterval = setInterval(() => {
                 createSparksAtTip(lastMouseX, lastMouseY);
             }, CLICK_CYCLE);
@@ -848,7 +840,6 @@
         function createSparksAtTip(mouseX, mouseY) {
             const tipX = mouseX + 5 - 2;
             const tipY = mouseY + 5 + 5 - 3;
-            
             const sparkCount = 4 + Math.floor(Math.random() * 3);
             for (let i = 0; i < sparkCount; i++) {
                 createSpark(tipX, tipY);
@@ -858,10 +849,8 @@
         function createSpark(x, y) {
             const spark = document.createElement('div');
             spark.className = 'spark';
-            
             const duration = 0.4 + Math.random() * 0.3;
             const delay = Math.random() * 0.1;
-            
             const dx1 = (Math.random() - 0.5) * 16;
             const dy1 = -6 - Math.random() * 8;
             const dx2 = (Math.random() - 0.5) * 20;
@@ -870,7 +859,6 @@
             const dy3 = 6 + Math.random() * 8;
             const dx4 = (Math.random() - 0.5) * 16;
             const dy4 = 10 + Math.random() * 8;
-            
             spark.style.setProperty('--duration', duration + 's');
             spark.style.setProperty('--delay', delay + 's');
             spark.style.setProperty('--dx1', dx1 + 'px');
@@ -881,15 +869,12 @@
             spark.style.setProperty('--dy3', dy3 + 'px');
             spark.style.setProperty('--dx4', dx4 + 'px');
             spark.style.setProperty('--dy4', dy4 + 'px');
-            
             spark.style.left = x + 'px';
             spark.style.top = y + 'px';
-            
             const colors = ['#fbbf24', '#f59e0b', '#fcd34d', '#fb923c'];
             const randomColor = colors[Math.floor(Math.random() * colors.length)];
             spark.style.background = randomColor;
             spark.style.boxShadow = `0 0 4px ${randomColor}, 0 0 6px ${randomColor}`;
-            
             document.body.appendChild(spark);
             setTimeout(() => spark.remove(), (duration + delay) * 1000 + 100);
         }
@@ -973,7 +958,7 @@
                 positionTooltip(el);
                 setTimeout(() => { el.classList.remove('copied'); tooltip.textContent = defaultTooltipText; }, 2000);
             }).catch(() => {
-                tooltip.textContent = '❌ Ошибка копирования';
+                tooltip.textContent = ' Ошибка копирования';
                 tooltip.classList.add('visible');
                 positionTooltip(el);
                 setTimeout(() => { tooltip.textContent = defaultTooltipText; }, 2000);
