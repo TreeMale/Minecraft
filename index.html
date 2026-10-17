@@ -286,7 +286,6 @@
         .slider-handle:hover { background: rgba(74, 222, 128, 1); }
         .slider-handle:hover::after { background: #4ade80; }
         
-        /* ===== КНОПКИ ДО/ПОСЛЕ В ВЕРХНИХ УГЛАХ ===== */
         .comparison-labels {
             position: absolute;
             top: 16px;
@@ -456,7 +455,6 @@
             100% { content: ''; }
         }
 
-        /* ===== ТАБЛИЦА — БЕЗ СКРОЛЛА, РАСШИРЕННАЯ ===== */
         .table-container { 
             width: 100%;
         }
@@ -470,7 +468,6 @@
             white-space: nowrap;
         }
         
-        /* Ширины столбцов */
         .col-num { width: 50px; min-width: 50px; }
         .col-world { width: 140px; min-width: 140px; }
         .col-lived { width: 170px; min-width: 170px; }
@@ -480,7 +477,7 @@
         .col-video { width: 100px; min-width: 100px; }
 
         .progress-container {
-            min-width: 120px;
+            min-width: 150px; /* Увеличено на 25% (было 120px) */
             background-color: #334155;
             border-radius: 9999px;
             height: 4px;
@@ -707,7 +704,7 @@
                         </td>
                         <td class="p-3 text-red-400 font-semibold">ЗОМБИ-ЖИТЕЛЬ</td>
                         <td class="p-3 text-slate-300">Зашел в иглу, исцелить зомби-жителя, но он отказал.</td>
-                        <td class="p-3"><a href="#" class="text-blue-400 hover:underline font-semibold">YouTube</a></td>
+                        <td class="p-3"><a href="https://www.youtube.com/shorts/w9V0Ip6WojI" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline font-semibold">YouTube</a></td>
                     </tr>
                     <tr id="comp-row-4" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
@@ -960,7 +957,7 @@
                 positionTooltip(el);
                 setTimeout(() => { el.classList.remove('copied'); tooltip.textContent = defaultTooltipText; }, 2000);
             }).catch(() => {
-                tooltip.textContent = ' Ошибка копирования';
+                tooltip.textContent = '❌ Ошибка копирования';
                 tooltip.classList.add('visible');
                 positionTooltip(el);
                 setTimeout(() => { tooltip.textContent = defaultTooltipText; }, 2000);
