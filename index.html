@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TreeMale</title>
     <link rel="icon" type="image/png" href="https://treemale.github.io/Minecraft/images/icon.png">
+    
+    <!-- ОПТИМИЗАЦИЯ: Предварительное подключение к доменам для ускорения загрузки -->
+    <link rel="preconnect" href="https://treemale.github.io">
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @font-face {
@@ -36,6 +41,7 @@
             image-rendering: pixelated;
             image-rendering: -moz-crisp-edges;
             image-rendering: crisp-edges;
+            will-change: transform; /* ОПТИМИЗАЦИЯ: Подсказка браузеру для анимации */
         }
 
         @keyframes pickaxeClick {
@@ -102,6 +108,7 @@
             background-attachment: fixed;
             opacity: 0;
             transition: opacity 2s ease-in-out;
+            will-change: opacity; /* ОПТИМИЗАЦИЯ */
         }
 
         .bg-slide.active {
@@ -139,20 +146,25 @@
         .mc-green { color: #4ade80; }
         .mc-bg { background-color: #22c55e; }
         .pack-bg { background-color: #8b5cf6; }
+        
         .card { 
             background-color: rgba(30, 41, 59, 0.9); 
             border: 1px solid #334155; 
             transition: all 0.2s;
             backdrop-filter: blur(10px);
+            contain: layout style paint; /* ОПТИМИЗАЦИЯ: Изоляция перерисовки */
         }
         .card:hover { transform: translateY(-3px); border-color: #4ade80; box-shadow: 0 4px 12px rgba(74, 222, 128, 0.2); }
+        
         .card-pack { 
             background-color: rgba(30, 41, 59, 0.9); 
             border: 1px solid #334155; 
             transition: all 0.2s;
             backdrop-filter: blur(10px);
+            contain: layout style paint;
         }
         .card-pack:hover { transform: translateY(-3px); border-color: #8b5cf6; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2); }
+        
         .progress-bar { background-color: #22c55e; height: 4px; border-radius: 2px; }
         
         .world-name {
@@ -282,12 +294,10 @@
             justify-content: center;
         }
         
-        /* По умолчанию показываем только стрелку */
         .download-btn .icon-default {
             display: flex;
         }
         
-        /* При загрузке показываем спиннер */
         .download-btn.downloading .icon-default,
         .download-btn.success .icon-default {
             display: none;
@@ -297,7 +307,6 @@
             display: flex;
         }
         
-        /* При успехе показываем галочку */
         .download-btn.success .icon-success {
             display: flex;
             color: #60a5fa;
@@ -322,6 +331,7 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
             border: 2px solid #334155;
             animation: slideDown 0.3s ease-out;
+            contain: layout style paint; /* ОПТИМИЗАЦИЯ */
         }
         @keyframes slideDown {
             from { opacity: 0; transform: translateY(-10px); }
@@ -510,6 +520,7 @@
             background-repeat: no-repeat;
             animation-delay: 0s;
         }
+        
         .loader-block.planks {
             background-image: url('https://treemale.github.io/Minecraft/images/loader/oak_planks.webp');
             background-size: 100% 100%;
@@ -517,6 +528,7 @@
             background-repeat: no-repeat;
             animation-delay: 0.2s;
         }
+        
         .loader-block.cobblestone {
             background-image: url('https://treemale.github.io/Minecraft/images/loader/cobblestone.webp');
             background-size: 100% 100%;
@@ -600,7 +612,6 @@
 <body class="p-4 md:p-8 mx-auto">
 
     <div id="custom-cursor"></div>
-    
     <div class="custom-bg" id="bg-container"></div>
 
     <header class="text-center mb-12">
@@ -997,12 +1008,13 @@
 
         initBackgroundSlides();
 
+        // ОПТИМИЗАЦИЯ: Добавлен { passive: true } для улучшения производительности прокрутки и отслеживания мыши
         document.addEventListener('mousemove', (e) => {
             lastMouseX = e.clientX;
             lastMouseY = e.clientY;
             customCursor.style.left = (e.clientX - 5) + 'px';
             customCursor.style.top = (e.clientY - 29) + 'px';
-        });
+        }, { passive: true });
 
         function playClickAnimation(x, y) {
             customCursor.classList.remove('pickaxe-clicking');
