@@ -41,7 +41,7 @@
             image-rendering: pixelated;
             image-rendering: -moz-crisp-edges;
             image-rendering: crisp-edges;
-            will-change: transform; /* ОПТИМИЗАЦИЯ: Подсказка браузеру для анимации */
+            will-change: transform;
         }
 
         @keyframes pickaxeClick {
@@ -108,7 +108,7 @@
             background-attachment: fixed;
             opacity: 0;
             transition: opacity 2s ease-in-out;
-            will-change: opacity; /* ОПТИМИЗАЦИЯ */
+            will-change: opacity;
         }
 
         .bg-slide.active {
@@ -152,7 +152,7 @@
             border: 1px solid #334155; 
             transition: all 0.2s;
             backdrop-filter: blur(10px);
-            contain: layout style paint; /* ОПТИМИЗАЦИЯ: Изоляция перерисовки */
+            contain: layout style paint;
         }
         .card:hover { transform: translateY(-3px); border-color: #4ade80; box-shadow: 0 4px 12px rgba(74, 222, 128, 0.2); }
         
@@ -331,7 +331,7 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
             border: 2px solid #334155;
             animation: slideDown 0.3s ease-out;
-            contain: layout style paint; /* ОПТИМИЗАЦИЯ */
+            contain: layout style paint;
         }
         @keyframes slideDown {
             from { opacity: 0; transform: translateY(-10px); }
@@ -1192,7 +1192,8 @@
             const seed = el.getAttribute('data-seed');
             navigator.clipboard.writeText(seed).then(() => {
                 el.classList.add('copied');
-                tooltip.textContent = '✅ Сид скопирован!';
+                // ИЗМЕНЕНО: теперь показывается сам скопированный сид
+                tooltip.textContent = '✅ ' + seed;
                 tooltip.classList.add('visible');
                 positionTooltip(el);
                 setTimeout(() => { el.classList.remove('copied'); tooltip.textContent = defaultTooltipText; }, 2000);
