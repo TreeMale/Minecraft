@@ -59,10 +59,10 @@
             border-radius: 50%;
             pointer-events: none;
             z-index: 99998;
-            animation: sparkJump var(--duration, 0.3s) ease-out var(--delay, 0s) forwards;
+            animation: sparkJump var(--duration, 0.15s) ease-out forwards;
         }
 
-        /* Упрощенная анимация искр: 4 шага вместо 5 */
+        /* Упрощенная анимация искр: 3 шага */
         @keyframes sparkJump {
             0% {
                 opacity: 1;
@@ -74,15 +74,10 @@
                 transform: translate(var(--dx1, 2px), var(--dy1, -8px)) scale(1.2);
                 filter: blur(0.75px);
             }
-            66% {
-                opacity: 0.6;
-                transform: translate(var(--dx2, -3px), var(--dy2, 4px)) scale(1.5);
-                filter: blur(1.5px);
-            }
             100% {
                 opacity: 0;
-                transform: translate(var(--dx3, 5px), var(--dy3, 8px)) scale(2);
-                filter: blur(3px);
+                transform: translate(var(--dx2, -3px), var(--dy2, 4px)) scale(1.5);
+                filter: blur(1.5px);
             }
         }
 
@@ -535,7 +530,7 @@
                 <thead class="bg-slate-800 text-slate-300">
                     <tr>
                         <th class="p-3">#</th>
-                        <th class="p-3">🌍 Мир</th>
+                        <th class="p-3"> Мир</th>
                         <th class="p-3">❤️ Прожито</th>
                         <th class="p-3">🏆 Достижения</th>
                         <th class="p-3">❓ Причина смерти</th>
@@ -803,6 +798,7 @@
         let isHolding = false;
         let clickInterval = null;
         const CLICK_CYCLE = 300;
+        const SPARK_DELAY = 150; // Искры появляются в середине цикла (когда кирка опустилась)
 
         document.addEventListener('mousemove', (e) => {
             lastMouseX = e.clientX;
@@ -812,10 +808,15 @@
         });
 
         function playClickAnimation(x, y) {
+            // Перезапуск CSS-анимации кирки
             customCursor.classList.remove('pickaxe-clicking');
             void customCursor.offsetWidth;
             customCursor.classList.add('pickaxe-clicking');
-            createSparksAtTip(x, y);
+            
+            // Искры появляются с задержкой 150мс (когда кирка полностью опустилась)
+            setTimeout(() => {
+                createSparksAtTip(x, y);
+            }, SPARK_DELAY);
         }
 
         document.addEventListener('mousedown', (e) => {
@@ -870,28 +871,19 @@
             const spark = document.createElement('div');
             spark.className = 'spark';
             
-            // Длительность уменьшена до 0.2-0.3с (вместо 0.4-0.7с)
-            const duration = 0.2 + Math.random() * 0.1;
-            const delay = Math.random() * 0.05;
+            // Длительность анимации искр ~150мс (укладывается в оставшуюся часть цикла)
+            const duration = 0.12 + Math.random() * 0.06;
             
-            // Уменьшенный разброс по X
             const dx1 = (Math.random() - 0.5) * 16;
             const dy1 = -6 - Math.random() * 8;
             const dx2 = (Math.random() - 0.5) * 20;
             const dy2 = 2 + Math.random() * 6;
             
-            // Уменьшенная дистанция падения в 2 раза (было 6-14 и 10-18, стало 3-7 и 5-9)
-            const dx3 = (Math.random() - 0.5) * 24;
-            const dy3 = 3 + Math.random() * 4;
-            
             spark.style.setProperty('--duration', duration + 's');
-            spark.style.setProperty('--delay', delay + 's');
             spark.style.setProperty('--dx1', dx1 + 'px');
             spark.style.setProperty('--dy1', dy1 + 'px');
             spark.style.setProperty('--dx2', dx2 + 'px');
             spark.style.setProperty('--dy2', dy2 + 'px');
-            spark.style.setProperty('--dx3', dx3 + 'px');
-            spark.style.setProperty('--dy3', dy3 + 'px');
             
             spark.style.left = x + 'px';
             spark.style.top = y + 'px';
@@ -902,7 +894,7 @@
             spark.style.boxShadow = `0 0 4px ${randomColor}, 0 0 6px ${randomColor}`;
             
             document.body.appendChild(spark);
-            setTimeout(() => spark.remove(), (duration + delay) * 1000 + 50);
+            setTimeout(() => spark.remove(), duration * 1000 + 50);
         }
 
         const world1ImageSets = {
