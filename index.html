@@ -61,14 +61,14 @@
             animation: sparkJump var(--duration, 0.15s) ease-out forwards;
         }
 
-        /* Прозрачность: 0% → 50% → 0% */
+        /* Два состояния: 100% → 0% */
         @keyframes sparkJump {
             0% {
-                opacity: 0;
+                opacity: 1;
                 transform: translate(0, 0);
             }
             50% {
-                opacity: 0.5;
+                opacity: 1;
                 transform: translate(var(--dx1, 2px), var(--dy1, -8px));
             }
             100% {
@@ -526,7 +526,7 @@
                 <thead class="bg-slate-800 text-slate-300">
                     <tr>
                         <th class="p-3">#</th>
-                        <th class="p-3"> Мир</th>
+                        <th class="p-3">🌍 Мир</th>
                         <th class="p-3">❤️ Прожито</th>
                         <th class="p-3">🏆 Достижения</th>
                         <th class="p-3">❓ Причина смерти</th>
@@ -870,11 +870,11 @@
             // Случайное направление: за киркой (1) или перед ней (-1)
             const direction = Math.random() > 0.5 ? 1 : -1;
             
-            // Уменьшенный разлет на 25% (было 8-24 и 16-32, стало 6-18 и 12-24)
+            // Разлет уменьшен на 25%, падение увеличено на 3px вниз
             const dx1 = direction * (6 + Math.random() * 12);
-            const dy1 = -6 - Math.random() * 8;
+            const dy1 = -3 - Math.random() * 8; // было -6, стало -3 (на 3px выше/меньше вниз)
             const dx2 = direction * (12 + Math.random() * 12);
-            const dy2 = 2 + Math.random() * 6;
+            const dy2 = 5 + Math.random() * 6; // было 2, стало 5 (на 3px ниже/дальше вниз)
             
             spark.style.setProperty('--duration', duration + 's');
             spark.style.setProperty('--dx1', dx1 + 'px');
