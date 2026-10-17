@@ -36,6 +36,18 @@
             image-rendering: pixelated;
             image-rendering: -moz-crisp-edges;
             image-rendering: crisp-edges;
+            transform-origin: 5px 29px; /* Точка вращения - острие кирки */
+        }
+
+        /* Анимация удара киркой ровно за 0.3 секунды */
+        @keyframes pickaxeClick {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(-25deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        .pickaxe-clicking {
+            animation: pickaxeClick 0.3s ease-in-out;
         }
 
         * {
@@ -794,19 +806,7 @@
         const customCursor = document.getElementById('custom-cursor');
         
         let lastMouseX = 0, lastMouseY = 0;
-        let isClicking = false;
-        let clickStartTime = 0;
-        let sparkInterval = null;
-        const CLICK_CYCLE = 300;
-
-        // Функция для гарантированного сброса состояния кирки
-        function resetCursorState() {
-            isClicking = false;
-            if (sparkInterval) {
-                clearInterval(sparkInterval);
-                sparkInterval = null;
-            }
-        }
+        let isAnimating = false;
 
         document.addEventListener('mousemove', (e) => {
             lastMouseX = e.clientX;
@@ -815,40 +815,36 @@
             customCursor.style.top = (e.clientY - 29) + 'px';
         });
 
+        // Обработка клика: одна анимация ровно на 0.3 секунды
         document.addEventListener('mousedown', (e) => {
-            isClicking = true;
-            clickStartTime = performance.now();
+            if (isAnimating) return; // Игнорируем новые клики, пока идет анимация
+            
+            isAnimating = true;
+            customCursor.classList.add('pickaxe-clicking');
+            
+            // Создаем одну порцию искр
             createSparksAtTip(e.clientX, e.clientY);
-            sparkInterval = setInterval(() => {
-                createSparksAtTip(lastMouseX, lastMouseY);
-            }, CLICK_CYCLE);
+            
+            // Сбрасываем состояние ровно через 0.3 секунды
+            setTimeout(() => {
+                customCursor.classList.remove('pickaxe-clicking');
+                isAnimating = false;
+            }, 300);
         });
 
-        // Используем window вместо document, чтобы перехватывать события даже при Drag-and-Drop
-        window.addEventListener('mouseup', resetCursorState);
+        // Защита от залипания при перетаскивании текста или уходе мыши
+        window.addEventListener('dragend', () => {
+            customCursor.classList.remove('pickaxe-clicking');
+            isAnimating = false;
+        });
+        
         window.addEventListener('mouseleave', () => {
             customCursor.style.display = 'none';
-            resetCursorState(); // Сбрасываем, если мышь ушла с зажатым кликом
         });
+        
         window.addEventListener('mouseenter', () => {
             customCursor.style.display = 'block';
         });
-        
-        // Ключевое исправление: принудительный сброс при завершении перетаскивания текста
-        window.addEventListener('dragend', resetCursorState);
-
-        function animateCursor() {
-            if (isClicking) {
-                const elapsed = performance.now() - clickStartTime;
-                const phase = (elapsed % CLICK_CYCLE) / CLICK_CYCLE;
-                const swingAngle = -25 * Math.sin(phase * Math.PI);
-                customCursor.style.transform = `rotate(${swingAngle}deg)`;
-            } else {
-                customCursor.style.transform = 'rotate(0deg)';
-            }
-            requestAnimationFrame(animateCursor);
-        }
-        requestAnimationFrame(animateCursor);
 
         function createSparksAtTip(mouseX, mouseY) {
             const tipX = mouseX + 5 - 2;
