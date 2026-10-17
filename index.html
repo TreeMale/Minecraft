@@ -477,7 +477,7 @@
         .col-video { width: 100px; min-width: 100px; }
 
         .progress-container {
-            min-width: 150px; /* Увеличено на 25% (было 120px) */
+            min-width: 150px;
             background-color: #334155;
             border-radius: 9999px;
             height: 4px;
@@ -799,6 +799,15 @@
         let sparkInterval = null;
         const CLICK_CYCLE = 300;
 
+        // Функция для гарантированного сброса состояния кирки
+        function resetCursorState() {
+            isClicking = false;
+            if (sparkInterval) {
+                clearInterval(sparkInterval);
+                sparkInterval = null;
+            }
+        }
+
         document.addEventListener('mousemove', (e) => {
             lastMouseX = e.clientX;
             lastMouseY = e.clientY;
@@ -815,13 +824,18 @@
             }, CLICK_CYCLE);
         });
 
-        document.addEventListener('mouseup', () => {
-            isClicking = false;
-            if (sparkInterval) {
-                clearInterval(sparkInterval);
-                sparkInterval = null;
-            }
+        // Используем window вместо document, чтобы перехватывать события даже при Drag-and-Drop
+        window.addEventListener('mouseup', resetCursorState);
+        window.addEventListener('mouseleave', () => {
+            customCursor.style.display = 'none';
+            resetCursorState(); // Сбрасываем, если мышь ушла с зажатым кликом
         });
+        window.addEventListener('mouseenter', () => {
+            customCursor.style.display = 'block';
+        });
+        
+        // Ключевое исправление: принудительный сброс при завершении перетаскивания текста
+        window.addEventListener('dragend', resetCursorState);
 
         function animateCursor() {
             if (isClicking) {
@@ -877,9 +891,6 @@
             document.body.appendChild(spark);
             setTimeout(() => spark.remove(), (duration + delay) * 1000 + 100);
         }
-
-        document.addEventListener('mouseleave', () => { customCursor.style.display = 'none'; });
-        document.addEventListener('mouseenter', () => { customCursor.style.display = 'block'; });
 
         const world1ImageSets = {
             1: { before: 'https://treemale.github.io/Minecraft/images/world/1/1_1-0_75.5-95--170.5-141-23.8.webp', after: 'https://treemale.github.io/Minecraft/images/world/1/1_1-1_75.5-95--170.5-141-23.8.webp' },
