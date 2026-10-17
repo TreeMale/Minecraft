@@ -209,6 +209,28 @@
             background: rgba(100, 116, 139, 0.2);
         }
 
+        /* Кнопка скачивания мира */
+        .download-btn {
+            background: rgba(74, 222, 128, 0.2);
+            border: 1px solid #4ade80;
+            color: #4ade80;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 8px;
+            font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
+        }
+        .download-btn:hover {
+            background: rgba(74, 222, 128, 0.4);
+            transform: scale(1.05);
+        }
+
         .comparison-container {
             position: relative;
             width: 100%;
@@ -541,7 +563,10 @@
                         <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="1021725279" onclick="copySeed(this)">#мирвайба1</span>
-                                <button class="compare-btn" onclick="toggleComparison(1)">Картинки</button>
+                                <div class="flex gap-2">
+                                    <a href="ССЫЛКА_НА_СКАЧИВАНИЕ_МИРА_1" class="download-btn" title="Скачать мир" download>⬇</a>
+                                    <button class="compare-btn" onclick="toggleComparison(1)">Картинки</button>
+                                </div>
                             </div>
                         </td>
                         <td class="p-3">4 ч. 36 мин.</td>
@@ -590,7 +615,10 @@
                         <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="-2075836568" onclick="copySeed(this)">#мирвайба2</span>
-                                <button class="compare-btn" onclick="toggleComparison(2)">Картинки</button>
+                                <div class="flex gap-2">
+                                    <a href="ССЫЛКА_НА_СКАЧИВАНИЕ_МИРА_2" class="download-btn" title="Скачать мир" download>⬇</a>
+                                    <button class="compare-btn" onclick="toggleComparison(2)">Картинки</button>
+                                </div>
                             </div>
                         </td>
                         <td class="p-3">14 ч. 9 мин.</td>
@@ -639,7 +667,10 @@
                         <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="4008466176163305479" onclick="copySeed(this)">#мирвайба3</span>
-                                <button class="compare-btn" onclick="toggleComparison(3)">Картинки</button>
+                                <div class="flex gap-2">
+                                    <a href="ССЫЛКА_НА_СКАЧИВАНИЕ_МИРА_3" class="download-btn" title="Скачать мир" download>⬇</a>
+                                    <button class="compare-btn" onclick="toggleComparison(3)">Картинки</button>
+                                </div>
                             </div>
                         </td>
                         <td class="p-3">19 ч. 55 мин.</td>
@@ -689,7 +720,10 @@
                         <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="34376356" onclick="copySeed(this)">#мирвайба4</span>
-                                <button class="compare-btn" onclick="toggleComparison(4)">Картинки</button>
+                                <div class="flex gap-2">
+                                    <a href="ССЫЛКА_НА_СКАЧИВАНИЕ_МИРА_4" class="download-btn" title="Скачать мир" download>⬇</a>
+                                    <button class="compare-btn" onclick="toggleComparison(4)">Картинки</button>
+                                </div>
                             </div>
                         </td>
                         <td class="p-3">16 ч. 5 мин.</td>
@@ -738,7 +772,10 @@
                         <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="-6728139250759796146" onclick="copySeed(this)">#мирвайба5</span>
-                                <button class="compare-btn disabled" disabled title="Картинки пока не добавлены">Картинки</button>
+                                <div class="flex gap-2">
+                                    <a href="ССЫЛКА_НА_СКАЧИВАНИЕ_МИРА_5" class="download-btn" title="Скачать мир" download>⬇</a>
+                                    <button class="compare-btn disabled" disabled title="Картинки пока не добавлены">Картинки</button>
+                                </div>
                             </div>
                         </td>
                         <td class="p-3">5 ч. 47 мин.</td>
@@ -965,7 +1002,7 @@
             const seed = el.getAttribute('data-seed');
             navigator.clipboard.writeText(seed).then(() => {
                 el.classList.add('copied');
-                tooltip.textContent = '✅ Сид скопирован: ' + seed;
+                tooltip.textContent = '✅ Сид скопирован!';
                 tooltip.classList.add('visible');
                 positionTooltip(el);
                 setTimeout(() => { el.classList.remove('copied'); tooltip.textContent = defaultTooltipText; }, 2000);
