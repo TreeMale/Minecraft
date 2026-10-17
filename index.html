@@ -513,7 +513,7 @@
                         <th class="p-3 text-center align-middle">#</th>
                         <th class="p-3 text-center align-middle">🌍 Мир</th>
                         <th class="p-3 text-center align-middle">❤️ Прожито</th>
-                        <th class="p-3 text-center align-middle"> Достижения</th>
+                        <th class="p-3 text-center align-middle">🏆 Достижения</th>
                         <th class="p-3 text-center align-middle">Причина смерти</th>
                         <th class="p-3 text-center align-middle">❗ Описание ситуации</th>
                         <th class="p-3 text-center align-middle">🎞️ Видео</th>
@@ -773,14 +773,15 @@
     </section>
 
     <script>
+        // ===== КАСТОМНЫЙ КУРСОР С НАКЛОНОМ И СМЕЩЕНИЕМ =====
         const customCursor = document.getElementById('custom-cursor');
         
         let lastMouseX = 0, lastMouseY = 0;
         let prevMouseX = 0, prevMouseY = 0;
         let skewX = 0, skewY = 0;
         let targetSkewX = 0, targetSkewY = 0;
-        let jitterX = 0, jitterY = 0;
-        let targetJitterX = 0, targetJitterY = 0;
+        let offsetX = 0, offsetY = 0;
+        let targetOffsetX = 0, targetOffsetY = 0;
         let isClicking = false;
         let clickStartTime = 0;
         let sparkInterval = null;
@@ -795,16 +796,17 @@
             const deltaX = e.clientX - prevMouseX;
             const deltaY = e.clientY - prevMouseY;
             
-            // Наклон в сторону движения по обеим осям (максимум ±10°)
+            // Наклон в сторону движения (±10° максимум)
             targetSkewX = Math.max(-10, Math.min(10, deltaX * 1.2));
             targetSkewY = Math.max(-10, Math.min(10, deltaY * 1.2));
             
-            // Дрожание позиции (±3px)
-            targetJitterX = (Math.random() - 0.5) * 6;
-            targetJitterY = (Math.random() - 0.5) * 6;
+            // Смещение в сторону движения (±5px максимум)
+            targetOffsetX = Math.max(-5, Math.min(5, deltaX * 0.8));
+            targetOffsetY = Math.max(-5, Math.min(5, deltaY * 0.8));
             
-            customCursor.style.left = (e.clientX - 5 + jitterX) + 'px';
-            customCursor.style.top = (e.clientY - 29 + jitterY) + 'px';
+            // Позиция курсора = позиция мыши + текущее смещение
+            customCursor.style.left = (e.clientX - 5 + offsetX) + 'px';
+            customCursor.style.top = (e.clientY - 29 + offsetY) + 'px';
         });
 
         document.addEventListener('mousedown', (e) => {
@@ -828,18 +830,18 @@
 
         function animateCursor() {
             // Плавное приближение к целевым значениям
-            skewX += (targetSkewX - skewX) * 0.15;
-            skewY += (targetSkewY - skewY) * 0.15;
-            jitterX += (targetJitterX - jitterX) * 0.3;
-            jitterY += (targetJitterY - jitterY) * 0.3;
+            skewX += (targetSkewX - skewX) * 0.2;
+            skewY += (targetSkewY - skewY) * 0.2;
+            offsetX += (targetOffsetX - offsetX) * 0.2;
+            offsetY += (targetOffsetY - offsetY) * 0.2;
             
-            // Затухание
-            targetSkewX *= 0.88;
-            targetSkewY *= 0.88;
-            targetJitterX *= 0.85;
-            targetJitterY *= 0.85;
+            // Быстрое затухание (возврат в исходное положение)
+            targetSkewX *= 0.85;
+            targetSkewY *= 0.85;
+            targetOffsetX *= 0.85;
+            targetOffsetY *= 0.85;
             
-            let transform = `skewX(${skewX}deg) skewY(${skewY}deg) translate(${jitterX}px, ${jitterY}px)`;
+            let transform = `skewX(${skewX}deg) skewY(${skewY}deg) translate(${offsetX}px, ${offsetY}px)`;
             
             if (isClicking) {
                 const elapsed = performance.now() - clickStartTime;
@@ -858,7 +860,6 @@
             const tipX = mouseX + 5 - 2;
             const tipY = mouseY + 5 + 5 - 3;
             
-            // Увеличено на 30%: было 3-5, стало 4-6
             const sparkCount = 4 + Math.floor(Math.random() * 3);
             for (let i = 0; i < sparkCount; i++) {
                 createSpark(tipX, tipY);
@@ -872,14 +873,15 @@
             const duration = 0.4 + Math.random() * 0.3;
             const delay = Math.random() * 0.1;
             
-            const dx1 = (Math.random() - 0.5) * 8;
-            const dy1 = -6 - Math.random() * 6;
-            const dx2 = (Math.random() - 0.5) * 10;
-            const dy2 = 2 + Math.random() * 4;
-            const dx3 = (Math.random() - 0.5) * 12;
-            const dy3 = 6 + Math.random() * 6;
-            const dx4 = (Math.random() - 0.5) * 8;
-            const dy4 = 10 + Math.random() * 6;
+            // Увеличенный разброс искр (в 2 раза шире по горизонтали)
+            const dx1 = (Math.random() - 0.5) * 16;   // было ±4, стало ±8
+            const dy1 = -6 - Math.random() * 8;         // было -6..-12, стало -6..-14
+            const dx2 = (Math.random() - 0.5) * 20;     // было ±5, стало ±10
+            const dy2 = 2 + Math.random() * 6;           // было 2..6, стало 2..8
+            const dx3 = (Math.random() - 0.5) * 24;     // было ±6, стало ±12
+            const dy3 = 6 + Math.random() * 8;           // было 6..12, стало 6..14
+            const dx4 = (Math.random() - 0.5) * 16;     // было ±4, стало ±8
+            const dy4 = 10 + Math.random() * 8;          // было 10..16, стало 10..18
             
             spark.style.setProperty('--duration', duration + 's');
             spark.style.setProperty('--delay', delay + 's');
@@ -983,7 +985,7 @@
                 positionTooltip(el);
                 setTimeout(() => { el.classList.remove('copied'); tooltip.textContent = defaultTooltipText; }, 2000);
             }).catch(() => {
-                tooltip.textContent = ' Ошибка копирования';
+                tooltip.textContent = '❌ Ошибка копирования';
                 tooltip.classList.add('visible');
                 positionTooltip(el);
                 setTimeout(() => { tooltip.textContent = defaultTooltipText; }, 2000);
