@@ -42,6 +42,7 @@
             cursor: none !important;
         }
 
+        /* ===== ИСКРЫ С АСИНХРОННЫМИ ПРЫЖКАМИ ===== */
         .spark {
             position: fixed;
             width: 2px;
@@ -49,23 +50,35 @@
             border-radius: 50%;
             pointer-events: none;
             z-index: 99998;
+            animation: sparkJump var(--duration, 0.5s) ease-out var(--delay, 0s) forwards;
         }
 
-        .spark::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: inherit;
-            border-radius: 50%;
-            animation: sparkFade 0.3s ease-out forwards;
-        }
-
-        @keyframes sparkFade {
-            0% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0; transform: scale(0); }
+        @keyframes sparkJump {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+                filter: blur(0px);
+            }
+            20% {
+                opacity: 1;
+                transform: translate(var(--dx1, 2px), var(--dy1, -8px)) scale(1.2);
+                filter: blur(0.5px);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translate(var(--dx2, -3px), var(--dy2, 4px)) scale(1.5);
+                filter: blur(1px);
+            }
+            80% {
+                opacity: 0.4;
+                transform: translate(var(--dx3, 5px), var(--dy3, 8px)) scale(1.8);
+                filter: blur(1.5px);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--dx4, -2px), var(--dy4, 12px)) scale(2);
+                filter: blur(2px);
+            }
         }
 
         body { 
@@ -502,8 +515,8 @@
                         <th class="p-3 text-center align-middle">❤️ Прожито</th>
                         <th class="p-3 text-center align-middle">🏆 Достижения</th>
                         <th class="p-3 text-center align-middle">Причина смерти</th>
-                        <th class="p-3 text-center align-middle"> Описание ситуации</th>
-                        <th class="p-3 text-center align-middle">🎞️ Видео</th>
+                        <th class="p-3 text-center align-middle">❗ Описание ситуации</th>
+                        <th class="p-3 text-center align-middle">️ Видео</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-800 bg-slate-900/50">
@@ -760,6 +773,7 @@
     </section>
 
     <script>
+        // ===== КАСТОМНЫЙ КУРСОР С ПОКАЧИВАНИЕМ И УДАРАМИ =====
         const customCursor = document.getElementById('custom-cursor');
         
         let lastMouseX = 0, lastMouseY = 0;
@@ -820,9 +834,10 @@
         }
         requestAnimationFrame(animateCursor);
 
+        // Искры из конца наклонённой кирки, сдвинутые на 3px вверх и 2px влево
         function createSparksAtTip(mouseX, mouseY) {
-            const tipX = mouseX + 5;
-            const tipY = mouseY + 5 + 5;
+            const tipX = mouseX + 5 - 2;      // -2px влево
+            const tipY = mouseY + 5 + 5 - 3;  // -3px вверх
             
             const sparkCount = 3 + Math.floor(Math.random() * 3);
             for (let i = 0; i < sparkCount; i++) {
@@ -834,11 +849,34 @@
             const spark = document.createElement('div');
             spark.className = 'spark';
             
-            const offsetX = (Math.random() - 0.5) * 14;
-            const offsetY = (Math.random() - 0.3) * 12;
+            // Случайные параметры для асинхронной анимации
+            const duration = 0.4 + Math.random() * 0.3; // 0.4-0.7s
+            const delay = Math.random() * 0.1; // 0-0.1s задержка
             
-            spark.style.left = (x + offsetX) + 'px';
-            spark.style.top = (y + offsetY) + 'px';
+            // Случайные траектории движения (прыжки вверх-вниз)
+            const dx1 = (Math.random() - 0.5) * 8;
+            const dy1 = -6 - Math.random() * 6;
+            const dx2 = (Math.random() - 0.5) * 10;
+            const dy2 = 2 + Math.random() * 4;
+            const dx3 = (Math.random() - 0.5) * 12;
+            const dy3 = 6 + Math.random() * 6;
+            const dx4 = (Math.random() - 0.5) * 8;
+            const dy4 = 10 + Math.random() * 6;
+            
+            // Устанавливаем CSS-переменные для этой искры
+            spark.style.setProperty('--duration', duration + 's');
+            spark.style.setProperty('--delay', delay + 's');
+            spark.style.setProperty('--dx1', dx1 + 'px');
+            spark.style.setProperty('--dy1', dy1 + 'px');
+            spark.style.setProperty('--dx2', dx2 + 'px');
+            spark.style.setProperty('--dy2', dy2 + 'px');
+            spark.style.setProperty('--dx3', dx3 + 'px');
+            spark.style.setProperty('--dy3', dy3 + 'px');
+            spark.style.setProperty('--dx4', dx4 + 'px');
+            spark.style.setProperty('--dy4', dy4 + 'px');
+            
+            spark.style.left = x + 'px';
+            spark.style.top = y + 'px';
             
             const colors = ['#fbbf24', '#f59e0b', '#fcd34d', '#fb923c'];
             const randomColor = colors[Math.floor(Math.random() * colors.length)];
@@ -846,7 +884,7 @@
             spark.style.boxShadow = `0 0 4px ${randomColor}, 0 0 6px ${randomColor}`;
             
             document.body.appendChild(spark);
-            setTimeout(() => spark.remove(), 300);
+            setTimeout(() => spark.remove(), (duration + delay) * 1000 + 100);
         }
 
         document.addEventListener('mouseleave', () => { customCursor.style.display = 'none'; });
