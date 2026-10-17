@@ -84,7 +84,6 @@
             margin: 0 auto;
         }
 
-        /* Контейнер для фоновых слайдов */
         .custom-bg {
             position: fixed;
             top: 0; left: 0;
@@ -93,7 +92,6 @@
             overflow: hidden;
         }
 
-        /* Отдельный слайд фона */
         .bg-slide {
             position: absolute;
             top: 0; left: 0;
@@ -259,6 +257,7 @@
             font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
             transition: opacity 0.15s, visibility 0.15s;
             z-index: 10;
+            pointer-events: none; /* ← ИСПРАВЛЕНИЕ БАГА */
         }
         .download-btn .tooltip-text::after {
             content: '';
@@ -563,10 +562,7 @@
 
     <div id="custom-cursor"></div>
     
-    <!-- Контейнер для фоновых слайдов -->
-    <div class="custom-bg" id="bg-container">
-        <!-- Слайды будут добавлены через JavaScript -->
-    </div>
+    <div class="custom-bg" id="bg-container"></div>
 
     <header class="text-center mb-12">
         <div class="flex justify-center">
@@ -611,7 +607,7 @@
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="1021725279" onclick="copySeed(this)">#мирвайба1</span>
                                 <div class="flex items-center">
-                                    <a href="ССЫЛКА_НА_СКАЧИВАНИЕ_МИРА_1" class="download-btn" title="" download>
+                                    <a href="https://github.com/TreeMale/Minecraft/releases/download/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B1%D0%B01/1.zip" class="download-btn" title="" download>
                                         <span class="tooltip-text">Скачать мир</span>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                                     </a>
@@ -666,7 +662,7 @@
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="-2075836568" onclick="copySeed(this)">#мирвайба2</span>
                                 <div class="flex items-center">
-                                    <a href="ССЫЛКА_НА_СКАЧИВАНИЕ_МИРА_2" class="download-btn" title="" download>
+                                    <a href="https://github.com/TreeMale/Minecraft/releases/download/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B1%D0%B02/2.zip" class="download-btn" title="" download>
                                         <span class="tooltip-text">Скачать мир</span>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                                     </a>
@@ -721,7 +717,7 @@
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="4008466176163305479" onclick="copySeed(this)">#мирвайба3</span>
                                 <div class="flex items-center">
-                                    <a href="ССЫЛКА_НА_СКАЧИВАНИЕ_МИРА_3" class="download-btn" title="" download>
+                                    <a href="https://github.com/TreeMale/Minecraft/releases/download/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B1%D0%B03/3.zip" class="download-btn" title="" download>
                                         <span class="tooltip-text">Скачать мир</span>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                                     </a>
@@ -777,7 +773,7 @@
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="34376356" onclick="copySeed(this)">#мирвайба4</span>
                                 <div class="flex items-center">
-                                    <a href="ССЫЛКА_НА_СКАЧИВАНИЕ_МИРА_4" class="download-btn" title="" download>
+                                    <a href="https://github.com/TreeMale/Minecraft/releases/download/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B1%D0%B04/4.zip class="download-btn" title="" download>
                                         <span class="tooltip-text">Скачать мир</span>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                                     </a>
@@ -888,7 +884,7 @@
 
     <script>
         // ================= НАСТРОЙКИ ФОНОВЫХ СЛАЙДОВ =================
-        // Добавь сюда ссылки на свои фоновые картинки с GitHub
+        // ВСТАВЛЯЙ ССЫЛКИ НА СВОИ ФОНОВЫЕ КАРТИНКИ ЗДЕСЬ:
         const backgroundImages = [
             'https://treemale.github.io/Minecraft/images/bg/slide1.jpg',
             'https://treemale.github.io/Minecraft/images/bg/slide2.jpg',
@@ -908,11 +904,9 @@
         const CLICK_CYCLE = 300;
         const SPARK_DELAY = 150;
 
-        // Инициализация фоновых слайдов
         function initBackgroundSlides() {
             const container = document.getElementById('bg-container');
             
-            // Создаём слайды
             backgroundImages.forEach((url, index) => {
                 const slide = document.createElement('div');
                 slide.className = 'bg-slide';
@@ -921,7 +915,6 @@
                 container.appendChild(slide);
             });
 
-            // Запускаем автопереключение
             if (backgroundImages.length > 1) {
                 startSlideShow();
             }
@@ -932,18 +925,12 @@
             let currentIndex = 0;
 
             setInterval(() => {
-                // Убираем active с текущего слайда
                 slides[currentIndex].classList.remove('active');
-                
-                // Переходим к следующему
                 currentIndex = (currentIndex + 1) % slides.length;
-                
-                // Добавляем active новому слайду
                 slides[currentIndex].classList.add('active');
             }, SLIDE_INTERVAL);
         }
 
-        // Запускаем инициализацию при загрузке
         initBackgroundSlides();
 
         document.addEventListener('mousemove', (e) => {
@@ -1117,7 +1104,7 @@
                 positionTooltip(el);
                 setTimeout(() => { el.classList.remove('copied'); tooltip.textContent = defaultTooltipText; }, 2000);
             }).catch(() => {
-                tooltip.textContent = ' Ошибка копирования';
+                tooltip.textContent = '❌ Ошибка копирования';
                 tooltip.classList.add('visible');
                 positionTooltip(el);
                 setTimeout(() => { tooltip.textContent = defaultTooltipText; }, 2000);
