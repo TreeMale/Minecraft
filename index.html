@@ -52,7 +52,6 @@
             cursor: none !important;
         }
 
-        /* Квадратные искры без border-radius */
         .spark {
             position: fixed;
             width: 2px;
@@ -62,19 +61,15 @@
             animation: sparkJump var(--duration, 0.15s) ease-out forwards;
         }
 
-        /* Две стадии: есть (opacity:1) и нет (opacity:0) */
+        /* Прозрачность: 0% → 50% → 0% */
         @keyframes sparkJump {
             0% {
-                opacity: 1;
+                opacity: 0;
                 transform: translate(0, 0);
             }
-            40% {
-                opacity: 1;
+            50% {
+                opacity: 0.5;
                 transform: translate(var(--dx1, 2px), var(--dy1, -8px));
-            }
-            90% {
-                opacity: 1;
-                transform: translate(var(--dx2, -3px), var(--dy2, 4px));
             }
             100% {
                 opacity: 0;
@@ -531,7 +526,7 @@
                 <thead class="bg-slate-800 text-slate-300">
                     <tr>
                         <th class="p-3">#</th>
-                        <th class="p-3">🌍 Мир</th>
+                        <th class="p-3"> Мир</th>
                         <th class="p-3">❤️ Прожито</th>
                         <th class="p-3">🏆 Достижения</th>
                         <th class="p-3">❓ Причина смерти</th>
@@ -858,7 +853,6 @@
         });
 
         function createSparksAtTip(mouseX, mouseY) {
-            // Опустили на 2px вниз: было -3, стало -3+2 = -1
             const tipX = mouseX + 5 - 2;
             const tipY = mouseY + 5 + 5 - 1;
             const sparkCount = 4 + Math.floor(Math.random() * 3);
@@ -873,13 +867,13 @@
             
             const duration = 0.12 + Math.random() * 0.06;
             
-            // Случайное направление: за киркой (-1) или перед ней (1)
+            // Случайное направление: за киркой (1) или перед ней (-1)
             const direction = Math.random() > 0.5 ? 1 : -1;
             
-            // Увеличенный разлет (было *16 и *20, стало *24 и *32)
-            const dx1 = direction * (8 + Math.random() * 16);
+            // Уменьшенный разлет на 25% (было 8-24 и 16-32, стало 6-18 и 12-24)
+            const dx1 = direction * (6 + Math.random() * 12);
             const dy1 = -6 - Math.random() * 8;
-            const dx2 = direction * (16 + Math.random() * 16);
+            const dx2 = direction * (12 + Math.random() * 12);
             const dy2 = 2 + Math.random() * 6;
             
             spark.style.setProperty('--duration', duration + 's');
