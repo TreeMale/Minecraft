@@ -277,23 +277,30 @@
         .download-btn .icon-default,
         .download-btn .icon-loading,
         .download-btn .icon-success {
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
         }
-
+        
+        /* По умолчанию показываем только стрелку */
+        .download-btn .icon-default {
+            display: flex;
+        }
+        
+        /* При загрузке показываем спиннер */
         .download-btn.downloading .icon-default,
         .download-btn.success .icon-default {
             display: none;
         }
-
+        
         .download-btn.downloading .icon-loading {
             display: flex;
         }
-
+        
+        /* При успехе показываем галочку */
         .download-btn.success .icon-success {
             display: flex;
-            color: #4ade80; /* Зеленая галочка */
+            color: #4ade80;
         }
 
         .spinner-icon {
