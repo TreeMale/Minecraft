@@ -257,7 +257,7 @@
             font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
             transition: opacity 0.15s, visibility 0.15s;
             z-index: 10;
-            pointer-events: none; /* ← ИСПРАВЛЕНИЕ БАГА */
+            pointer-events: none;
         }
         .download-btn .tooltip-text::after {
             content: '';
@@ -773,7 +773,8 @@
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="34376356" onclick="copySeed(this)">#мирвайба4</span>
                                 <div class="flex items-center">
-                                    <a href="https://github.com/TreeMale/Minecraft/releases/download/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B1%D0%B04/4.zip class="download-btn" title="" download>
+                                    <!-- ИСПРАВЛЕНО: добавлена закрывающая кавычка в href -->
+                                    <a href="https://github.com/TreeMale/Minecraft/releases/download/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B1%D0%B04/4.zip" class="download-btn" title="" download>
                                         <span class="tooltip-text">Скачать мир</span>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                                     </a>
@@ -826,12 +827,13 @@
                         <td class="p-3 font-bold mc-green">5</td>
                         <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
-                                <span class="world-name" data-seed="-6728139250759796146" onclick="copySeed(this)">#мирвайба5</span>
+                                <!-- ИСПРАВЛЕНО: убран data-seed и onclick для копирования -->
+                                <span class="world-name">#мирвайба5</span>
                                 <div class="flex items-center">
-                                    <a href="ССЫЛКА_НА_СКАЧИВАНИЕ_МИРА_5" class="download-btn" title="" download>
-                                        <span class="tooltip-text">Скачать мир</span>
+                                    <!-- ИСПРАВЛЕНО: кнопка скачивания отключена и неактивна -->
+                                    <button class="download-btn" disabled title="Скачать мир будет доступно позже" style="opacity: 0.4; cursor: not-allowed;">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                                    </a>
+                                    </button>
                                     <button class="compare-btn disabled" disabled title="Картинки пока не добавлены">Картинки</button>
                                 </div>
                             </div>
@@ -884,17 +886,13 @@
 
     <script>
         // ================= НАСТРОЙКИ ФОНОВЫХ СЛАЙДОВ =================
-        // ВСТАВЛЯЙ ССЫЛКИ НА СВОИ ФОНОВЫЕ КАРТИНКИ ЗДЕСЬ:
         const backgroundImages = [
             'https://treemale.github.io/Minecraft/images/bg/slide1.jpg',
             'https://treemale.github.io/Minecraft/images/bg/slide2.jpg',
             'https://treemale.github.io/Minecraft/images/bg/slide3.jpg',
-            // Добавляй сколько угодно ссылок
         ];
         
-        // Интервал переключения слайдов (в миллисекундах)
         const SLIDE_INTERVAL = 10000; // 10 секунд
-        // ============================================================
 
         const customCursor = document.getElementById('custom-cursor');
         
