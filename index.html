@@ -52,32 +52,33 @@
             cursor: none !important;
         }
 
+        /* Квадратные искры без border-radius */
         .spark {
             position: fixed;
             width: 2px;
             height: 2px;
-            border-radius: 50%;
             pointer-events: none;
             z-index: 99998;
             animation: sparkJump var(--duration, 0.15s) ease-out forwards;
         }
 
-        /* Упрощенная анимация искр: 3 шага */
+        /* Две стадии: есть (opacity:1) и нет (opacity:0) */
         @keyframes sparkJump {
             0% {
                 opacity: 1;
-                transform: translate(0, 0) scale(1);
-                filter: blur(0px);
+                transform: translate(0, 0);
             }
-            33% {
-                opacity: 0.8;
-                transform: translate(var(--dx1, 2px), var(--dy1, -8px)) scale(1.2);
-                filter: blur(0.75px);
+            40% {
+                opacity: 1;
+                transform: translate(var(--dx1, 2px), var(--dy1, -8px));
+            }
+            90% {
+                opacity: 1;
+                transform: translate(var(--dx2, -3px), var(--dy2, 4px));
             }
             100% {
                 opacity: 0;
-                transform: translate(var(--dx2, -3px), var(--dy2, 4px)) scale(1.5);
-                filter: blur(1.5px);
+                transform: translate(var(--dx2, -3px), var(--dy2, 4px));
             }
         }
 
@@ -530,12 +531,12 @@
                 <thead class="bg-slate-800 text-slate-300">
                     <tr>
                         <th class="p-3">#</th>
-                        <th class="p-3"> Мир</th>
+                        <th class="p-3">🌍 Мир</th>
                         <th class="p-3">❤️ Прожито</th>
                         <th class="p-3">🏆 Достижения</th>
                         <th class="p-3">❓ Причина смерти</th>
                         <th class="p-3">❗ Описание ситуации</th>
-                        <th class="p-3">️🎞️ Видео</th>
+                        <th class="p-3">🎞️ Видео</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-800 bg-slate-900/50">
@@ -798,7 +799,7 @@
         let isHolding = false;
         let clickInterval = null;
         const CLICK_CYCLE = 300;
-        const SPARK_DELAY = 150; // Искры появляются в середине цикла (когда кирка опустилась)
+        const SPARK_DELAY = 150;
 
         document.addEventListener('mousemove', (e) => {
             lastMouseX = e.clientX;
@@ -808,12 +809,10 @@
         });
 
         function playClickAnimation(x, y) {
-            // Перезапуск CSS-анимации кирки
             customCursor.classList.remove('pickaxe-clicking');
             void customCursor.offsetWidth;
             customCursor.classList.add('pickaxe-clicking');
             
-            // Искры появляются с задержкой 150мс (когда кирка полностью опустилась)
             setTimeout(() => {
                 createSparksAtTip(x, y);
             }, SPARK_DELAY);
@@ -859,8 +858,9 @@
         });
 
         function createSparksAtTip(mouseX, mouseY) {
+            // Опустили на 2px вниз: было -3, стало -3+2 = -1
             const tipX = mouseX + 5 - 2;
-            const tipY = mouseY + 5 + 5 - 3;
+            const tipY = mouseY + 5 + 5 - 1;
             const sparkCount = 4 + Math.floor(Math.random() * 3);
             for (let i = 0; i < sparkCount; i++) {
                 createSpark(tipX, tipY);
@@ -871,12 +871,15 @@
             const spark = document.createElement('div');
             spark.className = 'spark';
             
-            // Длительность анимации искр ~150мс (укладывается в оставшуюся часть цикла)
             const duration = 0.12 + Math.random() * 0.06;
             
-            const dx1 = (Math.random() - 0.5) * 16;
+            // Случайное направление: за киркой (-1) или перед ней (1)
+            const direction = Math.random() > 0.5 ? 1 : -1;
+            
+            // Увеличенный разлет (было *16 и *20, стало *24 и *32)
+            const dx1 = direction * (8 + Math.random() * 16);
             const dy1 = -6 - Math.random() * 8;
-            const dx2 = (Math.random() - 0.5) * 20;
+            const dx2 = direction * (16 + Math.random() * 16);
             const dy2 = 2 + Math.random() * 6;
             
             spark.style.setProperty('--duration', duration + 's');
