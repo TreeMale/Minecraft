@@ -35,14 +35,12 @@
             image-rendering: pixelated;
             image-rendering: -moz-crisp-edges;
             image-rendering: crisp-edges;
-            will-change: transform;
         }
 
         * {
             cursor: none !important;
         }
 
-        /* ===== ИСКРЫ С УСИЛЕННЫМ РАЗМЫТИЕМ ===== */
         .spark {
             position: fixed;
             width: 2px;
@@ -456,19 +454,34 @@
             100% { content: ''; }
         }
 
-        .table-container { overflow-x: visible; }
-        .table-container table { width: 100%; table-layout: auto; }
+        /* ===== ТАБЛИЦА С ФИКСИРОВАННЫМИ ШИРИНАМИ ===== */
+        .table-container { 
+            overflow-x: auto;
+            max-width: 100%;
+        }
+        .table-container table { 
+            width: 1410px; /* Фиксированная ширина таблицы */
+            table-layout: fixed;
+        }
         .table-container th, .table-container td {
             text-align: center !important;
             vertical-align: middle !important;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
-        th { white-space: nowrap; }
-        td:nth-child(3) { white-space: nowrap; }
-        td:nth-child(5) { white-space: nowrap; }
-        td:nth-child(6) { white-space: nowrap; }
+        
+        /* Ширины столбцов */
+        .col-num { width: 50px; }
+        .col-world { width: 140px; }
+        .col-lived { width: 170px; }
+        .col-achievements { width: 130px; }
+        .col-death { width: 180px; }
+        .col-description { width: 540px; }
+        .col-video { width: 100px; }
 
         .progress-container {
-            min-width: 150px;
+            min-width: 100px;
             background-color: #334155;
             border-radius: 9999px;
             height: 4px;
@@ -508,37 +521,46 @@
         </h2>
         <div class="rounded-lg border border-slate-700 table-container">
             <table class="w-full text-center border-collapse text-sm">
+                <colgroup>
+                    <col class="col-num">
+                    <col class="col-world">
+                    <col class="col-lived">
+                    <col class="col-achievements">
+                    <col class="col-death">
+                    <col class="col-description">
+                    <col class="col-video">
+                </colgroup>
                 <thead class="bg-slate-800 text-slate-300">
                     <tr>
-                        <th class="p-3 text-center align-middle">#</th>
-                        <th class="p-3 text-center align-middle">🌍 Мир</th>
-                        <th class="p-3 text-center align-middle">❤️ Прожито</th>
-                        <th class="p-3 text-center align-middle">🏆 Достижения</th>
-                        <th class="p-3 text-center align-middle">Причина смерти</th>
-                        <th class="p-3 text-center align-middle">❗ Описание ситуации</th>
-                        <th class="p-3 text-center align-middle">🎞️ Видео</th>
+                        <th class="p-3">#</th>
+                        <th class="p-3">🌍 Мир</th>
+                        <th class="p-3">❤️ Прожито</th>
+                        <th class="p-3">🏆 Достижения</th>
+                        <th class="p-3">❓ Причина смерти</th>
+                        <th class="p-3">❗ Описание ситуации</th>
+                        <th class="p-3">🎞️ Видео</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-800 bg-slate-900/50">
 
                     <tr class="hover:bg-slate-800/50 transition">
-                        <td class="p-3 font-bold mc-green text-center align-middle">1</td>
-                        <td class="p-3 text-center align-middle">
+                        <td class="p-3 font-bold mc-green">1</td>
+                        <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="1234567890" onclick="copySeed(this)">#мирвайба1</span>
                                 <button class="compare-btn" onclick="toggleComparison(1)">Картинки</button>
                             </div>
                         </td>
-                        <td class="p-3 text-center align-middle">4 ч. 36 мин.</td>
-                        <td class="p-3 text-center align-middle">
+                        <td class="p-3">4 ч. 36 мин.</td>
+                        <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span>61 (4,8%)</span>
                                 <div class="progress-container"><div class="progress-bar" style="width: 4.8%"></div></div>
                             </div>
                         </td>
-                        <td class="p-3 text-red-400 font-semibold text-center align-middle">ЭНДЕРМЕН</td>
-                        <td class="p-3 text-slate-300 text-center align-middle">Пошёл искать шахту ночью, а там оно...</td>
-                        <td class="p-3 text-slate-500 text-center align-middle">-</td>
+                        <td class="p-3 text-red-400 font-semibold">ЭНДЕРМЕН</td>
+                        <td class="p-3 text-slate-300">Пошёл искать шахту ночью, а там оно...</td>
+                        <td class="p-3 text-slate-500">-</td>
                     </tr>
                     <tr id="comp-row-1" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
@@ -571,23 +593,23 @@
                     </tr>
 
                     <tr class="hover:bg-slate-800/50 transition">
-                        <td class="p-3 font-bold mc-green text-center align-middle">2</td>
-                        <td class="p-3 text-center align-middle">
+                        <td class="p-3 font-bold mc-green">2</td>
+                        <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="9876543210" onclick="copySeed(this)">#мирвайба2</span>
                                 <button class="compare-btn" onclick="toggleComparison(2)">Картинки</button>
                             </div>
                         </td>
-                        <td class="p-3 text-center align-middle">14 ч. 9 мин.</td>
-                        <td class="p-3 text-center align-middle">
+                        <td class="p-3">14 ч. 9 мин.</td>
+                        <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span>178 (14,1%)</span>
                                 <div class="progress-container"><div class="progress-bar" style="width: 14.1%"></div></div>
                             </div>
                         </td>
-                        <td class="p-3 text-red-400 font-semibold text-center align-middle">КРИПЕР</td>
-                        <td class="p-3 text-slate-300 text-center align-middle">Взорвал со спины пока рубил дерево, щит не спас.</td>
-                        <td class="p-3 text-slate-500 text-center align-middle">-</td>
+                        <td class="p-3 text-red-400 font-semibold">КРИПЕР</td>
+                        <td class="p-3 text-slate-300">Взорвал со спины пока рубил дерево, щит не спас.</td>
+                        <td class="p-3 text-slate-500">-</td>
                     </tr>
                     <tr id="comp-row-2" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
@@ -620,23 +642,23 @@
                     </tr>
 
                     <tr class="hover:bg-slate-800/50 transition">
-                        <td class="p-3 font-bold mc-green text-center align-middle">3</td>
-                        <td class="p-3 text-center align-middle">
+                        <td class="p-3 font-bold mc-green">3</td>
+                        <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="1122334455" onclick="copySeed(this)">#мирвайба3</span>
                                 <button class="compare-btn" onclick="toggleComparison(3)">Картинки</button>
                             </div>
                         </td>
-                        <td class="p-3 text-center align-middle">19 ч. 55 мин.</td>
-                        <td class="p-3 text-center align-middle">
+                        <td class="p-3">19 ч. 55 мин.</td>
+                        <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span>284 (22,5%)</span>
                                 <div class="progress-container"><div class="progress-bar" style="width: 22.5%"></div></div>
                             </div>
                         </td>
-                        <td class="p-3 text-red-400 font-semibold text-center align-middle">ПУСТОТА</td>
-                        <td class="p-3 text-slate-300 text-center align-middle">Настраивал моды, включил читы и упал сквозь мир, ануак.</td>
-                        <td class="p-3 text-slate-500 text-center align-middle">-</td>
+                        <td class="p-3 text-red-400 font-semibold">ПУСТОТА</td>
+                        <td class="p-3 text-slate-300">Настраивал моды, включил читы и упал сквозь мир, ануак.</td>
+                        <td class="p-3 text-slate-500">-</td>
                     </tr>
                     <tr id="comp-row-3" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
@@ -670,23 +692,23 @@
                     </tr>
 
                     <tr class="hover:bg-slate-800/50 transition">
-                        <td class="p-3 font-bold mc-green text-center align-middle">4</td>
-                        <td class="p-3 text-center align-middle">
+                        <td class="p-3 font-bold mc-green">4</td>
+                        <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="5566778899" onclick="copySeed(this)">#мирвайба4</span>
                                 <button class="compare-btn" onclick="toggleComparison(4)">Картинки</button>
                             </div>
                         </td>
-                        <td class="p-3 text-center align-middle">16 ч. 5 мин.</td>
-                        <td class="p-3 text-center align-middle">
+                        <td class="p-3">16 ч. 5 мин.</td>
+                        <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span>196 (15,5%)</span>
                                 <div class="progress-container"><div class="progress-bar" style="width: 15.5%"></div></div>
                             </div>
                         </td>
-                        <td class="p-3 text-red-400 font-semibold text-center align-middle">ЗОМБИ-ЖИТЕЛЬ</td>
-                        <td class="p-3 text-slate-300 text-center align-middle">Зашел в иглу, исцелить зомби-жителя, но он отказал.</td>
-                        <td class="p-3 text-center align-middle"><a href="#" class="text-blue-400 hover:underline font-semibold">YouTube</a></td>
+                        <td class="p-3 text-red-400 font-semibold">ЗОМБИ-ЖИТЕЛЬ</td>
+                        <td class="p-3 text-slate-300">Зашел в иглу, исцелить зомби-жителя, но он отказал.</td>
+                        <td class="p-3"><a href="#" class="text-blue-400 hover:underline font-semibold">YouTube</a></td>
                     </tr>
                     <tr id="comp-row-4" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
@@ -719,23 +741,23 @@
                     </tr>
 
                     <tr class="hover:bg-slate-800/50 transition">
-                        <td class="p-3 font-bold mc-green text-center align-middle">5</td>
-                        <td class="p-3 text-center align-middle">
+                        <td class="p-3 font-bold mc-green">5</td>
+                        <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="1010101010" onclick="copySeed(this)">#мирвайба5</span>
                                 <button class="compare-btn disabled" disabled title="Картинки пока не добавлены">Картинки</button>
                             </div>
                         </td>
-                        <td class="p-3 text-center align-middle">5 ч. 47 мин.</td>
-                        <td class="p-3 text-center align-middle">
+                        <td class="p-3">5 ч. 47 мин.</td>
+                        <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
                                 <span>136 (10,8%)</span>
                                 <div class="progress-container"><div class="progress-bar" style="width: 10.8%"></div></div>
                             </div>
                         </td>
-                        <td class="p-3 text-slate-500 text-center align-middle">-</td>
-                        <td class="p-3 text-slate-500 text-center align-middle">-</td>
-                        <td class="p-3 text-slate-500 text-center align-middle">-</td>
+                        <td class="p-3 text-slate-500">-</td>
+                        <td class="p-3 text-slate-500">-</td>
+                        <td class="p-3 text-slate-500">-</td>
                     </tr>
                     <tr id="comp-row-5" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
@@ -773,40 +795,22 @@
     </section>
 
     <script>
-        // ===== КАСТОМНЫЙ КУРСОР С НАКЛОНОМ И СМЕЩЕНИЕМ =====
+        // ===== КАСТОМНЫЙ КУРСОР (БЕЗ АНИМАЦИИ ДВИЖЕНИЯ) =====
         const customCursor = document.getElementById('custom-cursor');
         
         let lastMouseX = 0, lastMouseY = 0;
-        let prevMouseX = 0, prevMouseY = 0;
-        let skewX = 0, skewY = 0;
-        let targetSkewX = 0, targetSkewY = 0;
-        let offsetX = 0, offsetY = 0;
-        let targetOffsetX = 0, targetOffsetY = 0;
         let isClicking = false;
         let clickStartTime = 0;
         let sparkInterval = null;
         const CLICK_CYCLE = 300;
 
         document.addEventListener('mousemove', (e) => {
-            prevMouseX = lastMouseX;
-            prevMouseY = lastMouseY;
             lastMouseX = e.clientX;
             lastMouseY = e.clientY;
             
-            const deltaX = e.clientX - prevMouseX;
-            const deltaY = e.clientY - prevMouseY;
-            
-            // Наклон в сторону движения (±10° максимум)
-            targetSkewX = Math.max(-10, Math.min(10, deltaX * 1.2));
-            targetSkewY = Math.max(-10, Math.min(10, deltaY * 1.2));
-            
-            // Смещение в сторону движения (±5px максимум)
-            targetOffsetX = Math.max(-5, Math.min(5, deltaX * 0.8));
-            targetOffsetY = Math.max(-5, Math.min(5, deltaY * 0.8));
-            
-            // Позиция курсора = позиция мыши + текущее смещение
-            customCursor.style.left = (e.clientX - 5 + offsetX) + 'px';
-            customCursor.style.top = (e.clientY - 29 + offsetY) + 'px';
+            // Просто позиционируем курсор без анимации
+            customCursor.style.left = (e.clientX - 5) + 'px';
+            customCursor.style.top = (e.clientY - 29) + 'px';
         });
 
         document.addEventListener('mousedown', (e) => {
@@ -829,33 +833,18 @@
         });
 
         function animateCursor() {
-            // Плавное приближение к целевым значениям
-            skewX += (targetSkewX - skewX) * 0.2;
-            skewY += (targetSkewY - skewY) * 0.2;
-            offsetX += (targetOffsetX - offsetX) * 0.2;
-            offsetY += (targetOffsetY - offsetY) * 0.2;
-            
-            // Быстрое затухание (возврат в исходное положение)
-            targetSkewX *= 0.85;
-            targetSkewY *= 0.85;
-            targetOffsetX *= 0.85;
-            targetOffsetY *= 0.85;
-            
-            let transform = `skewX(${skewX}deg) skewY(${skewY}deg) translate(${offsetX}px, ${offsetY}px)`;
-            
             if (isClicking) {
                 const elapsed = performance.now() - clickStartTime;
                 const phase = (elapsed % CLICK_CYCLE) / CLICK_CYCLE;
                 const swingAngle = -25 * Math.sin(phase * Math.PI);
-                transform = `rotate(${swingAngle}deg) ` + transform;
+                customCursor.style.transform = `rotate(${swingAngle}deg)`;
+            } else {
+                customCursor.style.transform = 'rotate(0deg)';
             }
-            
-            customCursor.style.transform = transform;
             requestAnimationFrame(animateCursor);
         }
         requestAnimationFrame(animateCursor);
 
-        // Искры из конца наклонённой кирки, сдвинутые на 3px вверх и 2px влево
         function createSparksAtTip(mouseX, mouseY) {
             const tipX = mouseX + 5 - 2;
             const tipY = mouseY + 5 + 5 - 3;
@@ -873,15 +862,14 @@
             const duration = 0.4 + Math.random() * 0.3;
             const delay = Math.random() * 0.1;
             
-            // Увеличенный разброс искр (в 2 раза шире по горизонтали)
-            const dx1 = (Math.random() - 0.5) * 16;   // было ±4, стало ±8
-            const dy1 = -6 - Math.random() * 8;         // было -6..-12, стало -6..-14
-            const dx2 = (Math.random() - 0.5) * 20;     // было ±5, стало ±10
-            const dy2 = 2 + Math.random() * 6;           // было 2..6, стало 2..8
-            const dx3 = (Math.random() - 0.5) * 24;     // было ±6, стало ±12
-            const dy3 = 6 + Math.random() * 8;           // было 6..12, стало 6..14
-            const dx4 = (Math.random() - 0.5) * 16;     // было ±4, стало ±8
-            const dy4 = 10 + Math.random() * 8;          // было 10..16, стало 10..18
+            const dx1 = (Math.random() - 0.5) * 16;
+            const dy1 = -6 - Math.random() * 8;
+            const dx2 = (Math.random() - 0.5) * 20;
+            const dy2 = 2 + Math.random() * 6;
+            const dx3 = (Math.random() - 0.5) * 24;
+            const dy3 = 6 + Math.random() * 8;
+            const dx4 = (Math.random() - 0.5) * 16;
+            const dy4 = 10 + Math.random() * 8;
             
             spark.style.setProperty('--duration', duration + 's');
             spark.style.setProperty('--delay', delay + 's');
