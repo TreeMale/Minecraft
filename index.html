@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minecraft Hardcore Tracker</title>
+    <title>TreeMale</title>
+    <link rel="icon" type="image/png" href="https://treemale.github.io/Minecraft/images/icon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @font-face {
@@ -285,13 +286,14 @@
         .slider-handle:hover { background: rgba(74, 222, 128, 1); }
         .slider-handle:hover::after { background: #4ade80; }
         
+        /* ===== КНОПКИ ДО/ПОСЛЕ В ВЕРХНИХ УГЛАХ ===== */
         .comparison-labels {
             position: absolute;
-            bottom: 65px;
+            top: 16px;
             left: 0; right: 0;
             display: flex;
             justify-content: space-between;
-            padding: 0 24px;
+            padding: 0 16px;
             z-index: 5;
         }
         .comparison-label {
