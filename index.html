@@ -805,7 +805,9 @@
         const customCursor = document.getElementById('custom-cursor');
         
         let lastMouseX = 0, lastMouseY = 0;
-        let isAnimating = false;
+        let isHolding = false;
+        let clickInterval = null;
+        const CLICK_CYCLE = 300;
 
         document.addEventListener('mousemove', (e) => {
             lastMouseX = e.clientX;
@@ -814,27 +816,55 @@
             customCursor.style.top = (e.clientY - 29) + 'px';
         });
 
-        // Обработка клика: одна анимация ровно на 0.3 секунды
-        document.addEventListener('mousedown', (e) => {
-            if (isAnimating) return;
-            
-            isAnimating = true;
+        // Функция запуска одного цикла анимации
+        function playClickAnimation(x, y) {
+            // Перезапуск CSS-анимации через удаление и добавление класса
+            customCursor.classList.remove('pickaxe-clicking');
+            void customCursor.offsetWidth; // принудительный reflow для перезапуска
             customCursor.classList.add('pickaxe-clicking');
-            createSparksAtTip(e.clientX, e.clientY);
             
-            setTimeout(() => {
-                customCursor.classList.remove('pickaxe-clicking');
-                isAnimating = false;
-            }, 300);
+            // Создаём искры
+            createSparksAtTip(x, y);
+        }
+
+        // При зажатии — запускаем первый цикл сразу, затем повторяем каждые 300мс
+        document.addEventListener('mousedown', (e) => {
+            if (isHolding) return;
+            isHolding = true;
+            
+            playClickAnimation(e.clientX, e.clientY);
+            
+            clickInterval = setInterval(() => {
+                playClickAnimation(lastMouseX, lastMouseY);
+            }, CLICK_CYCLE);
         });
 
+        // При отпускании — останавливаем повтор, но текущая анимация доиграет сама (CSS 0.3s)
+        window.addEventListener('mouseup', () => {
+            if (!isHolding) return;
+            isHolding = false;
+            if (clickInterval) {
+                clearInterval(clickInterval);
+                clickInterval = null;
+            }
+        });
+
+        // Защита от залипания при перетаскивании текста
         window.addEventListener('dragend', () => {
-            customCursor.classList.remove('pickaxe-clicking');
-            isAnimating = false;
+            isHolding = false;
+            if (clickInterval) {
+                clearInterval(clickInterval);
+                clickInterval = null;
+            }
         });
         
         window.addEventListener('mouseleave', () => {
             customCursor.style.display = 'none';
+            isHolding = false;
+            if (clickInterval) {
+                clearInterval(clickInterval);
+                clickInterval = null;
+            }
         });
         
         window.addEventListener('mouseenter', () => {
@@ -959,7 +989,7 @@
                 positionTooltip(el);
                 setTimeout(() => { el.classList.remove('copied'); tooltip.textContent = defaultTooltipText; }, 2000);
             }).catch(() => {
-                tooltip.textContent = ' Ошибка копирования';
+                tooltip.textContent = '❌ Ошибка копирования';
                 tooltip.classList.add('visible');
                 positionTooltip(el);
                 setTimeout(() => { tooltip.textContent = defaultTooltipText; }, 2000);
