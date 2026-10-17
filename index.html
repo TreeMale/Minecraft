@@ -38,7 +38,6 @@
             image-rendering: crisp-edges;
         }
 
-        /* Анимация удара киркой ровно за 0.3 секунды */
         @keyframes pickaxeClick {
             0% { transform: rotate(0deg); }
             50% { transform: rotate(-25deg); }
@@ -60,33 +59,29 @@
             border-radius: 50%;
             pointer-events: none;
             z-index: 99998;
-            animation: sparkJump var(--duration, 0.5s) ease-out var(--delay, 0s) forwards;
+            animation: sparkJump var(--duration, 0.3s) ease-out var(--delay, 0s) forwards;
         }
 
+        /* Упрощенная анимация искр: 4 шага вместо 5 */
         @keyframes sparkJump {
             0% {
                 opacity: 1;
                 transform: translate(0, 0) scale(1);
                 filter: blur(0px);
             }
-            20% {
-                opacity: 1;
+            33% {
+                opacity: 0.8;
                 transform: translate(var(--dx1, 2px), var(--dy1, -8px)) scale(1.2);
                 filter: blur(0.75px);
             }
-            50% {
-                opacity: 0.8;
+            66% {
+                opacity: 0.6;
                 transform: translate(var(--dx2, -3px), var(--dy2, 4px)) scale(1.5);
                 filter: blur(1.5px);
             }
-            80% {
-                opacity: 0.4;
-                transform: translate(var(--dx3, 5px), var(--dy3, 8px)) scale(1.8);
-                filter: blur(2.25px);
-            }
             100% {
                 opacity: 0;
-                transform: translate(var(--dx4, -2px), var(--dy4, 12px)) scale(2);
+                transform: translate(var(--dx3, 5px), var(--dy3, 8px)) scale(2);
                 filter: blur(3px);
             }
         }
@@ -816,30 +811,22 @@
             customCursor.style.top = (e.clientY - 29) + 'px';
         });
 
-        // Функция запуска одного цикла анимации
         function playClickAnimation(x, y) {
-            // Перезапуск CSS-анимации через удаление и добавление класса
             customCursor.classList.remove('pickaxe-clicking');
-            void customCursor.offsetWidth; // принудительный reflow для перезапуска
+            void customCursor.offsetWidth;
             customCursor.classList.add('pickaxe-clicking');
-            
-            // Создаём искры
             createSparksAtTip(x, y);
         }
 
-        // При зажатии — запускаем первый цикл сразу, затем повторяем каждые 300мс
         document.addEventListener('mousedown', (e) => {
             if (isHolding) return;
             isHolding = true;
-            
             playClickAnimation(e.clientX, e.clientY);
-            
             clickInterval = setInterval(() => {
                 playClickAnimation(lastMouseX, lastMouseY);
             }, CLICK_CYCLE);
         });
 
-        // При отпускании — останавливаем повтор, но текущая анимация доиграет сама (CSS 0.3s)
         window.addEventListener('mouseup', () => {
             if (!isHolding) return;
             isHolding = false;
@@ -849,7 +836,6 @@
             }
         });
 
-        // Защита от залипания при перетаскивании текста
         window.addEventListener('dragend', () => {
             isHolding = false;
             if (clickInterval) {
@@ -883,16 +869,21 @@
         function createSpark(x, y) {
             const spark = document.createElement('div');
             spark.className = 'spark';
-            const duration = 0.4 + Math.random() * 0.3;
-            const delay = Math.random() * 0.1;
+            
+            // Длительность уменьшена до 0.2-0.3с (вместо 0.4-0.7с)
+            const duration = 0.2 + Math.random() * 0.1;
+            const delay = Math.random() * 0.05;
+            
+            // Уменьшенный разброс по X
             const dx1 = (Math.random() - 0.5) * 16;
             const dy1 = -6 - Math.random() * 8;
             const dx2 = (Math.random() - 0.5) * 20;
             const dy2 = 2 + Math.random() * 6;
+            
+            // Уменьшенная дистанция падения в 2 раза (было 6-14 и 10-18, стало 3-7 и 5-9)
             const dx3 = (Math.random() - 0.5) * 24;
-            const dy3 = 6 + Math.random() * 8;
-            const dx4 = (Math.random() - 0.5) * 16;
-            const dy4 = 10 + Math.random() * 8;
+            const dy3 = 3 + Math.random() * 4;
+            
             spark.style.setProperty('--duration', duration + 's');
             spark.style.setProperty('--delay', delay + 's');
             spark.style.setProperty('--dx1', dx1 + 'px');
@@ -901,16 +892,17 @@
             spark.style.setProperty('--dy2', dy2 + 'px');
             spark.style.setProperty('--dx3', dx3 + 'px');
             spark.style.setProperty('--dy3', dy3 + 'px');
-            spark.style.setProperty('--dx4', dx4 + 'px');
-            spark.style.setProperty('--dy4', dy4 + 'px');
+            
             spark.style.left = x + 'px';
             spark.style.top = y + 'px';
+            
             const colors = ['#fbbf24', '#f59e0b', '#fcd34d', '#fb923c'];
             const randomColor = colors[Math.floor(Math.random() * colors.length)];
             spark.style.background = randomColor;
             spark.style.boxShadow = `0 0 4px ${randomColor}, 0 0 6px ${randomColor}`;
+            
             document.body.appendChild(spark);
-            setTimeout(() => spark.remove(), (duration + delay) * 1000 + 100);
+            setTimeout(() => spark.remove(), (duration + delay) * 1000 + 50);
         }
 
         const world1ImageSets = {
