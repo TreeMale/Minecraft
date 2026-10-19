@@ -646,7 +646,7 @@
                         <th class="p-3">🏆 Достижения</th>
                         <th class="p-3">❓ Причина смерти</th>
                         <th class="p-3">❗ Описание ситуации</th>
-                        <th class="p-3">🎞️ Видео</th>
+                        <th class="p-3">️🎞️ Видео</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-800 bg-slate-900/50">
@@ -1420,6 +1420,13 @@
             {n: "Crops 3D", d: "Добавляет 3D текстуры для всех растений на грядках и грибов.", url: "https://www.curseforge.com/minecraft/texture-packs/crops-3d"},
             {n: "Tasty Items", d: "Добавляет анимацию при поедании чего-либо.", url: "https://modrinth.com/resourcepack/tasty-items"}
         ];
+
+        // ================= АВТОМАТИЧЕСКАЯ СОРТИРОВКА ПО АЛФАВИТУ =================
+        // Сортируем моды и паки по алфавиту перед отображением
+        // Теперь можно добавлять новые элементы в любое место массива - они автоматически отсортируются
+        mods.sort((a, b) => a.n.localeCompare(b.n, 'ru'));
+        packs.sort((a, b) => a.n.localeCompare(b.n, 'ru'));
+        // =========================================================================
 
         const allGrid = document.getElementById('all-grid');
         document.getElementById('mod-count').innerText = mods.length;
