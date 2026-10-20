@@ -226,6 +226,8 @@
             border-color: #64748b;
             color: #64748b;
             background: rgba(100, 116, 139, 0.2);
+            cursor: not-allowed;
+            pointer-events: none;
         }
         .compare-btn.disabled:hover {
             transform: none;
@@ -641,7 +643,7 @@
                 <thead class="bg-slate-800 text-slate-300">
                     <tr>
                         <th class="p-3">#</th>
-                        <th class="p-3">🌍 Мир</th>
+                        <th class="p-3"> Мир</th>
                         <th class="p-3">❤️ Прожито</th>
                         <th class="p-3">🏆 Достижения</th>
                         <th class="p-3">❓ Причина смерти</th>
@@ -910,9 +912,11 @@
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name">#мирвайба5</span>
                                 <div class="flex items-center">
-                                    <button class="download-btn" disabled title="Скачать мир будет доступно позже" style="opacity: 0.4; cursor: not-allowed;">
+                                    <!-- НЕАКТИВНАЯ КНОПКА СКАЧИВАНИЯ -->
+                                    <button class="download-btn" disabled title="Скачать мир будет доступно позже" style="opacity: 0.4; cursor: not-allowed; pointer-events: none;">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                                     </button>
+                                    <!-- НЕАКТИВНАЯ КНОПКА КАРТИНКИ -->
                                     <button class="compare-btn disabled" disabled title="Картинки пока не добавлены">Картинки</button>
                                 </div>
                             </div>
@@ -966,7 +970,7 @@
     <script>
         // ================= НАСТРОЙКИ ФОНОВЫХ СЛАЙДОВ =================
         const backgroundImages = [
-            'https://treemale.github.io/Minecraft/images/bg.webp'
+            'https://avatars.mds.yandex.net/i?id=5635b7d1a38d17697d7928a21d509078_l-16334182-images-thumbs&n=13'
         ];
         
         const SLIDE_INTERVAL = 10000; // 10 секунд
@@ -1353,7 +1357,7 @@
             {n: "Visual Health", d: "Добавляет наглядные визуальные повреждения (раны и синяки) на модели существ.", url: "https://modrinth.com/mod/visualhealth"},
             {n: "Vanilla Outsider Bed Chat Hider", d: "Отключает автоматический фокус чата во время сна.", url: "https://www.curseforge.com/minecraft/mc-mods/vo-bed-chat-hider"},
             {n: "Uku's Armor HUD", d: "Добавляет виджет HUD, отображающий текущий набор предметов брони.", url: "https://modrinth.com/mod/ukus-armor-hud"},
-            {n: "Fancy World Animations", d: "Добавляет анимацию при взаимодействии для некоторых предметов.", url: "https://modrinth.com/mod/fwa"},
+            {n: "Swinging Lanterns", d: "Добавляет анимацию движения фонарей от ветра.", url: "https://modrinth.com/mod/surface-particles"},
             {n: "Surface Particles", d: "Делает частицы блоков при взаимодействии текстурированными в соответствии с тем, что вы видите.", url: "https://modrinth.com/mod/surface-particles"},
             {n: "Status Effect Bars", d: "Добавляет полосы наложения эффектов состояния, отображающие оставшееся время действия.", url: "https://modrinth.com/mod/status-effect-bars"},
             {n: "Sound Physics Remastered", d: "Обеспечивает реалистичное затухание, реверберацию и поглощение звука блоками.", url: "https://modrinth.com/mod/sound-physics-remastered"},
@@ -1371,7 +1375,7 @@
             {n: "Lambda Better Grass", d: "Добавляет в игру улучшенную траву и снег при их переходе.", url: "https://modrinth.com/mod/lambdabettergrass"},
             {n: "Item Drops", d: "Изменяет внешний вид анимации выпадающих предметов и блоков (лежат на земле).", url: "https://modrinth.com/mod/item-drops"},
             {n: "Inventory Particles", d: "Красивые эффекты для предметов вашего инвентаря при перемещении.", url: "https://modrinth.com/mod/inventory-particles"},
-            {n: "Particle Rain", d: "Заменяет погодные условия на более красивые эффекты частиц.", url: "https://modrinth.com/mod/particle-rain"},
+            {n: "Improved Weather", d: "Улучшает погоду и добавляет новые погодные условия.", url: "https://modrinth.com/mod/improved-weather"},
             {n: "Imprint", d: "Добавляет частицы следов на земле от шагов игроков и мобов.", url: "https://modrinth.com/mod/imprint"},
             {n: "Immersive Hotbar", d: "Добавляет анимацию к панели быстрого доступа.", url: "https://modrinth.com/mod/immersive-hotbar"},
             {n: "Hover Items", d: "Добавляет небольшую анимацию при наведении курсора на элементы.", url: "https://modrinth.com/mod/hover-items"},
@@ -1386,6 +1390,7 @@
             {n: "Blur+", d: "Оживляет скучный стандартный эффект размытия с помощью анимации.", url: "https://modrinth.com/mod/blur-plus"},
             {n: "Better Statistics Screen", d: "Заменяет стандартный экран статистики игры, делает его более наглядным, понятным и простым.", url: "https://modrinth.com/mod/better-stats"},
             {n: "Apple Skin", d: "Добавляет полезную информацию о еде/голоде в интерфейс пользователя (отображает уровень насыщения).", url: "https://modrinth.com/mod/appleskin"},
+            {n: "Concurrent Chunk Management Engine", d: "Набор функций для улучшения производительности прогрузки чанков в Minecraft.", url: "https://modrinth.com/mod/c2me-fabric"},
             {n: "Smart Particles", d: "Оптимизация производительности, которая улучшает отрисовку частиц и настраивает их лимиты.", url: "https://modrinth.com/mod/smart-particles"},
             {n: "TCD Commons API", d: "Библиотека API для моддинга Minecraft, которая включает в себя собственную систему GUI.", url: "https://modrinth.com/mod/tcdcommons"},
             {n: "Sodium", d: "Высокопроизводительная замена движка рендеринга для Minecraft, которая повышает частоту кадров.", url: "https://modrinth.com/mod/sodium"},
@@ -1406,12 +1411,7 @@
             {n: "Dasik Lib", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/dasik-library"},
             {n: "Uku Lib", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/ukulib"},
             {n: "Immediately Fast", d: "Оптимизация рендеринга, повышающая FPS за счёт улучшения отрисовки сущностей и частиц.", url: "https://modrinth.com/mod/immediatelyfast"},
-            {n: "Debugify", d: "Исправление ошибок в Minecraft, обнаруженные в системе отслеживания ошибок.", url: "https://modrinth.com/mod/debugify"},
-            {n: "Make Bubbles Pop", d: "Заставляет пузырьки лопаться и реалистично подниматься к поверхности воды.", url: "https://modrinth.com/mod/make_bubbles_pop"},
-            {n: "Wavey Capes", d: "Плащи и элитры колышутся на ветру с физикой.", url: "https://modrinth.com/mod/wavey-capes"},
-            {n: "Ping Wheel", d: "Позволяет игрокам временно отмечать местоположения и объекты издалека (метки).", url: "https://modrinth.com/mod/ping-wheel"},
-            {n: "Chunks Fade In", d: "Меняет анимацию появления чанков в мире, добавляя плавную красиву анимацию прорисовки.", url: "https://modrinth.com/mod/chunks-fade-in"},
-            {n: "Spark", d: "Инструмент для профилирования производительности клиентов, серверов и прокси-серверов.", url: "https://modrinth.com/mod/spark"}
+            {n: "Krypton", d: "Технический мод, который оптимизирует работу сетевого стека игры и снижает нагрузку ЦП.", url: "https://modrinth.com/mod/krypton"}
         ];
 
         const packs = [
