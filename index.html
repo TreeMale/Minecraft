@@ -971,6 +971,58 @@
                         </td>
                     </tr>
 
+                    <!-- НОВЫЙ ПУНКТ #мирвайба6 (НЕАКТИВНЫЙ) -->
+                    <tr class="hover:bg-slate-800/50 transition">
+                        <td class="p-3 font-bold mc-green">6</td>
+                        <td class="p-3">
+                            <div class="flex flex-col items-center gap-1">
+                                <span class="world-name" data-seed="0" onclick="copySeed(this)">#мирвайба6</span>
+                                <div class="flex items-center">
+                                    <button class="download-btn" disabled title="Скачать мир будет доступно позже" style="opacity: 0.4; cursor: not-allowed; pointer-events: none;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                    </button>
+                                    <button class="compare-btn disabled" disabled title="Картинки пока не добавлены">Картинки</button>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="p-3">0 ч. 0 мин.</td>
+                        <td class="p-3">
+                            <div class="flex flex-col items-center gap-1">
+                                <span>0 (0,0%)</span>
+                                <div class="progress-container"><div class="progress-bar" style="width: 0%"></div></div>
+                            </div>
+                        </td>
+                        <td class="p-3 text-slate-500">-</td>
+                        <td class="p-3 text-slate-500">-</td>
+                        <td class="p-3 text-slate-500">-</td>
+                    </tr>
+                    <tr id="comp-row-6" style="display: none;">
+                        <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
+                            <div id="comp-6" class="comparison-container">
+                                <div class="comparison-wrapper" oncontextmenu="return false;">
+                                    <img src="" class="after-image" id="after-img-6" alt="После" decoding="async" draggable="false">
+                                    <img src="" class="before-image" id="before-img-6" alt="До" decoding="async" draggable="false">
+                                    <div class="slider-handle" id="slider-6"></div>
+                                    <div class="loader" id="loader-6">
+                                        <div class="loader-blocks">
+                                            <div class="loader-block grass"></div>
+                                            <div class="loader-block planks"></div>
+                                            <div class="loader-block cobblestone"></div>
+                                        </div>
+                                        <div class="loader-text">ЗАГРУЗКА</div>
+                                    </div>
+                                    <div class="comparison-labels">
+                                        <span class="comparison-label before" onclick="showFullImage(6, 'before')">До</span>
+                                        <span class="comparison-label after" onclick="showFullImage(6, 'after')">После</span>
+                                    </div>
+                                    <div class="image-set-buttons">
+                                        <!-- Кнопки наборов картинок будут добавлены позже -->
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
                 </tbody>
             </table>
         </div>
@@ -1189,7 +1241,7 @@
             'https://treemale.github.io/Minecraft/images/cursor/diamond_pickaxe.png'
         ];
 
-        let currentSet = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+        let currentSet = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
         const preloadedImages = {};
 
         (function preloadLoaderBlocks() {
@@ -1232,7 +1284,7 @@
                 positionTooltip(el);
                 setTimeout(() => { el.classList.remove('copied'); tooltip.textContent = defaultTooltipText; }, 2000);
             }).catch(() => {
-                tooltip.textContent = ' Ошибка копирования';
+                tooltip.textContent = '❌ Ошибка копирования';
                 tooltip.classList.add('visible');
                 positionTooltip(el);
                 setTimeout(() => { tooltip.textContent = defaultTooltipText; }, 2000);
@@ -1257,7 +1309,7 @@
             else if (worldNum === 3) imageSets = world3ImageSets;
             else if (worldNum === 4) imageSets = world4ImageSets;
             else if (worldNum === 5) imageSets = world5ImageSets;
-            else return;
+            else if (worldNum === 6) return; // Для 6-го мира пока нет наборов
             const set = imageSets[setNum];
             if (!set) return;
             const btn = event.target.closest('.set-btn');
@@ -1268,6 +1320,8 @@
         }
 
         function switchImageSet(worldNum, setNum) {
+            if (worldNum === 6) return; // Для 6-го мира пока нет наборов
+            
             const beforeImg = document.getElementById('before-img-' + worldNum);
             const afterImg = document.getElementById('after-img-' + worldNum);
             const loader = document.getElementById('loader-' + worldNum);
@@ -1277,7 +1331,7 @@
             else if (worldNum === 3) imageSets = world3ImageSets;
             else if (worldNum === 4) imageSets = world4ImageSets;
             else if (worldNum === 5) imageSets = world5ImageSets;
-            else return;
+            
             const set = imageSets[setNum];
             if (!beforeImg || !afterImg || !set) return;
             if (currentSet[worldNum] === setNum) return;
@@ -1326,9 +1380,11 @@
         }
 
         function toggleComparison(num) {
+            if (num === 6) return; // Блокируем открытие для 6-го мира, так как он неактивен
+            
             const row = document.getElementById('comp-row-' + num);
             if (row.style.display === 'none' || row.style.display === '') {
-                for (let i = 1; i <= 5; i++) document.getElementById('comp-row-' + i).style.display = 'none';
+                for (let i = 1; i <= 6; i++) document.getElementById('comp-row-' + i).style.display = 'none';
                 row.style.display = 'table-row';
                 setTimeout(() => { 
                     setupSlider(num);
