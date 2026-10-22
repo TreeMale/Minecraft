@@ -935,9 +935,9 @@
                                 <div class="progress-container"><div class="progress-bar" style="width: 25.4%"></div></div>
                             </div>
                         </td>
-                        <td class="p-3 text-slate-500">-</td>
-                        <td class="p-3 text-slate-500">-</td>
-                        <td class="p-3 text-slate-500">-</td>
+                        <td class="p-3 text-red-400 font-semibold">СКЕЛЕТ-ИССУШИТЕЛЬ</td>
+                        <td class="p-3 text-slate-300">Проведал ифритов в аду, но я явно был не готов к НЕМУ...</td>
+                        <td class="p-3"><a href="#" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline font-semibold">YouTube</a></td>
                     </tr>
                     <tr id="comp-row-5" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
@@ -1232,7 +1232,7 @@
                 positionTooltip(el);
                 setTimeout(() => { el.classList.remove('copied'); tooltip.textContent = defaultTooltipText; }, 2000);
             }).catch(() => {
-                tooltip.textContent = '❌ Ошибка копирования';
+                tooltip.textContent = ' Ошибка копирования';
                 tooltip.classList.add('visible');
                 positionTooltip(el);
                 setTimeout(() => { tooltip.textContent = defaultTooltipText; }, 2000);
