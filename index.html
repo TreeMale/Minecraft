@@ -144,8 +144,6 @@
         }
 
         .mc-green { color: #4ade80; }
-        .mc-bg { background-color: #22c55e; }
-        .pack-bg { background-color: #8b5cf6; }
         
         .card { 
             background-color: rgba(30, 41, 59, 0.9); 
@@ -1087,7 +1085,6 @@
 
         initBackgroundSlides();
 
-        // ОПТИМИЗАЦИЯ: Добавлен { passive: true } для улучшения производительности прокрутки и отслеживания мыши
         document.addEventListener('mousemove', (e) => {
             lastMouseX = e.clientX;
             lastMouseY = e.clientY;
@@ -1183,7 +1180,6 @@
             setTimeout(() => spark.remove(), duration * 1000 + 50);
         }
 
-        // ================= АНИМАЦИЯ КНОПКИ СКАЧИВАНИЯ =================
         function animateDownloadButton(btn) {
             if (btn.classList.contains('downloading') || btn.classList.contains('success')) return;
             
@@ -1195,10 +1191,9 @@
                 
                 setTimeout(() => {
                     btn.classList.remove('success');
-                }, 1500); // Показываем галочку 1.5 секунды
-            }, 800); // Имитируем начало загрузки (0.8 сек)
+                }, 1500);
+            }, 800);
         }
-        // ============================================================
 
         const world1ImageSets = {
             1: { before: 'https://treemale.github.io/Minecraft/images/world/1/1_1-0_75.5-95--170.5-141-23.8.webp', after: 'https://treemale.github.io/Minecraft/images/world/1/1_1-1_75.5-95--170.5-141-23.8.webp' },
@@ -1309,7 +1304,7 @@
             else if (worldNum === 3) imageSets = world3ImageSets;
             else if (worldNum === 4) imageSets = world4ImageSets;
             else if (worldNum === 5) imageSets = world5ImageSets;
-            else if (worldNum === 6) return; // Для 6-го мира пока нет наборов
+            else if (worldNum === 6) return;
             const set = imageSets[setNum];
             if (!set) return;
             const btn = event.target.closest('.set-btn');
@@ -1320,7 +1315,7 @@
         }
 
         function switchImageSet(worldNum, setNum) {
-            if (worldNum === 6) return; // Для 6-го мира пока нет наборов
+            if (worldNum === 6) return;
             
             const beforeImg = document.getElementById('before-img-' + worldNum);
             const afterImg = document.getElementById('after-img-' + worldNum);
@@ -1380,7 +1375,7 @@
         }
 
         function toggleComparison(num) {
-            if (num === 6) return; // Блокируем открытие для 6-го мира, так как он неактивен
+            if (num === 6) return;
             
             const row = document.getElementById('comp-row-' + num);
             if (row.style.display === 'none' || row.style.display === '') {
@@ -1522,25 +1517,25 @@
         document.getElementById('pack-count').innerText = packs.length;
 
         // ================= ОБЩАЯ АЛФАВИТНАЯ СОРТИРОВКА (СМЕШАННАЯ) =================
-        // Объединяем моды и паки в один массив, добавляя метку типа для сохранения цвета
         const allItems = [
             ...mods.map(m => ({ ...m, type: 'mod' })),
             ...packs.map(p => ({ ...p, type: 'pack' }))
         ];
 
-        // Сортируем по алфавиту с учетом русского языка
         allItems.sort((a, b) => a.n.localeCompare(b.n, 'ru'));
 
-        // Отрисовываем отсортированный список
+        // Отрисовываем отсортированный список с новыми иконками
         allItems.forEach(item => {
             const isMod = item.type === 'mod';
             const cardClass = isMod ? 'card p-4 rounded-lg' : 'card card-pack p-4 rounded-lg';
-            const dotClass = isMod ? 'mc-bg' : 'pack-bg';
+            const dotImage = isMod 
+                ? 'https://treemale.github.io/Minecraft/images/point/point-green.png' 
+                : 'https://treemale.github.io/Minecraft/images/point/point-purple.png';
             const title = isMod ? 'Перейти к моду' : 'Перейти к паку';
             
             allGrid.innerHTML += `<div class="${cardClass}" onclick="window.open('${item.url}', '_blank')" title="${title}">
                 <h3 class="font-bold text-slate-200 mb-2 flex items-center gap-2 text-sm md:text-base">
-                    <span class="w-2 h-2 rounded-full ${dotClass} flex-shrink-0"></span> ${item.n}
+                    <img src="${dotImage}" class="w-4 h-4 flex-shrink-0" alt="icon"> ${item.n}
                 </h3>
                 <p class="text-xs md:text-sm text-slate-400 leading-relaxed">${item.d}</p>
             </div>`;
