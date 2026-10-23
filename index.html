@@ -1029,11 +1029,11 @@
     <section class="mb-16">
         <div class="flex flex-wrap items-end justify-center gap-8 mb-6 border-b border-slate-700 pb-2">
             <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleSection('mods')">
-                <span>&#x1F9E9;</span> Моды (<span id="mod-count" class="mc-green text-lg"></span>)
+                <img src="https://treemale.github.io/Minecraft/images/items/redstone.png" class="w-5 h-5" alt="mods"> Моды (<span id="mod-count" class="mc-green text-lg"></span>)
                 <span class="toggle-icon" id="mods-toggle">▼</span>
             </h2>
             <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleSection('packs')">
-                <span>&#x1F4E6;</span> Ресурс-паки (<span id="pack-count" class="text-purple-400 text-lg"></span>)
+                <img src="https://treemale.github.io/Minecraft/images/items/bundle.png" class="w-5 h-5" alt="packs"> Ресурс-паки (<span id="pack-count" class="text-purple-400 text-lg"></span>)
                 <span class="toggle-icon" id="packs-toggle">▼</span>
             </h2>
         </div>
@@ -1529,8 +1529,8 @@
             const isMod = item.type === 'mod';
             const cardClass = isMod ? 'card p-4 rounded-lg' : 'card card-pack p-4 rounded-lg';
             const dotImage = isMod 
-                ? 'https://treemale.github.io/Minecraft/images/point/point-green.png' 
-                : 'https://treemale.github.io/Minecraft/images/point/point-purple.png';
+                ? 'https://treemale.github.io/Minecraft/images/items/point-green.png' 
+                : 'https://treemale.github.io/Minecraft/images/items/point-purple.png';
             const title = isMod ? 'Перейти к моду' : 'Перейти к паку';
             
             allGrid.innerHTML += `<div class="${cardClass}" onclick="window.open('${item.url}', '_blank')" title="${title}">
