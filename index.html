@@ -90,36 +90,6 @@
         }
         /* ================= КОНЕЦ НОВОГО КУРСОРА ================= */
 
-        /* ================= ШЛЕЙФ ЗА ДВИЖЕНИЕМ ================= */
-        .cursor-trail {
-            position: fixed;
-            width: 20px;
-            height: 2px;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                rgba(147, 197, 253, 0.5) 30%, 
-                rgba(255, 255, 255, 0.7) 50%, 
-                rgba(147, 197, 253, 0.5) 70%, 
-                transparent 100%);
-            border-radius: 1px;
-            pointer-events: none;
-            z-index: 99997;
-            animation: trailFade var(--duration, 0.3s) ease-out forwards;
-            filter: blur(0.5px);
-        }
-
-        @keyframes trailFade {
-            0% {
-                opacity: 0.6;
-                transform: scaleX(1) translateX(0);
-            }
-            100% {
-                opacity: 0;
-                transform: scaleX(0.3) translateX(-6px);
-            }
-        }
-        /* ================= КОНЕЦ ШЛЕЙФА ================= */
-
         * {
             cursor: none !important;
         }
@@ -1134,20 +1104,14 @@
     </section>
 
     <script>
-        // ================= НАСТРОЙКИ КУРСОРА И ЭФФЕКТОВ =================
+        // ================= НАСТРОЙКИ КУРСОРА =================
         const cursorContainer = document.getElementById('cursor-container');
         const customCursor = document.getElementById('custom-cursor');
         
         let lastMouseX = 0, lastMouseY = 0;
-        let prevMouseX = 0, prevMouseY = 0;
         let isHolding = false;
         let clickInterval = null;
         const CLICK_CYCLE = 250;
-        
-        // Настройки шлейфа
-        const TRAIL_MIN_SPEED = 8;
-        const TRAIL_INTERVAL = 16;
-        let lastTrailTime = 0;
         
         function initBackgroundSlides() {
             const container = document.getElementById('bg-container');
@@ -1176,44 +1140,10 @@
         initBackgroundSlides();
 
         document.addEventListener('mousemove', (e) => {
-            prevMouseX = lastMouseX;
-            prevMouseY = lastMouseY;
             lastMouseX = e.clientX;
             lastMouseY = e.clientY;
-            
             cursorContainer.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-            
-            const now = performance.now();
-            if (now - lastTrailTime >= TRAIL_INTERVAL) {
-                const dx = lastMouseX - prevMouseX;
-                const dy = lastMouseY - prevMouseY;
-                const speed = Math.sqrt(dx * dx + dy * dy);
-                
-                if (speed >= TRAIL_MIN_SPEED) {
-                    createTrail(lastMouseX, lastMouseY, dx, dy, speed);
-                }
-                lastTrailTime = now;
-            }
         }, { passive: true });
-
-        function createTrail(x, y, dx, dy, speed) {
-            const trail = document.createElement('div');
-            trail.className = 'cursor-trail';
-            
-            const angle = Math.atan2(dy, dx);
-            const intensity = Math.min(speed / 20, 1);
-            const duration = 0.2 + (1 - intensity) * 0.15;
-            
-            trail.style.left = (x - 10) + 'px';
-            trail.style.top = (y - 1) + 'px';
-            trail.style.setProperty('--duration', duration + 's');
-            trail.style.transform = `rotate(${angle}rad)`;
-            trail.style.opacity = 0.3 + intensity * 0.4;
-            trail.style.width = (12 + intensity * 12) + 'px';
-            
-            document.body.appendChild(trail);
-            setTimeout(() => trail.remove(), duration * 1000 + 50);
-        }
 
         function playClickAnimation(x, y) {
             customCursor.classList.remove('sword-clicking');
