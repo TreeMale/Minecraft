@@ -1116,11 +1116,11 @@
         <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mb-6 border-b border-slate-700 pb-3">
             <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleSection('mods')">
                 <img src="https://treemale.github.io/Minecraft/images/items/redstone-block.png" class="w-7 h-7 object-contain" alt="mods"> Моды (<span id="mod-count" class="mc-green text-lg"></span>)
-                <img src="https://treemale.github.io/Minecraft/images/items/arrow-green.png" class="w-4 h-2 flex-shrink-0 align-middle" id="mods-toggle" alt="toggle">
+                <img src="https://treemale.github.io/Minecraft/images/items/arrow-green.png" class="w-4 h-2 flex-shrink-0 align-middle pixel-icon" id="mods-toggle" alt="toggle">
             </h2>
             <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleSection('packs')">
                 <img src="https://treemale.github.io/Minecraft/images/items/copper-chest.png" class="w-7 h-7 object-contain" alt="packs"> Ресурс-паки (<span id="pack-count" class="text-purple-400 text-lg"></span>)
-                <img src="https://treemale.github.io/Minecraft/images/items/arrow-green.png" class="w-4 h-2 flex-shrink-0 align-middle" id="packs-toggle" alt="toggle">
+                <img src="https://treemale.github.io/Minecraft/images/items/arrow-green.png" class="w-4 h-2 flex-shrink-0 align-middle pixel-icon" id="packs-toggle" alt="toggle">
             </h2>
             <div class="search-box">
                 <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -1145,16 +1145,15 @@
         const ARROW_RED = 'https://treemale.github.io/Minecraft/images/items/arrow-red.png';
 
         // ================= ДИАПАЗОН ЦВЕТОВ ЧАСТИЦ =================
-        // От белого блика до глубокого синего — алмазная палитра
         const PARTICLE_COLORS = [
-            '#ffffff',   // белый блик
-            '#e0f2fe',   // очень светлый голубой
-            '#bae6fd',   // светлый голубой
-            '#7dd3fc',   // голубой
-            '#38bdf8',   // основной алмазный
-            '#0ea5e3',   // средний синий
-            '#0284c7',   // тёмно-синий
-            '#0369a1',   // глубокий синий
+            '#ffffff',
+            '#e0f2fe',
+            '#bae6fd',
+            '#7dd3fc',
+            '#38bdf8',
+            '#0ea5e3',
+            '#0284c7',
+            '#0369a1',
         ];
 
         function getRandomColor() {
@@ -1162,7 +1161,7 @@
         }
         // ================= КОНЕЦ ДИАПАЗОНА ЦВЕТОВ =================
         
-        // ================= ОБВОДКА КУРСОРА ПРИ НАВЕДЕНИИ (делегирование событий) =================
+        // ================= ОБВОДКА КУРСОРА ПРИ НАВЕДЕНИИ =================
         const HOVER_SELECTORS = 'a, button, [onclick], .card, .card-pack, .section-header, .world-name, .comparison-label, .set-btn, .slider-handle, .search-clear, #item-search';
         
         function getClickableParent(el) {
@@ -1190,14 +1189,14 @@
 
         // ================= ПИКСЕЛЬНЫЕ ЧАСТИЦЫ ПРИ КЛИКЕ =================
         function createClickPixels(x, y) {
-            const pixelCount = 5 + Math.floor(Math.random() * 4); // 5-8 пикселей
+            const pixelCount = 5 + Math.floor(Math.random() * 4);
             
             for (let i = 0; i < pixelCount; i++) {
                 const pixel = document.createElement('div');
                 pixel.className = 'click-pixel';
                 
                 const color = getRandomColor();
-                const size = 2 + Math.floor(Math.random() * 3); // 2-4 пикселя
+                const size = 2 + Math.floor(Math.random() * 3);
                 
                 pixel.style.width = size + 'px';
                 pixel.style.height = size + 'px';
@@ -1207,7 +1206,7 @@
                 const angle = Math.random() * Math.PI * 2;
                 const distance = 12 + Math.random() * 30;
                 const dx = Math.cos(angle) * distance;
-                const dy = Math.sin(angle) * distance - 8; // чуть вверх
+                const dy = Math.sin(angle) * distance - 8;
                 
                 const duration = 0.2 + Math.random() * 0.2;
                 
@@ -1549,6 +1548,13 @@
         const sectionState = { mods: true, packs: true };
         let searchQuery = '';
 
+        // ================= ОБНОВЛЕНИЕ СЧЁТЧИКОВ =================
+        function updateCounters(modsVisible, packsVisible) {
+            document.getElementById('mod-count').innerText = modsVisible;
+            document.getElementById('pack-count').innerText = packsVisible;
+        }
+        // ================= КОНЕЦ ОБНОВЛЕНИЯ СЧЁТЧИКОВ =================
+
         function toggleSection(section) {
             sectionState[section] = !sectionState[section];
             const toggleIcon = document.getElementById(section + '-toggle');
@@ -1560,17 +1566,37 @@
             const query = searchQuery.trim().toLowerCase();
             document.getElementById('search-clear').classList.toggle('hidden', !searchQuery);
 
+            let modsVisible = 0;
+            let packsVisible = 0;
+
             for (let card of allGrid.children) {
                 if (!card.classList.contains('card')) continue;
                 const isMod = !card.classList.contains('card-pack');
                 const section = isMod ? 'mods' : 'packs';
+                const sectionOpen = sectionState[section];
 
+                // Если секция свёрнута — скрываем всё в ней
+                if (!sectionOpen) {
+                    card.classList.add('hidden');
+                    continue;
+                }
+
+                // Секция раскрыта — фильтруем по поиску
                 if (query) {
-                    card.classList.toggle('hidden', !card.textContent.toLowerCase().includes(query));
+                    const matches = card.textContent.toLowerCase().includes(query);
+                    card.classList.toggle('hidden', !matches);
                 } else {
-                    card.classList.toggle('hidden', !sectionState[section]);
+                    card.classList.remove('hidden');
+                }
+
+                // Считаем видимые
+                if (!card.classList.contains('hidden')) {
+                    if (isMod) modsVisible++;
+                    else packsVisible++;
                 }
             }
+
+            updateCounters(modsVisible, packsVisible);
         }
 
         document.getElementById('item-search').addEventListener('input', (e) => {
@@ -1662,8 +1688,6 @@
         ];
 
         const allGrid = document.getElementById('all-grid');
-        document.getElementById('mod-count').innerText = mods.length;
-        document.getElementById('pack-count').innerText = packs.length;
 
         const allItems = [
             ...mods.map(m => ({ ...m, type: 'mod' })),
@@ -1687,6 +1711,9 @@
                 <p class="text-xs md:text-sm text-slate-400 leading-relaxed">${item.d}</p>
             </div>`;
         });
+
+        // Инициализация счётчиков после рендера карточек
+        applyFilters();
     </script>
 </body>
 </html>
