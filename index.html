@@ -6,7 +6,6 @@
     <title>TreeMale</title>
     <link rel="icon" type="image/png" href="https://treemale.github.io/Minecraft/images/icon.png">
     
-    <!-- ОПТИМИЗАЦИЯ: Предварительное подключение к доменам для ускорения загрузки -->
     <link rel="preconnect" href="https://treemale.github.io">
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     
@@ -57,7 +56,6 @@
         ================= КОНЕЦ СТАРОГО КУРСОРА ================= */
 
         /* ================= НОВЫЙ КУРСОР (МЕЧ 32x32) ================= */
-        /* Контейнер отвечает только за позицию (GPU-ускорение) */
         #cursor-container {
             position: fixed;
             top: 0;
@@ -67,7 +65,6 @@
             will-change: transform;
         }
 
-        /* Сам курсор отвечает только за внешний вид и анимацию вращения */
         #custom-cursor {
             width: 32px;
             height: 32px;
@@ -78,14 +75,13 @@
             image-rendering: -moz-crisp-edges;
             image-rendering: crisp-edges;
             will-change: transform;
-            /* Смещение на 1px, чтобы пиксель (1, 1) изображения был точно под координатами мыши */
             margin-top: -1px;
             margin-left: -1px;
         }
 
         @keyframes swordClick {
             0% { transform: rotate(0deg); }
-            40% { transform: rotate(-35deg); } /* Резкий замах */
+            40% { transform: rotate(-35deg); }
             100% { transform: rotate(0deg); }
         }
 
@@ -94,32 +90,131 @@
         }
         /* ================= КОНЕЦ НОВОГО КУРСОРА ================= */
 
-        * {
-            cursor: none !important;
-        }
-
-        .spark {
+        /* ================= ШЛЕЙФ ЗА ДВИЖЕНИЕМ ================= */
+        .cursor-trail {
             position: fixed;
-            width: 2px;
-            height: 2px;
+            width: 24px;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(147, 197, 253, 0.7) 20%, 
+                rgba(255, 255, 255, 0.9) 50%, 
+                rgba(147, 197, 253, 0.7) 80%, 
+                transparent 100%);
+            border-radius: 2px;
             pointer-events: none;
-            z-index: 99998;
-            animation: sparkJump var(--duration, 0.15s) ease-out forwards;
+            z-index: 99997;
+            animation: trailFade var(--duration, 0.4s) ease-out forwards;
+            filter: blur(0.5px);
+            box-shadow: 0 0 4px rgba(147, 197, 253, 0.4);
         }
 
-        @keyframes sparkJump {
+        @keyframes trailFade {
             0% {
-                opacity: 1;
-                transform: translate(0, 0);
-            }
-            50% {
-                opacity: 1;
-                transform: translate(var(--dx1, 2px), var(--dy1, -8px));
+                opacity: 0.8;
+                transform: scaleX(1) translateX(0);
             }
             100% {
                 opacity: 0;
-                transform: translate(var(--dx2, -3px), var(--dy2, 4px));
+                transform: scaleX(0.2) translateX(-8px);
             }
+        }
+        /* ================= КОНЕЦ ШЛЕЙФА ================= */
+
+        /* ================= ПОРЫВ ПРИ КЛИКЕ (ВЗМАХ) ================= */
+        .cursor-slash {
+            position: fixed;
+            width: 140px;
+            height: 6px;
+            pointer-events: none;
+            z-index: 99998;
+            animation: slashAnim 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            transform-origin: left center;
+        }
+
+        .cursor-slash::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.95) 15%, 
+                rgba(186, 230, 253, 0.8) 40%, 
+                rgba(147, 197, 253, 0.5) 70%, 
+                transparent 100%);
+            border-radius: 3px;
+            filter: blur(1px);
+            box-shadow: 0 0 8px rgba(147, 197, 253, 0.6), 0 0 16px rgba(186, 230, 253, 0.4);
+        }
+
+        @keyframes slashAnim {
+            0% {
+                opacity: 1;
+                transform: scaleX(0) rotate(var(--slash-angle, -30deg));
+            }
+            30% {
+                opacity: 1;
+                transform: scaleX(1.1) rotate(var(--slash-angle, -30deg));
+            }
+            100% {
+                opacity: 0;
+                transform: scaleX(1.3) rotate(var(--slash-angle, -30deg)) translateY(-30px);
+            }
+        }
+
+        .cursor-slash-secondary {
+            position: fixed;
+            width: 90px;
+            height: 4px;
+            pointer-events: none;
+            z-index: 99998;
+            animation: slashAnimSecondary 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            transform-origin: left center;
+            animation-delay: 0.05s;
+            opacity: 0;
+        }
+
+        .cursor-slash-secondary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.7) 20%, 
+                rgba(186, 230, 253, 0.5) 60%, 
+                transparent 100%);
+            border-radius: 2px;
+            filter: blur(1.5px);
+            box-shadow: 0 0 6px rgba(147, 197, 253, 0.3);
+        }
+
+        @keyframes slashAnimSecondary {
+            0% {
+                opacity: 0;
+                transform: scaleX(0) rotate(var(--slash-angle-2, -25deg));
+            }
+            20% {
+                opacity: 0.8;
+            }
+            50% {
+                opacity: 0.6;
+                transform: scaleX(0.9) rotate(var(--slash-angle-2, -25deg));
+            }
+            100% {
+                opacity: 0;
+                transform: scaleX(1.1) rotate(var(--slash-angle-2, -25deg)) translateY(-20px);
+            }
+        }
+        /* ================= КОНЕЦ ПОРЫВА ================= */
+
+        * {
+            cursor: none !important;
         }
 
         body { 
@@ -325,7 +420,6 @@
             opacity: 1;
         }
 
-        /* Анимация кнопки скачивания */
         .download-btn .icon-default,
         .download-btn .icon-loading,
         .download-btn .icon-success {
@@ -648,7 +742,6 @@
         }
         .toggle-icon.collapsed { color: #ef4444; }
 
-        /* ================= ПОИСК ================= */
         .search-box {
             position: relative;
             width: 100%;
@@ -698,7 +791,6 @@
 </head>
 <body class="p-4 md:p-8 mx-auto">
 
-    <!-- Оптимизированная структура курсора: контейнер для позиции, внутренний блок для анимации -->
     <div id="cursor-container">
         <div id="custom-cursor"></div>
     </div>
@@ -1060,7 +1152,6 @@
                         </td>
                     </tr>
 
-                    <!-- НОВЫЙ ПУНКТ #мирвайба6 (НЕАКТИВНЫЙ) -->
                     <tr class="hover:bg-slate-800/50 transition">
                         <td class="p-3 font-bold mc-green">6</td>
                         <td class="p-3">
@@ -1105,7 +1196,6 @@
                                         <span class="comparison-label after" onclick="showFullImage(6, 'after')">После</span>
                                     </div>
                                     <div class="image-set-buttons">
-                                        <!-- Кнопки наборов картинок будут добавлены позже -->
                                     </div>
                                 </div>
                             </div>
@@ -1137,20 +1227,26 @@
     </section>
 
     <script>
-        // ================= НАСТРОЙКИ КУРСОРА =================
+        // ================= НАСТРОЙКИ КУРСОРА И ЭФФЕКТОВ =================
         const cursorContainer = document.getElementById('cursor-container');
         const customCursor = document.getElementById('custom-cursor');
         
         let lastMouseX = 0, lastMouseY = 0;
+        let prevMouseX = 0, prevMouseY = 0;
         let isHolding = false;
         let clickInterval = null;
-        const CLICK_CYCLE = 250; // Чуть быстрее для меча
-        const SPARK_DELAY = 100; // Искры вылетают почти сразу при ударе
-
+        const CLICK_CYCLE = 250;
+        const SLASH_DELAY = 50;
+        
+        // Настройки шлейфа
+        const TRAIL_MIN_SPEED = 8;
+        const TRAIL_INTERVAL = 16;
+        let lastTrailTime = 0;
+        
         function initBackgroundSlides() {
             const container = document.getElementById('bg-container');
             const backgroundImages = ['https://treemale.github.io/Minecraft/images/bg.webp'];
-            const SLIDE_INTERVAL = 10000; // 10 секунд
+            const SLIDE_INTERVAL = 10000;
             
             backgroundImages.forEach((url, index) => {
                 const slide = document.createElement('div');
@@ -1174,20 +1270,74 @@
         initBackgroundSlides();
 
         document.addEventListener('mousemove', (e) => {
+            prevMouseX = lastMouseX;
+            prevMouseY = lastMouseY;
             lastMouseX = e.clientX;
             lastMouseY = e.clientY;
-            // Используем transform для максимально плавного перемещения (GPU-ускорение)
+            
             cursorContainer.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+            
+            const now = performance.now();
+            if (now - lastTrailTime >= TRAIL_INTERVAL) {
+                const dx = lastMouseX - prevMouseX;
+                const dy = lastMouseY - prevMouseY;
+                const speed = Math.sqrt(dx * dx + dy * dy);
+                
+                if (speed >= TRAIL_MIN_SPEED) {
+                    createTrail(lastMouseX, lastMouseY, dx, dy, speed);
+                }
+                lastTrailTime = now;
+            }
         }, { passive: true });
+
+        function createTrail(x, y, dx, dy, speed) {
+            const trail = document.createElement('div');
+            trail.className = 'cursor-trail';
+            
+            const angle = Math.atan2(dy, dx);
+            const intensity = Math.min(speed / 20, 1);
+            const duration = 0.25 + (1 - intensity) * 0.2;
+            
+            trail.style.left = (x - 12) + 'px';
+            trail.style.top = (y - 1.5) + 'px';
+            trail.style.setProperty('--duration', duration + 's');
+            trail.style.transform = `rotate(${angle}rad)`;
+            trail.style.opacity = 0.4 + intensity * 0.4;
+            trail.style.width = (16 + intensity * 16) + 'px';
+            
+            document.body.appendChild(trail);
+            setTimeout(() => trail.remove(), duration * 1000 + 50);
+        }
 
         function playClickAnimation(x, y) {
             customCursor.classList.remove('sword-clicking');
-            void customCursor.offsetWidth; // Перезапуск анимации
+            void customCursor.offsetWidth;
             customCursor.classList.add('sword-clicking');
             
             setTimeout(() => {
-                createSparksAtTip(x, y);
-            }, SPARK_DELAY);
+                createSlash(x, y);
+            }, SLASH_DELAY);
+        }
+
+        function createSlash(x, y) {
+            const primaryAngle = -45 + Math.random() * 30;
+            const secondaryAngle = primaryAngle + 10 + Math.random() * 10;
+            
+            const slash = document.createElement('div');
+            slash.className = 'cursor-slash';
+            slash.style.left = (x - 20) + 'px';
+            slash.style.top = (y - 3) + 'px';
+            slash.style.setProperty('--slash-angle', primaryAngle + 'deg');
+            document.body.appendChild(slash);
+            setTimeout(() => slash.remove(), 450);
+            
+            const slash2 = document.createElement('div');
+            slash2.className = 'cursor-slash-secondary';
+            slash2.style.left = (x - 10) + 'px';
+            slash2.style.top = (y + 8) + 'px';
+            slash2.style.setProperty('--slash-angle-2', secondaryAngle + 'deg');
+            document.body.appendChild(slash2);
+            setTimeout(() => slash2.remove(), 420);
         }
 
         document.addEventListener('mousedown', (e) => {
@@ -1228,45 +1378,6 @@
         window.addEventListener('mouseenter', () => {
             cursorContainer.style.display = 'block';
         });
-
-        function createSparksAtTip(mouseX, mouseY) {
-            // Искры летят из активного кончика меча. 
-            // Благодаря CSS margin, пиксель (1, 1) картинки уже точно совпадает с mouseX и mouseY.
-            const sparkCount = 4 + Math.floor(Math.random() * 3);
-            for (let i = 0; i < sparkCount; i++) {
-                createSpark(mouseX, mouseY);
-            }
-        }
-
-        function createSpark(x, y) {
-            const spark = document.createElement('div');
-            spark.className = 'spark';
-            
-            const duration = 0.12 + Math.random() * 0.06;
-            const direction = Math.random() > 0.5 ? 1 : -1;
-            
-            const dx1 = direction * (6 + Math.random() * 12);
-            const dy1 = -3 - Math.random() * 8;
-            const dx2 = direction * (12 + Math.random() * 12);
-            const dy2 = 5 + Math.random() * 6;
-            
-            spark.style.setProperty('--duration', duration + 's');
-            spark.style.setProperty('--dx1', dx1 + 'px');
-            spark.style.setProperty('--dy1', dy1 + 'px');
-            spark.style.setProperty('--dx2', dx2 + 'px');
-            spark.style.setProperty('--dy2', dy2 + 'px');
-            
-            spark.style.left = x + 'px';
-            spark.style.top = y + 'px';
-            
-            const colors = ['#fbbf24', '#f59e0b', '#fcd34d', '#fb923c'];
-            const randomColor = colors[Math.floor(Math.random() * colors.length)];
-            spark.style.background = randomColor;
-            spark.style.boxShadow = `0 0 4px ${randomColor}, 0 0 6px ${randomColor}`;
-            
-            document.body.appendChild(spark);
-            setTimeout(() => spark.remove(), duration * 1000 + 50);
-        }
 
         function animateDownloadButton(btn) {
             if (btn.classList.contains('downloading') || btn.classList.contains('success')) return;
@@ -1513,8 +1624,7 @@
             else { beforeImg.style.clipPath = 'inset(0 100% 0 0)'; slider.style.left = '0%'; }
         }
 
-        // ================= СЕКЦИИ И ПОИСК =================
-        const sectionState = { mods: true, packs: true }; // true = секция раскрыта
+        const sectionState = { mods: true, packs: true };
         let searchQuery = '';
 
         function toggleSection(section) {
@@ -1535,7 +1645,6 @@
                 const section = isMod ? 'mods' : 'packs';
 
                 if (query) {
-                    // При активном поиске ищем по всему списку, свёрнутость секций игнорируем
                     card.classList.toggle('hidden', !card.textContent.toLowerCase().includes(query));
                 } else {
                     card.classList.toggle('hidden', !sectionState[section]);
@@ -1635,7 +1744,6 @@
         document.getElementById('mod-count').innerText = mods.length;
         document.getElementById('pack-count').innerText = packs.length;
 
-        // ================= ОБЩАЯ АЛФАВИТНАЯ СОРТИРОВКА (СМЕШАННАЯ) =================
         const allItems = [
             ...mods.map(m => ({ ...m, type: 'mod' })),
             ...packs.map(p => ({ ...p, type: 'pack' }))
@@ -1643,7 +1751,6 @@
 
         allItems.sort((a, b) => a.n.localeCompare(b.n, 'ru'));
 
-        // Отрисовываем отсортированный список с новыми иконками 12x12px
         allItems.forEach(item => {
             const isMod = item.type === 'mod';
             const cardClass = isMod ? 'card p-4 rounded-lg' : 'card card-pack p-4 rounded-lg';
