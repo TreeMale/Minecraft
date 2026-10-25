@@ -28,7 +28,7 @@
         }
 
         /* ================= СТАРЫЙ КУРСОР (КИРКА) — ЗАКОММЕНТИРОВАН =================
-        #custom-cursor {
+        #custom-cursor-old {
             position: fixed;
             top: 0;
             left: 0;
@@ -57,32 +57,40 @@
         ================= КОНЕЦ СТАРОГО КУРСОРА ================= */
 
         /* ================= НОВЫЙ КУРСОР (МЕЧ 32x32) ================= */
-        #custom-cursor {
+        /* Контейнер отвечает только за позицию (GPU-ускорение) */
+        #cursor-container {
             position: fixed;
             top: 0;
             left: 0;
+            pointer-events: none;
+            z-index: 99999;
+            will-change: transform;
+        }
+
+        /* Сам курсор отвечает только за внешний вид и анимацию вращения */
+        #custom-cursor {
             width: 32px;
             height: 32px;
             background-image: url('https://treemale.github.io/Minecraft/images/cursor/diamond-sword.png');
             background-size: 32px 32px;
             background-repeat: no-repeat;
-            pointer-events: none;
-            z-index: 99999;
             image-rendering: pixelated;
             image-rendering: -moz-crisp-edges;
             image-rendering: crisp-edges;
             will-change: transform;
-            transform-origin: 1px 1px; /* точка наведения — активный кончик меча */
+            /* Смещение на 1px, чтобы пиксель (1, 1) изображения был точно под координатами мыши */
+            margin-top: -1px;
+            margin-left: -1px;
         }
 
         @keyframes swordClick {
             0% { transform: rotate(0deg); }
-            50% { transform: rotate(-30deg); }
+            40% { transform: rotate(-35deg); } /* Резкий замах */
             100% { transform: rotate(0deg); }
         }
 
         .sword-clicking {
-            animation: swordClick 0.25s ease-in-out;
+            animation: swordClick 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         /* ================= КОНЕЦ НОВОГО КУРСОРА ================= */
 
@@ -690,7 +698,11 @@
 </head>
 <body class="p-4 md:p-8 mx-auto">
 
-    <div id="custom-cursor"></div>
+    <!-- Оптимизированная структура курсора: контейнер для позиции, внутренний блок для анимации -->
+    <div id="cursor-container">
+        <div id="custom-cursor"></div>
+    </div>
+    
     <div class="custom-bg" id="bg-container"></div>
 
     <header class="text-center mb-12">
@@ -1126,27 +1138,19 @@
 
     <script>
         // ================= НАСТРОЙКИ КУРСОРА =================
-        // Активная точка (hotspot) меча: пиксель (1, 1) от левого верхнего угла картинки
-        const CURSOR_HOTSPOT_X = 1;
-        const CURSOR_HOTSPOT_Y = 1;
-
-        // ================= НАСТРОЙКИ ФОНОВЫХ СЛАЙДОВ =================
-        const backgroundImages = [
-            'https://treemale.github.io/Minecraft/images/bg.webp'
-        ];
-        
-        const SLIDE_INTERVAL = 10000; // 10 секунд
-
+        const cursorContainer = document.getElementById('cursor-container');
         const customCursor = document.getElementById('custom-cursor');
         
         let lastMouseX = 0, lastMouseY = 0;
         let isHolding = false;
         let clickInterval = null;
-        const CLICK_CYCLE = 300;
-        const SPARK_DELAY = 150;
+        const CLICK_CYCLE = 250; // Чуть быстрее для меча
+        const SPARK_DELAY = 100; // Искры вылетают почти сразу при ударе
 
         function initBackgroundSlides() {
             const container = document.getElementById('bg-container');
+            const backgroundImages = ['https://treemale.github.io/Minecraft/images/bg.webp'];
+            const SLIDE_INTERVAL = 10000; // 10 секунд
             
             backgroundImages.forEach((url, index) => {
                 const slide = document.createElement('div');
@@ -1157,19 +1161,14 @@
             });
 
             if (backgroundImages.length > 1) {
-                startSlideShow();
+                const slides = document.querySelectorAll('.bg-slide');
+                let currentIndex = 0;
+                setInterval(() => {
+                    slides[currentIndex].classList.remove('active');
+                    currentIndex = (currentIndex + 1) % slides.length;
+                    slides[currentIndex].classList.add('active');
+                }, SLIDE_INTERVAL);
             }
-        }
-
-        function startSlideShow() {
-            const slides = document.querySelectorAll('.bg-slide');
-            let currentIndex = 0;
-
-            setInterval(() => {
-                slides[currentIndex].classList.remove('active');
-                currentIndex = (currentIndex + 1) % slides.length;
-                slides[currentIndex].classList.add('active');
-            }, SLIDE_INTERVAL);
         }
 
         initBackgroundSlides();
@@ -1177,14 +1176,13 @@
         document.addEventListener('mousemove', (e) => {
             lastMouseX = e.clientX;
             lastMouseY = e.clientY;
-            // Позиционируем так, чтобы пиксель (1,1) картинки совпадал с указателем мыши
-            customCursor.style.left = (e.clientX - CURSOR_HOTSPOT_X) + 'px';
-            customCursor.style.top = (e.clientY - CURSOR_HOTSPOT_Y) + 'px';
+            // Используем transform для максимально плавного перемещения (GPU-ускорение)
+            cursorContainer.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
         }, { passive: true });
 
         function playClickAnimation(x, y) {
             customCursor.classList.remove('sword-clicking');
-            void customCursor.offsetWidth;
+            void customCursor.offsetWidth; // Перезапуск анимации
             customCursor.classList.add('sword-clicking');
             
             setTimeout(() => {
@@ -1219,7 +1217,7 @@
         });
         
         window.addEventListener('mouseleave', () => {
-            customCursor.style.display = 'none';
+            cursorContainer.style.display = 'none';
             isHolding = false;
             if (clickInterval) {
                 clearInterval(clickInterval);
@@ -1228,16 +1226,15 @@
         });
         
         window.addEventListener('mouseenter', () => {
-            customCursor.style.display = 'block';
+            cursorContainer.style.display = 'block';
         });
 
         function createSparksAtTip(mouseX, mouseY) {
-            // Искры летят из активного кончика меча — пиксель (1,1)
-            const tipX = mouseX - CURSOR_HOTSPOT_X + 1;
-            const tipY = mouseY - CURSOR_HOTSPOT_Y + 1;
+            // Искры летят из активного кончика меча. 
+            // Благодаря CSS margin, пиксель (1, 1) картинки уже точно совпадает с mouseX и mouseY.
             const sparkCount = 4 + Math.floor(Math.random() * 3);
             for (let i = 0; i < sparkCount; i++) {
-                createSpark(tipX, tipY);
+                createSpark(mouseX, mouseY);
             }
         }
 
