@@ -27,6 +27,7 @@
             font-display: swap;
         }
 
+        /* ================= СТАРЫЙ КУРСОР (КИРКА) — ЗАКОММЕНТИРОВАН =================
         #custom-cursor {
             position: fixed;
             top: 0;
@@ -53,6 +54,37 @@
         .pickaxe-clicking {
             animation: pickaxeClick 0.3s ease-in-out;
         }
+        ================= КОНЕЦ СТАРОГО КУРСОРА ================= */
+
+        /* ================= НОВЫЙ КУРСОР (МЕЧ 32x32) ================= */
+        #custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 32px;
+            height: 32px;
+            background-image: url('https://treemale.github.io/Minecraft/images/cursor/diamond-sword.png');
+            background-size: 32px 32px;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            z-index: 99999;
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+            will-change: transform;
+            transform-origin: 1px 1px; /* точка наведения — активный кончик меча */
+        }
+
+        @keyframes swordClick {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(-30deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        .sword-clicking {
+            animation: swordClick 0.25s ease-in-out;
+        }
+        /* ================= КОНЕЦ НОВОГО КУРСОРА ================= */
 
         * {
             cursor: none !important;
@@ -672,7 +704,7 @@
 
     <section class="mb-16">
         <h2 class="text-2xl font-bold mb-6 border-b border-slate-700 pb-2 flex items-center justify-center gap-2">
-            <img src="https://treemale.github.io/Minecraft/images/items/lectern.png" class="w-8 h-8" alt="lectern"> История забегов и смертей
+            <img src="https://treemale.github.io/Minecraft/images/items/lectern.png" class="w-8 h-8 object-contain" alt="lectern"> История забегов и смертей
         </h2>
         <div class="rounded-lg border border-slate-700 table-container">
             <table class="w-full text-center border-collapse text-sm">
@@ -1076,11 +1108,11 @@
     <section class="mb-16">
         <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mb-6 border-b border-slate-700 pb-3">
             <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleSection('mods')">
-                <img src="https://treemale.github.io/Minecraft/images/items/redstone-block.png" class="w-7 h-7" alt="mods"> Моды (<span id="mod-count" class="mc-green text-lg"></span>)
+                <img src="https://treemale.github.io/Minecraft/images/items/redstone-block.png" class="w-7 h-7 object-contain" alt="mods"> Моды (<span id="mod-count" class="mc-green text-lg"></span>)
                 <span class="toggle-icon" id="mods-toggle">▼</span>
             </h2>
             <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleSection('packs')">
-                <img src="https://treemale.github.io/Minecraft/images/items/copper-chest.png" class="w-7 h-7" alt="packs"> Ресурс-паки (<span id="pack-count" class="text-purple-400 text-lg"></span>)
+                <img src="https://treemale.github.io/Minecraft/images/items/copper-chest.png" class="w-7 h-7 object-contain" alt="packs"> Ресурс-паки (<span id="pack-count" class="text-purple-400 text-lg"></span>)
                 <span class="toggle-icon" id="packs-toggle">▼</span>
             </h2>
             <div class="search-box">
@@ -1093,6 +1125,11 @@
     </section>
 
     <script>
+        // ================= НАСТРОЙКИ КУРСОРА =================
+        // Активная точка (hotspot) меча: пиксель (1, 1) от левого верхнего угла картинки
+        const CURSOR_HOTSPOT_X = 1;
+        const CURSOR_HOTSPOT_Y = 1;
+
         // ================= НАСТРОЙКИ ФОНОВЫХ СЛАЙДОВ =================
         const backgroundImages = [
             'https://treemale.github.io/Minecraft/images/bg.webp'
@@ -1140,14 +1177,15 @@
         document.addEventListener('mousemove', (e) => {
             lastMouseX = e.clientX;
             lastMouseY = e.clientY;
-            customCursor.style.left = (e.clientX - 5) + 'px';
-            customCursor.style.top = (e.clientY - 29) + 'px';
+            // Позиционируем так, чтобы пиксель (1,1) картинки совпадал с указателем мыши
+            customCursor.style.left = (e.clientX - CURSOR_HOTSPOT_X) + 'px';
+            customCursor.style.top = (e.clientY - CURSOR_HOTSPOT_Y) + 'px';
         }, { passive: true });
 
         function playClickAnimation(x, y) {
-            customCursor.classList.remove('pickaxe-clicking');
+            customCursor.classList.remove('sword-clicking');
             void customCursor.offsetWidth;
-            customCursor.classList.add('pickaxe-clicking');
+            customCursor.classList.add('sword-clicking');
             
             setTimeout(() => {
                 createSparksAtTip(x, y);
@@ -1194,8 +1232,9 @@
         });
 
         function createSparksAtTip(mouseX, mouseY) {
-            const tipX = mouseX + 5 - 2;
-            const tipY = mouseY + 5 + 5 - 1;
+            // Искры летят из активного кончика меча — пиксель (1,1)
+            const tipX = mouseX - CURSOR_HOTSPOT_X + 1;
+            const tipY = mouseY - CURSOR_HOTSPOT_Y + 1;
             const sparkCount = 4 + Math.floor(Math.random() * 3);
             for (let i = 0; i < sparkCount; i++) {
                 createSpark(tipX, tipY);
@@ -1285,7 +1324,8 @@
             'https://treemale.github.io/Minecraft/images/loader/grass_block.webp',
             'https://treemale.github.io/Minecraft/images/loader/oak_planks.webp',
             'https://treemale.github.io/Minecraft/images/loader/cobblestone.webp',
-            'https://treemale.github.io/Minecraft/images/cursor/diamond_pickaxe.png'
+            'https://treemale.github.io/Minecraft/images/cursor/diamond_pickaxe.png',
+            'https://treemale.github.io/Minecraft/images/cursor/diamond-sword.png'
         ];
 
         let currentSet = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
