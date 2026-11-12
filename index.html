@@ -26,6 +26,13 @@
             font-display: swap;
         }
 
+        /* ================= РЕЗЕРВ МЕСТА ПОД СКРОЛЛБАР ================= */
+        html {
+            scrollbar-gutter: stable;
+            overflow-y: scroll;
+        }
+        /* ================= КОНЕЦ РЕЗЕРВА ================= */
+
         /* ================= КУРСОР (МЕЧ 32x32) ================= */
         #cursor-container {
             position: fixed;
@@ -102,6 +109,7 @@
             font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
             max-width: 1600px;
             margin: 0 auto;
+            min-height: 100vh;
         }
 
         .custom-bg {
