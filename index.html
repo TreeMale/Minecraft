@@ -300,7 +300,7 @@
         }
 
         .status-badge { font-size: 11px; padding: 3px 10px; border-radius: 9999px; font-weight: 600; white-space: nowrap; }
-        .status-badge.done { background: rgba(74, 222, 128, 0.15); border: 1px solid #4ade80; color: #4ade80; }
+        .status-badge.done { color: #4ade80; }
         .status-badge.not-done { background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #ef4444; }
 
         .challenge-card {
@@ -311,8 +311,14 @@
         .challenge-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
         .challenge-header .ch-title { display: flex; align-items: center; gap: 10px; min-width: 0; }
         .challenge-header .ch-nick { font-weight: bold; color: #e2e8f0; font-size: 15px; }
-        .challenge-arrow { transition: transform 0.2s ease; flex-shrink: 0; }
-        .challenge-card.expanded .challenge-arrow { transform: rotate(180deg); }
+        .challenge-arrow {
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+            transform: rotate(-90deg);
+        }
+        .challenge-card.expanded .challenge-arrow {
+            transform: rotate(0deg);
+        }
         .challenge-body {
             max-height: 0; opacity: 0; overflow: hidden;
             transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease; margin-top: 0;
@@ -341,9 +347,10 @@
 
     <!-- ================= ВКЛАДКА: ИСТОРИЯ ЗАБЕГОВ ================= -->
     <section id="tab-runs" class="mb-16">
-        <h2 class="text-2xl font-bold mb-6 border-b border-slate-700 pb-2 flex items-center justify-center gap-2">
+        <h2 class="text-2xl font-bold mb-2 border-b border-slate-700 pb-2 flex items-center justify-center gap-2">
             <img src="https://treemale.github.io/Minecraft/images/items/lectern.png" class="w-8 h-8 object-contain" alt="lectern"> История забегов и смертей
         </h2>
+        <p class="text-slate-400 text-sm text-center mb-6">Здесь будет описание раздела.</p>
         <div class="rounded-lg border border-slate-700 table-container">
             <table class="w-full text-center border-collapse text-sm">
                 <colgroup>
@@ -631,9 +638,10 @@
 
     <!-- ================= ВКЛАДКА: МОДЫ И РЕСУРС-ПАКИ ================= -->
     <section id="tab-mods" class="mb-16" style="display: none;">
-        <h2 class="text-2xl font-bold mb-6 border-b border-slate-700 pb-2 flex items-center justify-center gap-2">
+        <h2 class="text-2xl font-bold mb-2 border-b border-slate-700 pb-2 flex items-center justify-center gap-2">
             <img src="" class="w-8 h-8 object-contain" alt=""> Моды и ресурс-паки
         </h2>
+        <p class="text-slate-400 text-sm text-center mb-6">Здесь будет описание раздела.</p>
         <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mb-6 border-b border-slate-700 pb-3">
             <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleSection('mods')">
                 <img src="https://treemale.github.io/Minecraft/images/items/redstone-block.png" class="w-7 h-7 object-contain" alt="mods"> Моды (<span id="mod-count" class="mc-green text-lg"></span>)
@@ -655,12 +663,12 @@
     <!-- ================= ВКЛАДКА: ИСПЫТАНИЯ ОТ ЗРИТЕЛЕЙ ================= -->
     <section id="tab-challenges" class="mb-16" style="display: none;">
         <h2 class="text-2xl font-bold mb-2 border-b border-slate-700 pb-2 flex items-center justify-center gap-2">
-            <img src="https://treemale.github.io/Minecraft/images/items/point-green.png" class="w-7 h-7 object-contain" alt=""> Испытания от зрителей
+            <img src="" class="w-7 h-7 object-contain" alt=""> Испытания от зрителей
         </h2>
         <p class="text-slate-400 text-sm text-center mb-4">Зрители покупают испытание за баллы канала и присылают его мне — а я его выполняю. Нажмите на карточку, чтобы раскрыть подробности.</p>
         <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mb-6 border-b border-slate-700 pb-3">
             <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleChallengesFilter('done')">
-                Выполнено (<span id="ch-done-count" class="mc-green text-lg"></span>)
+                <span class="mc-green">Выполнено</span> (<span id="ch-done-count" class="mc-green text-lg"></span>)
                 <img src="https://treemale.github.io/Minecraft/images/items/down-arrow-green.png" class="w-4 h-2 flex-shrink-0 align-middle pixel-icon" id="ch-done-toggle" alt="toggle">
             </h2>
             <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleChallengesFilter('pending')">
@@ -1259,9 +1267,7 @@
 
         function toggleChallenge(i) {
             const card = document.getElementById('ch-card-' + i);
-            const arrow = document.getElementById('ch-arrow-' + i);
             const expanded = card.classList.toggle('expanded');
-            if (arrow) arrow.src = expanded ? ARROW_RED : ARROW_GREEN;
         }
 
         function switchTab(tab) {
