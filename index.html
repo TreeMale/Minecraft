@@ -300,17 +300,20 @@
         }
 
         .status-badge { font-size: 11px; padding: 3px 10px; border-radius: 9999px; font-weight: 600; white-space: nowrap; }
-        .status-badge.done { color: #4ade80; }
+        .status-badge.done { background: rgba(74, 222, 128, 0.15); border: 1px solid #4ade80; color: #4ade80; }
         .status-badge.not-done { background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #ef4444; }
 
         .challenge-card {
             background-color: rgba(30, 41, 59, 0.9); border: 1px solid #334155; border-radius: 12px; padding: 16px;
             transition: all 0.2s; backdrop-filter: blur(10px); user-select: none; -webkit-user-select: none;
         }
-        .challenge-card:hover { border-color: #4ade80; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(74, 222, 128, 0.2); }
-        .challenge-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-        .challenge-header .ch-title { display: flex; align-items: center; gap: 10px; min-width: 0; }
-        .challenge-header .ch-nick { font-weight: bold; color: #e2e8f0; font-size: 15px; }
+        .challenge-card.done:hover { border-color: #4ade80; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(74, 222, 128, 0.2); }
+        .challenge-card.not-done:hover { border-color: #ef4444; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2); }
+        .challenge-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+        .ch-left { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; flex-wrap: wrap; }
+        .ch-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .ch-title-text { font-weight: bold; color: #e2e8f0; font-size: 15px; white-space: nowrap; }
+        .ch-world { color: #60a5fa; font-weight: 600; font-size: 13px; white-space: nowrap; }
         .challenge-arrow {
             transition: transform 0.2s ease;
             flex-shrink: 0;
@@ -1154,12 +1157,12 @@
 
         // ================= ВКЛАДКА: ИСПЫТАНИЯ ОТ ЗРИТЕЛЕЙ =================
         const challenges = [
-            { nick: "PixelHunter", desc: "Победить иссушителя, используя только снежки и лук", world: "#мирвайба5", bought: "2026-10-28", done: "2026-11-02", start: "14:05", end: "19:47" },
-            { nick: "CreeperLover", desc: "Пережить ночь в деревне жителей без брони и щита", world: "#мирвайба2", bought: "2026-09-15", done: "2026-09-17", start: "22:10", end: "05:38" },
-            { nick: "SteveFromMarketing", desc: "Дойти до крепости Энда, не добывая и не используя факелы", world: "#мирвайба4", bought: "2026-11-01", done: "2026-11-05", start: "10:15", end: "13:24" },
-            { nick: "NotchIsMyNeighbor", desc: "Построить дом из обсидиана за один заход (без творческого режима)", world: "#мирвайба1", bought: "2026-08-20", done: "2026-08-21", start: "16:40", end: "21:05" },
-            { nick: "ZombieFan228", desc: "Победить дракона Края в золотой броне", world: "#мирвайба6", bought: "2026-11-10", done: null, start: null, end: null },
-            { nick: "AlexTheBuilder", desc: "Пройти весь Незер пешком, не возвращаясь в обычный мир через портал", world: "#мирвайба6", bought: "2026-11-11", done: null, start: null, end: null }
+            { title: "Испытание 1", nick: "PixelHunter", desc: "Победить иссушителя, используя только снежки и лук", world: "#мирвайба5", bought: "2026-10-28", done: "2026-11-02", start: "14:05", end: "19:47" },
+            { title: "Испытание 2", nick: "CreeperLover", desc: "Пережить ночь в деревне жителей без брони и щита", world: "#мирвайба2", bought: "2026-09-15", done: "2026-09-17", start: "22:10", end: "05:38" },
+            { title: "Испытание 3", nick: "SteveFromMarketing", desc: "Дойти до крепости Энда, не добывая и не используя факелы", world: "#мирвайба4", bought: "2026-11-01", done: "2026-11-05", start: "10:15", end: "13:24" },
+            { title: "Испытание 4", nick: "NotchIsMyNeighbor", desc: "Построить дом из обсидиана за один заход (без творческого режима)", world: "#мирвайба1", bought: "2026-08-20", done: "2026-08-21", start: "16:40", end: "21:05" },
+            { title: "Испытание 5", nick: "ZombieFan228", desc: "Победить дракона Края в золотой броне", world: "#мирвайба6", bought: "2026-11-10", done: null, start: null, end: null },
+            { title: "Испытание 6", nick: "AlexTheBuilder", desc: "Пройти весь Незер пешком, не возвращаясь в обычный мир через портал", world: "#мирвайба6", bought: "2026-11-11", done: null, start: null, end: null }
         ];
 
         function resolveTime(ch, key) {
@@ -1238,7 +1241,7 @@
                     <p class="text-sm text-slate-300 leading-relaxed mb-3">${c.desc}</p>
                     <div class="text-xs text-slate-400 space-y-1">
                         <div>Куплено: ${fmtDate(c.bought)}</div>
-                        ${isDone ? `<div>Выполнено: ${fmtDate(c.done)} в мире <span class="text-blue-400 font-semibold">${c.world}</span></div>` : ''}
+                        ${isDone ? `<div>Выполнено: ${fmtDate(c.done)}</div>` : ''}
                     </div>`;
 
                 const durationBlock = isDone && duration ? `
@@ -1248,13 +1251,16 @@
                     </div>` : '';
 
                 grid.innerHTML += `
-                    <div class="challenge-card" id="ch-card-${i}" onclick="toggleChallenge(${i})" data-done="${isDone}">
+                    <div class="challenge-card ${isDone ? 'done' : 'not-done'}" id="ch-card-${i}" onclick="toggleChallenge(${i})" data-done="${isDone}">
                         <div class="challenge-header">
-                            <div class="ch-title">
-                                <span class="ch-nick">${c.nick}</span>
+                            <div class="ch-left">
+                                <span class="ch-title-text">${c.title} — ${c.nick}</span>
                                 ${status}
                             </div>
-                            <img src="${ARROW_GREEN}" class="w-4 h-2 pixel-icon challenge-arrow" id="ch-arrow-${i}" alt="">
+                            <div class="ch-right">
+                                <span class="ch-world">${c.world}</span>
+                                <img src="${ARROW_GREEN}" class="w-4 h-2 pixel-icon challenge-arrow" id="ch-arrow-${i}" alt="">
+                            </div>
                         </div>
                         <div class="challenge-body">
                             ${info}
