@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TreeMale</title>
-    <link rel="icon" type="image/png" href="https://treemale.github.io/Minecraft/images/icon.png">
+    <link rel="icon" href="https://treemale.github.io/Minecraft/images/icon.png">
     
     <link rel="preconnect" href="https://treemale.github.io">
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
@@ -25,35 +25,6 @@
             font-style: normal;
             font-display: swap;
         }
-
-        /* ================= СТАРЫЙ КУРСОР (КИРКА) — ЗАКОММЕНТИРОВАН =================
-        #custom-cursor-old {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 39px;
-            height: 39px;
-            background-image: url('https://treemale.github.io/Minecraft/images/cursor/diamond_pickaxe.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            pointer-events: none;
-            z-index: 99999;
-            image-rendering: pixelated;
-            image-rendering: -moz-crisp-edges;
-            image-rendering: crisp-edges;
-            will-change: transform;
-        }
-
-        @keyframes pickaxeClick {
-            0% { transform: rotate(0deg); }
-            50% { transform: rotate(-25deg); }
-            100% { transform: rotate(0deg); }
-        }
-
-        .pickaxe-clicking {
-            animation: pickaxeClick 0.3s ease-in-out;
-        }
-        ================= КОНЕЦ СТАРОГО КУРСОРА ================= */
 
         /* ================= НОВЫЙ КУРСОР (МЕЧ 32x32) ================= */
         #cursor-container {
@@ -692,6 +663,65 @@
             transition: color 0.2s;
         }
         .search-box .search-clear:hover { color: #e2e8f0; }
+
+        /* ================= ВКЛАДКИ ================= */
+        .tab-bar {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
+            padding: 10px 22px;
+            border-radius: 8px;
+            border: 2px solid #334155;
+            background: rgba(30, 41, 59, 0.9);
+            color: #e2e8f0;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .tab-btn:hover { transform: translateY(-2px); border-color: #4ade80; }
+        .tab-btn.active {
+            border-color: #4ade80;
+            background: rgba(74, 222, 128, 0.2);
+            color: #4ade80;
+            box-shadow: 0 0 12px rgba(74, 222, 128, 0.4);
+        }
+
+        /* ================= ИСПЫТАНИЯ ЗРИТЕЛЕЙ ================= */
+        .status-badge {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 9999px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .status-badge.done {
+            background: rgba(74, 222, 128, 0.15);
+            border: 1px solid #4ade80;
+            color: #4ade80;
+        }
+        .status-badge.pending {
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid #8b5cf6;
+            color: #a78bfa;
+        }
+
+        .challenge-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 4px 6px;
+            margin: -4px -6px 6px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .challenge-header:hover { background: rgba(139, 92, 246, 0.15); }
+        .challenge-body { margin-top: 4px; }
     </style>
 </head>
 <body class="p-4 md:p-8 mx-auto">
@@ -709,9 +739,14 @@
         <p class="text-slate-400 text-lg"> История забегов, смертей и список используемых модификаций</p>
     </header>
 
+    <nav class="tab-bar">
+        <button class="tab-btn active" data-tab="runs" onclick="switchTab('runs')">История забегов и смертей</button>
+        <button class="tab-btn" data-tab="challenges" onclick="switchTab('challenges')">Испытания от зрителей</button>
+    </nav>
+
     <div id="global-tooltip" class="tooltip">Скопировать сид</div>
 
-    <section class="mb-16">
+    <section id="tab-runs" class="mb-16">
         <h2 class="text-2xl font-bold mb-6 border-b border-slate-700 pb-2 flex items-center justify-center gap-2">
             <img src="https://treemale.github.io/Minecraft/images/items/lectern.png" class="w-8 h-8 object-contain" alt="lectern"> История забегов и смертей
         </h2>
@@ -1131,6 +1166,15 @@
         <div id="all-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
     </section>
 
+    <section id="tab-challenges" class="mb-16" style="display: none;">
+        <h2 class="text-2xl font-bold mb-2 border-b border-slate-700 pb-2 flex items-center justify-center gap-2">
+            <img src="https://treemale.github.io/Minecraft/images/items/point-green.png" class="w-7 h-7 object-contain" alt=""> Испытания от зрителей
+            (<span class="mc-green text-lg" id="ch-done-count"></span> из <span class="text-purple-400 text-lg" id="ch-total-count"></span>)
+        </h2>
+        <p class="text-slate-400 text-sm text-center mb-6">Зрители покупают испытание и присылают его мне — а я его выполняю. Время выполнения считается автоматически по времени начала и конца забега.</p>
+        <div id="challenges-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
+    </section>
+
     <script>
         // ================= НАСТРОЙКИ КУРСОРА =================
         const cursorContainer = document.getElementById('cursor-container');
@@ -1162,7 +1206,7 @@
         // ================= КОНЕЦ ДИАПАЗОНА ЦВЕТОВ =================
         
         // ================= ОБВОДКА КУРСОРА ПРИ НАВЕДЕНИИ =================
-        const HOVER_SELECTORS = 'a, button, [onclick], .card, .card-pack, .section-header, .world-name, .comparison-label, .set-btn, .slider-handle, .search-clear, #item-search';
+        const HOVER_SELECTORS = 'a, button, [onclick], .card, .card-pack, .section-header, .world-name, .comparison-label, .set-btn, .slider-handle, .search-clear, #item-search, .tab-btn, .challenge-header';
         
         function getClickableParent(el) {
             while (el && el !== document.body) {
@@ -1715,6 +1759,172 @@
 
         // Инициализация счётчиков после рендера карточек
         applyFilters();
+
+        // ================= ВКЛАДКА: ИСПЫТАНИЯ ОТ ЗРИТЕЛЕЙ =================
+        // Чтобы добавить испытание — скопируйте блок и заполните поля.
+        // У невыполненных поставьте done: null, start: null, end: null.
+        // start и end можно писать как "14:05" (в день выполнения/покупки),
+        // так и полностью: "2026-11-02 14:05".
+        const challenges = [
+            {
+                nick: "PixelHunter",
+                desc: "Победить иссушителя, используя только снежки и лук",
+                world: "#мирвайба5",
+                bought: "2026-10-28",
+                done: "2026-11-02",
+                start: "14:05",
+                end: "19:47"
+            },
+            {
+                nick: "CreeperLover",
+                desc: "Пережить ночь в деревне жителей без брони и щита",
+                world: "#мирвайба2",
+                bought: "2026-09-15",
+                done: "2026-09-17",
+                start: "22:10",
+                end: "05:38"
+            },
+            {
+                nick: "SteveFromMarketing",
+                desc: "Дойти до крепости Энда, не добывая и не используя факелы",
+                world: "#мирвайба4",
+                bought: "2026-11-01",
+                done: "2026-11-05",
+                start: "10:15",
+                end: "13:24"
+            },
+            {
+                nick: "NotchIsMyNeighbor",
+                desc: "Построить дом из обсидиана за один заход (без творческого режима)",
+                world: "#мирвайба1",
+                bought: "2026-08-20",
+                done: "2026-08-21",
+                start: "16:40",
+                end: "21:05"
+            },
+            {
+                nick: "ZombieFan228",
+                desc: "Победить дракона Края в золотой броне",
+                world: "#мирвайба6",
+                bought: "2026-11-10",
+                done: null,
+                start: null,
+                end: null
+            },
+            {
+                nick: "AlexTheBuilder",
+                desc: "Пройти весь Незер пешком, не возвращаясь в обычный мир через портал",
+                world: "#мирвайба6",
+                bought: "2026-11-11",
+                done: null,
+                start: null,
+                end: null
+            }
+        ];
+
+        const DONE_POINT = 'https://treemale.github.io/Minecraft/images/items/point-green.png';
+        const PENDING_POINT = 'https://treemale.github.io/Minecraft/images/items/point-purple.png';
+
+        function resolveTime(ch, key) {
+            const raw = ch[key];
+            if (!raw) return null;
+            if (/^\d{1,2}:\d{2}$/.test(raw.trim())) {
+                const day = ch.done || ch.bought || new Date().toISOString().slice(0, 10);
+                return new Date(day + 'T' + raw.trim());
+            }
+            return new Date(raw.trim().replace(' ', 'T'));
+        }
+
+        function calcDuration(ch) {
+            const s = resolveTime(ch, 'start');
+            const e = resolveTime(ch, 'end');
+            if (!s || !e || isNaN(s) || isNaN(e)) return null;
+            let ms = e - s;
+            if (ms < 0) ms += 24 * 60 * 60 * 1000; // забег через полночь
+            const totalMin = Math.round(ms / 60000);
+            const d = Math.floor(totalMin / 1440);
+            const h = Math.floor((totalMin % 1440) / 60);
+            const m = totalMin % 60;
+            const parts = [];
+            if (d) parts.push(d + ' д.');
+            if (h) parts.push(h + ' ч.');
+            if (m || !parts.length) parts.push(m + ' мин.');
+            return parts.join(' ');
+        }
+
+        function fmtDate(str) {
+            if (!str) return '—';
+            const dt = new Date(str.replace(' ', 'T'));
+            if (isNaN(dt)) return str;
+            return dt.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+        }
+
+        function renderChallenges() {
+            const grid = document.getElementById('challenges-grid');
+            grid.innerHTML = '';
+            let doneCount = 0;
+
+            challenges.forEach((c, i) => {
+                const isDone = !!c.done;
+                if (isDone) doneCount++;
+                const duration = calcDuration(c);
+                const point = isDone ? DONE_POINT : PENDING_POINT;
+                const status = isDone
+                    ? '<span class="status-badge done">Выполнено</span>'
+                    : '<span class="status-badge pending">Ожидает</span>';
+                const arrow = isDone ? '' :
+                    `<img src="${ARROW_GREEN}" class="w-4 h-2 pixel-icon flex-shrink-0" id="ch-arrow-${i}" alt="">`;
+
+                const info = `
+                    <p class="text-xs md:text-sm text-slate-400 leading-relaxed mb-3">${c.desc}</p>
+                    <div class="text-xs text-slate-400 space-y-1">
+                        <div>Куплено: ${fmtDate(c.bought)}</div>
+                        ${isDone ? `<div>Выполнено: ${fmtDate(c.done)} в мире <span class="text-blue-400 font-semibold">${c.world}</span></div>` : ''}
+                    </div>`;
+
+                const durationBlock = isDone ? `
+                    <div class="mt-3 pt-3 border-t border-slate-700 flex items-center justify-between">
+                        <span class="text-xs text-slate-500">Время выполнения</span>
+                        <span class="mc-green font-bold">${duration}</span>
+                    </div>` : '';
+
+                grid.innerHTML += `
+                    <div class="${isDone ? 'card' : 'card card-pack'} p-4 rounded-lg challenge-card">
+                        <div class="challenge-header" ${isDone ? '' : `onclick="toggleChallenge(${i})"`}>
+                            <div class="flex items-center gap-2 min-w-0">
+                                <img src="${point}" class="w-3 h-3 pixel-icon flex-shrink-0" alt="">
+                                <span class="font-bold text-slate-200 truncate">${c.nick}</span>
+                                ${status}
+                            </div>
+                            ${arrow}
+                        </div>
+                        <div class="challenge-body ${isDone ? '' : 'hidden'}" id="ch-body-${i}">
+                            ${info}
+                        </div>
+                        ${durationBlock}
+                    </div>`;
+            });
+
+            document.getElementById('ch-done-count').innerText = doneCount;
+            document.getElementById('ch-total-count').innerText = challenges.length;
+        }
+
+        function toggleChallenge(i) {
+            const body = document.getElementById('ch-body-' + i);
+            const arrow = document.getElementById('ch-arrow-' + i);
+            const hidden = body.classList.toggle('hidden');
+            if (arrow) arrow.src = hidden ? ARROW_GREEN : ARROW_RED;
+        }
+
+        function switchTab(tab) {
+            document.getElementById('tab-runs').style.display = tab === 'runs' ? '' : 'none';
+            document.getElementById('tab-challenges').style.display = tab === 'challenges' ? '' : 'none';
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        renderChallenges();
+        // ================= КОНЕЦ ВКЛАДКИ ИСПЫТАНИЙ =================
     </script>
 </body>
 </html>
