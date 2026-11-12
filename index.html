@@ -26,366 +26,170 @@
             font-display: swap;
         }
 
-        html {
-            scrollbar-gutter: stable;
-            overflow-y: scroll; 
-        }
+        html { scrollbar-gutter: stable; overflow-y: scroll; }
 
         #cursor-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: 99999;
-            will-change: transform;
+            position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99999; will-change: transform;
         }
-
         #custom-cursor {
-            width: 32px;
-            height: 32px;
+            width: 32px; height: 32px;
             background-image: url('https://treemale.github.io/Minecraft/images/cursor/diamond-sword.png');
-            background-size: 32px 32px;
-            background-repeat: no-repeat;
-            image-rendering: pixelated;
-            image-rendering: -moz-crisp-edges;
-            image-rendering: crisp-edges;
-            will-change: transform, filter;
-            margin-top: -1px;
-            margin-left: -1px;
-            transition: filter 0.15s ease;
+            background-size: 32px 32px; background-repeat: no-repeat;
+            image-rendering: pixelated; image-rendering: -moz-crisp-edges; image-rendering: crisp-edges;
+            will-change: transform, filter; margin-top: -1px; margin-left: -1px; transition: filter 0.15s ease;
         }
-
         #custom-cursor.hovering {
             filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 6px rgba(56, 189, 248, 0.8)) drop-shadow(0 0 10px rgba(14, 165, 233, 0.5));
         }
-
-        @keyframes swordClick {
-            0% { transform: rotate(0deg); }
-            40% { transform: rotate(-35deg); }
-            100% { transform: rotate(0deg); }
-        }
-
-        .sword-clicking {
-            animation: swordClick 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
+        @keyframes swordClick { 0% { transform: rotate(0deg); } 40% { transform: rotate(-35deg); } 100% { transform: rotate(0deg); } }
+        .sword-clicking { animation: swordClick 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
 
         .click-pixel {
-            position: fixed;
-            pointer-events: none;
-            z-index: 99998;
-            image-rendering: pixelated;
+            position: fixed; pointer-events: none; z-index: 99998; image-rendering: pixelated;
             animation: pixelFly var(--duration, 0.3s) ease-out forwards;
         }
-
         @keyframes pixelFly {
             0% { opacity: 1; transform: translate(0, 0) scale(1); }
             100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.2); }
         }
 
-        .pixel-icon {
-            image-rendering: pixelated;
-            image-rendering: -moz-crisp-edges;
-            image-rendering: crisp-edges;
-        }
-
+        .pixel-icon { image-rendering: pixelated; image-rendering: -moz-crisp-edges; image-rendering: crisp-edges; }
         * { cursor: none !important; }
 
         body { 
-            background-color: #0f172a; 
-            color: #e2e8f0; 
+            background-color: #0f172a; color: #e2e8f0; 
             font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
-            max-width: 1600px;
-            margin: 0 auto;
-            min-height: 100vh;
+            max-width: 1600px; margin: 0 auto; min-height: 100vh;
         }
 
-        .custom-bg {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -2;
-            overflow: hidden;
-        }
-
+        .custom-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden; }
         .bg-slide {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            opacity: 0;
-            transition: opacity 2s ease-in-out;
-            will-change: opacity;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center; background-repeat: no-repeat;
+            background-attachment: fixed; opacity: 0; transition: opacity 2s ease-in-out; will-change: opacity;
         }
-
         .bg-slide.active { opacity: 1; }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.75);
-            z-index: -1;
-        }
+        body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.75); z-index: -1; }
 
         .gradient-title {
-            font-family: 'MinecraftTitle', 'Minecraft', sans-serif !important;
-            white-space: nowrap;
+            font-family: 'MinecraftTitle', 'Minecraft', sans-serif !important; white-space: nowrap;
             background: linear-gradient(135deg, #4ade80 0%, #3b82f6 50%, #8b5cf6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 40px rgba(74, 222, 128, 0.5);
-            filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.5));
-            animation: gradientShift 5s ease infinite;
-            background-size: 200% 200%;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            text-shadow: 0 0 40px rgba(74, 222, 128, 0.5); filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.5));
+            animation: gradientShift 5s ease infinite; background-size: 200% 200%;
         }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
         .mc-green { color: #4ade80; }
         
         .card { 
-            background-color: rgba(30, 41, 59, 0.9); 
-            border: 1px solid #334155; 
-            transition: all 0.2s;
-            backdrop-filter: blur(10px);
-            contain: layout style paint;
+            background-color: rgba(30, 41, 59, 0.9); border: 1px solid #334155; 
+            transition: all 0.2s; backdrop-filter: blur(10px); contain: layout style paint;
         }
         .card:hover { transform: translateY(-3px); border-color: #4ade80; box-shadow: 0 4px 12px rgba(74, 222, 128, 0.2); }
         
         .card-pack { 
-            background-color: rgba(30, 41, 59, 0.9); 
-            border: 1px solid #334155; 
-            transition: all 0.2s;
-            backdrop-filter: blur(10px);
-            contain: layout style paint;
+            background-color: rgba(30, 41, 59, 0.9); border: 1px solid #334155; 
+            transition: all 0.2s; backdrop-filter: blur(10px); contain: layout style paint;
         }
         .card-pack:hover { transform: translateY(-3px); border-color: #8b5cf6; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2); }
         
         .progress-bar { background-color: #22c55e; height: 4px; border-radius: 2px; }
         
-        .world-name {
-            transition: all 0.2s;
-            position: relative;
-            color: #60a5fa;
-            font-weight: 600;
-        }
-        .world-name:hover {
-            color: #93c5fd;
-            text-decoration: underline;
-            text-shadow: 0 0 8px rgba(96, 165, 250, 0.5);
-        }
+        .world-name { transition: all 0.2s; position: relative; color: #60a5fa; font-weight: 600; }
+        .world-name:hover { color: #93c5fd; text-decoration: underline; text-shadow: 0 0 8px rgba(96, 165, 250, 0.5); }
         .world-name.copied { color: #4ade80 !important; }
         
         .tooltip {
-            position: fixed;
-            background: rgba(15, 23, 42, 0.95);
-            color: #e2e8f0;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            white-space: nowrap;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.15s;
-            border: 1px solid #334155;
-            z-index: 9999;
-            transform: translateX(-50%);
+            position: fixed; background: rgba(15, 23, 42, 0.95); color: #e2e8f0;
+            padding: 6px 12px; border-radius: 6px; font-size: 12px; white-space: nowrap;
+            pointer-events: none; opacity: 0; transition: opacity 0.15s;
+            border: 1px solid #334155; z-index: 9999; transform: translateX(-50%);
             font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
         }
         .tooltip.visible { opacity: 1; }
         .tooltip::after {
-            content: '';
-            position: absolute;
-            top: 100%; left: 50%;
-            transform: translateX(-50%);
-            border: 5px solid transparent;
-            border-top-color: #334155;
+            content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+            border: 5px solid transparent; border-top-color: #334155;
         }
 
         .compare-btn {
-            background: rgba(74, 222, 128, 0.2);
-            border: 1px solid #4ade80;
-            color: #4ade80;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: 600;
-            transition: all 0.2s;
+            background: rgba(74, 222, 128, 0.2); border: 1px solid #4ade80; color: #4ade80;
+            padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 600; transition: all 0.2s;
             font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
         }
         .compare-btn:hover { background: rgba(74, 222, 128, 0.4); transform: scale(1.05); }
         .compare-btn.disabled {
-            opacity: 0.4;
-            border-color: #64748b;
-            color: #64748b;
-            background: rgba(100, 116, 139, 0.2);
-            cursor: not-allowed;
-            pointer-events: none;
+            opacity: 0.4; border-color: #64748b; color: #64748b; background: rgba(100, 116, 139, 0.2);
+            cursor: not-allowed; pointer-events: none;
         }
         .compare-btn.disabled:hover { transform: none; background: rgba(100, 116, 139, 0.2); }
 
         .download-btn {
-            position: relative;
-            background: rgba(59, 130, 246, 0.2);
-            border: 1px solid #3b82f6;
-            color: #60a5fa;
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 8px;
+            position: relative; background: rgba(59, 130, 246, 0.2); border: 1px solid #3b82f6; color: #60a5fa;
+            width: 32px; height: 32px; border-radius: 6px; transition: all 0.2s;
+            display: flex; align-items: center; justify-content: center; margin-right: 8px;
         }
         .download-btn:hover { background: rgba(59, 130, 246, 0.4); transform: scale(1.05); color: #93c5fd; }
-        
         .download-btn .tooltip-text {
-            visibility: hidden;
-            opacity: 0;
-            position: absolute;
-            bottom: 125%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(15, 23, 42, 0.95);
-            color: #e2e8f0;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            white-space: nowrap;
-            border: 1px solid #334155;
+            visibility: hidden; opacity: 0; position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.95); color: #e2e8f0; padding: 6px 12px; border-radius: 6px;
+            font-size: 12px; white-space: nowrap; border: 1px solid #334155;
             font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
-            transition: opacity 0.15s, visibility 0.15s;
-            z-index: 10;
-            pointer-events: none;
+            transition: opacity 0.15s, visibility 0.15s; z-index: 10; pointer-events: none;
         }
         .download-btn .tooltip-text::after {
-            content: '';
-            position: absolute;
-            top: 100%; left: 50%;
-            transform: translateX(-50%);
-            border: 5px solid transparent;
-            border-top-color: #334155;
+            content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+            border: 5px solid transparent; border-top-color: #334155;
         }
         .download-btn:hover .tooltip-text { visibility: visible; opacity: 1; }
-
-        .download-btn .icon-default,
-        .download-btn .icon-loading,
-        .download-btn .icon-success {
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
+        .download-btn .icon-default, .download-btn .icon-loading, .download-btn .icon-success { display: none; align-items: center; justify-content: center; }
         .download-btn .icon-default { display: flex; }
-        .download-btn.downloading .icon-default,
-        .download-btn.success .icon-default { display: none; }
+        .download-btn.downloading .icon-default, .download-btn.success .icon-default { display: none; }
         .download-btn.downloading .icon-loading { display: flex; }
         .download-btn.success .icon-success { display: flex; color: #60a5fa; }
-
         .spinner-icon { animation: spin 1s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         .comparison-container {
-            position: relative;
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-            border: 2px solid #334155;
-            animation: slideDown 0.3s ease-out;
-            contain: layout style paint;
+            position: relative; width: 100%; max-width: 900px; margin: 0 auto; border-radius: 12px; overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); border: 2px solid #334155;
+            animation: slideDown 0.3s ease-out; contain: layout style paint;
         }
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
         .comparison-wrapper {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            user-select: none;
-            -webkit-user-select: none;
-            background: #0f172a;
+            position: relative; width: 100%; aspect-ratio: 16 / 9;
+            user-select: none; -webkit-user-select: none; background: #0f172a;
         }
         .after-image, .before-image {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            pointer-events: none;
-            -webkit-user-drag: none;
-            user-select: none;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
+            opacity: 0; transition: opacity 0.4s ease; pointer-events: none; -webkit-user-drag: none; user-select: none;
         }
         .after-image.loaded, .before-image.loaded { opacity: 1; }
         .after-image { z-index: 1; }
         .before-image { z-index: 2; clip-path: inset(0 50% 0 0); }
         .slider-handle {
-            position: absolute;
-            top: 0; left: 50%;
-            width: 2px; height: 100%;
-            background: rgba(74, 222, 128, 0.8);
-            z-index: 3;
-            transform: translateX(-50%);
-            box-shadow: 0 0 8px rgba(74, 222, 128, 0.5);
-            pointer-events: auto;
+            position: absolute; top: 0; left: 50%; width: 2px; height: 100%;
+            background: rgba(74, 222, 128, 0.8); z-index: 3; transform: translateX(-50%);
+            box-shadow: 0 0 8px rgba(74, 222, 128, 0.5); pointer-events: auto;
         }
         .slider-handle::after {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 28px; height: 28px;
-            background: rgba(74, 222, 128, 0.9);
-            border-radius: 50%;
+            content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 28px; height: 28px; background: rgba(74, 222, 128, 0.9); border-radius: 50%;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
         }
         .slider-handle::before {
-            content: '\27F7';
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            color: #0f172a;
-            font-size: 14px;
-            font-weight: bold;
-            z-index: 4;
-            pointer-events: none;
+            content: '\27F7'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            color: #0f172a; font-size: 14px; font-weight: bold; z-index: 4; pointer-events: none;
         }
         .slider-handle:hover { background: rgba(74, 222, 128, 1); }
         .slider-handle:hover::after { background: #4ade80; }
         
-        .comparison-labels {
-            position: absolute;
-            top: 16px; left: 0; right: 0;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 16px;
-            z-index: 5;
-        }
+        .comparison-labels { position: absolute; top: 16px; left: 0; right: 0; display: flex; justify-content: space-between; padding: 0 16px; z-index: 5; }
         .comparison-label {
-            background: rgba(15, 23, 42, 0.85);
-            color: #e2e8f0;
-            padding: 6px 14px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            border: 1px solid #334155;
-            backdrop-filter: blur(4px);
-            transition: all 0.2s;
-            user-select: none;
-            pointer-events: auto;
+            background: rgba(15, 23, 42, 0.85); color: #e2e8f0; padding: 6px 14px; border-radius: 8px;
+            font-size: 13px; font-weight: 600; border: 1px solid #334155; backdrop-filter: blur(4px);
+            transition: all 0.2s; user-select: none; pointer-events: auto;
             font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
         }
         .comparison-label:hover { transform: scale(1.05); }
@@ -395,136 +199,63 @@
         .comparison-label.after:hover { background: rgba(139, 92, 246, 0.3); }
         
         .image-set-buttons {
-            position: absolute;
-            bottom: 8px; left: 0; right: 0;
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            z-index: 6;
-            overflow-x: auto;
-            overflow-y: visible;
-            flex-wrap: nowrap;
-            padding: 12px 16px 8px 16px;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-            pointer-events: auto;
+            position: absolute; bottom: 8px; left: 0; right: 0; display: flex; justify-content: center; gap: 8px;
+            z-index: 6; overflow-x: auto; overflow-y: visible; flex-wrap: nowrap;
+            padding: 12px 16px 8px 16px; scrollbar-width: none; -ms-overflow-style: none; pointer-events: auto;
         }
         .image-set-buttons::-webkit-scrollbar { display: none; }
         .set-btn {
-            background: rgba(15, 23, 42, 0.85);
-            border: 2px solid #4ade80;
-            color: #e2e8f0;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            transition: all 0.2s;
-            backdrop-filter: blur(4px);
-            position: relative;
-            flex-shrink: 0;
-            white-space: nowrap;
-            pointer-events: auto;
-            font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
+            background: rgba(15, 23, 42, 0.85); border: 2px solid #4ade80; color: #e2e8f0;
+            padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; transition: all 0.2s;
+            backdrop-filter: blur(4px); position: relative; flex-shrink: 0; white-space: nowrap;
+            pointer-events: auto; font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
         }
         .set-btn:hover { background: rgba(74, 222, 128, 0.3); transform: translateY(-2px); }
-        .set-btn.active {
-            background: rgba(74, 222, 128, 0.5);
-            border-color: #22c55e;
-            box-shadow: 0 0 12px rgba(74, 222, 128, 0.5);
-        }
+        .set-btn.active { background: rgba(74, 222, 128, 0.5); border-color: #22c55e; box-shadow: 0 0 12px rgba(74, 222, 128, 0.5); }
         .set-btn .loading-dot {
-            display: none;
-            width: 6px; height: 6px;
-            background: #4ade80;
-            border-radius: 50%;
-            position: absolute;
-            top: 4px; right: 4px;
-            animation: pulse 1s infinite;
+            display: none; width: 6px; height: 6px; background: #4ade80; border-radius: 50%;
+            position: absolute; top: 4px; right: 4px; animation: pulse 1s infinite;
         }
         .set-btn.preloading .loading-dot { display: block; }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.8); }
-        }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
         
         .loader {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2;
+            display: none; flex-direction: column; align-items: center; gap: 16px; opacity: 0; transition: opacity 0.3s ease;
         }
         .loader.visible { display: flex; opacity: 1; }
         .loader-blocks { display: flex; gap: 12px; justify-content: center; }
         .loader-block {
-            width: 48px; height: 48px;
-            image-rendering: pixelated;
-            image-rendering: -moz-crisp-edges;
-            image-rendering: crisp-edges;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-            border: 2px solid rgba(0,0,0,0.4);
-            border-radius: 2px;
-            animation: blockBounce 1.4s ease-in-out infinite;
-            animation-fill-mode: both;
+            width: 48px; height: 48px; image-rendering: pixelated; image-rendering: -moz-crisp-edges; image-rendering: crisp-edges;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5); border: 2px solid rgba(0,0,0,0.4); border-radius: 2px;
+            animation: blockBounce 1.4s ease-in-out infinite; animation-fill-mode: both;
         }
         .loader-block.grass {
             background-image: url('https://treemale.github.io/Minecraft/images/loader/grass_block.webp');
-            background-size: 100% 100%;
-            background-position: center;
-            background-repeat: no-repeat;
-            animation-delay: 0s;
+            background-size: 100% 100%; background-position: center; background-repeat: no-repeat; animation-delay: 0s;
         }
         .loader-block.planks {
             background-image: url('https://treemale.github.io/Minecraft/images/loader/oak_planks.webp');
-            background-size: 100% 100%;
-            background-position: center;
-            background-repeat: no-repeat;
-            animation-delay: 0.2s;
+            background-size: 100% 100%; background-position: center; background-repeat: no-repeat; animation-delay: 0.2s;
         }
         .loader-block.cobblestone {
             background-image: url('https://treemale.github.io/Minecraft/images/loader/cobblestone.webp');
-            background-size: 100% 100%;
-            background-position: center;
-            background-repeat: no-repeat;
-            animation-delay: 0.4s;
+            background-size: 100% 100%; background-position: center; background-repeat: no-repeat; animation-delay: 0.4s;
         }
-        @keyframes blockBounce {
-            0%, 100% { transform: translateY(-24px) rotate(-8deg); opacity: 0.4; }
-            50% { transform: translateY(0) rotate(8deg); opacity: 1; }
-        }
+        @keyframes blockBounce { 0%, 100% { transform: translateY(-24px) rotate(-8deg); opacity: 0.4; } 50% { transform: translateY(0) rotate(8deg); opacity: 1; } }
         .loader-text {
-            font-size: 14px;
-            color: #4ade80;
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
-            font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
+            font-size: 14px; color: #4ade80; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(74, 222, 128, 0.5); font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
         }
         .loader-text::after {
-            content: '';
-            display: inline-block;
-            width: 3ch;
-            text-align: left;
-            animation: dots 1.4s steps(4, end) infinite;
-            vertical-align: bottom;
+            content: ''; display: inline-block; width: 3ch; text-align: left;
+            animation: dots 1.4s steps(4, end) infinite; vertical-align: bottom;
         }
-        @keyframes dots {
-            0% { content: ''; } 25% { content: '.'; } 50% { content: '..'; } 75% { content: '...'; } 100% { content: ''; }
-        }
+        @keyframes dots { 0% { content: ''; } 25% { content: '.'; } 50% { content: '..'; } 75% { content: '...'; } 100% { content: ''; } }
 
         .table-container { width: 100%; }
         .table-container table { width: 100%; table-layout: auto; }
-        .table-container th, .table-container td {
-            text-align: center !important;
-            vertical-align: middle !important;
-            white-space: nowrap;
-        }
+        .table-container th, .table-container td { text-align: center !important; vertical-align: middle !important; white-space: nowrap; }
         .col-num { width: 50px; min-width: 50px; }
         .col-world { width: 160px; min-width: 160px; }
         .col-lived { width: 170px; min-width: 170px; }
@@ -539,16 +270,9 @@
 
         .search-box { position: relative; width: 100%; max-width: 340px; margin-top: 4px; }
         .search-box input {
-            width: 100%;
-            background: rgba(15, 23, 42, 0.85);
-            border: 1px solid #334155;
-            border-radius: 8px;
-            padding: 10px 36px 10px 38px;
-            font-size: 14px;
-            color: #e2e8f0;
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
+            width: 100%; background: rgba(15, 23, 42, 0.85); border: 1px solid #334155; border-radius: 8px;
+            padding: 10px 36px 10px 38px; font-size: 14px; color: #e2e8f0; outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s; font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
         }
         .search-box input::placeholder { color: #64748b; }
         .search-box input:focus { border-color: #38bdf8; box-shadow: 0 0 12px rgba(56, 189, 248, 0.3); }
@@ -580,31 +304,18 @@
         .status-badge.not-done { background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #ef4444; }
 
         .challenge-card {
-            background-color: rgba(30, 41, 59, 0.9);
-            border: 1px solid #334155;
-            border-radius: 12px;
-            padding: 16px;
-            transition: all 0.2s;
-            backdrop-filter: blur(10px);
-            user-select: none;
-            -webkit-user-select: none;
+            background-color: rgba(30, 41, 59, 0.9); border: 1px solid #334155; border-radius: 12px; padding: 16px;
+            transition: all 0.2s; backdrop-filter: blur(10px); user-select: none; -webkit-user-select: none;
         }
-        .challenge-card:hover {
-            border-color: #4ade80;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(74, 222, 128, 0.2);
-        }
-
+        .challenge-card:hover { border-color: #4ade80; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(74, 222, 128, 0.2); }
         .challenge-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
         .challenge-header .ch-title { display: flex; align-items: center; gap: 10px; min-width: 0; }
         .challenge-header .ch-nick { font-weight: bold; color: #e2e8f0; font-size: 15px; }
         .challenge-arrow { transition: transform 0.2s ease; flex-shrink: 0; }
         .challenge-card.expanded .challenge-arrow { transform: rotate(180deg); }
-
         .challenge-body {
             max-height: 0; opacity: 0; overflow: hidden;
-            transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
-            margin-top: 0;
+            transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease; margin-top: 0;
         }
         .challenge-card.expanded .challenge-body { max-height: 600px; opacity: 1; margin-top: 14px; }
     </style>
@@ -623,6 +334,7 @@
 
     <nav class="tab-bar">
         <button class="tab-btn active" data-tab="runs" onclick="switchTab('runs')">История забегов и смертей</button>
+        <button class="tab-btn" data-tab="mods" onclick="switchTab('mods')">Моды и ресур-паки</button>
         <button class="tab-btn" data-tab="challenges" onclick="switchTab('challenges')">Испытания от зрителей</button>
     </nav>
 
@@ -918,8 +630,8 @@
         </div>
     </section>
 
-    <!-- ================= МОДЫ И РЕСУРС-ПАКИ ================= -->
-    <section id="mods-section" class="mb-16">
+    <!-- ================= ВКЛАДКА: МОДЫ И РЕСУРС-ПАКИ ================= -->
+    <section id="tab-mods" class="mb-16" style="display: none;">
         <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mb-6 border-b border-slate-700 pb-3">
             <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleSection('mods')">
                 <img src="https://treemale.github.io/Minecraft/images/items/redstone-block.png" class="w-7 h-7 object-contain" alt="mods"> Моды (<span id="mod-count" class="mc-green text-lg"></span>)
@@ -946,11 +658,11 @@
         <p class="text-slate-400 text-sm text-center mb-4">Зрители покупают испытание за баллы канала и присылают его мне — а я его выполняю. Нажмите на карточку, чтобы раскрыть подробности.</p>
         <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mb-6 border-b border-slate-700 pb-3">
             <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleChallengesFilter('done')">
-                <img src="https://treemale.github.io/Minecraft/images/items/point-green.png" class="w-5 h-5 object-contain pixel-icon" alt=""> Выполнено (<span id="ch-done-count" class="mc-green text-lg"></span>)
+                Выполнено (<span id="ch-done-count" class="mc-green text-lg"></span>)
                 <img src="https://treemale.github.io/Minecraft/images/items/down-arrow-green.png" class="w-4 h-2 flex-shrink-0 align-middle pixel-icon" id="ch-done-toggle" alt="toggle">
             </h2>
             <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleChallengesFilter('pending')">
-                <img src="https://treemale.github.io/Minecraft/images/items/point-purple.png" class="w-5 h-5 object-contain pixel-icon" alt=""> <span class="text-red-400">Не выполнено</span> (<span id="ch-pending-count" class="text-red-400 text-lg"></span>)
+                <span class="text-red-400">Не выполнено</span> (<span id="ch-pending-count" class="text-red-400 text-lg"></span>)
                 <img src="https://treemale.github.io/Minecraft/images/items/down-arrow-green.png" class="w-4 h-2 flex-shrink-0 align-middle pixel-icon" id="ch-pending-toggle" alt="toggle">
             </h2>
         </div>
@@ -1440,9 +1152,6 @@
             { nick: "AlexTheBuilder", desc: "Пройти весь Незер пешком, не возвращаясь в обычный мир через портал", world: "#мирвайба6", bought: "2026-11-11", done: null, start: null, end: null }
         ];
 
-        const DONE_POINT = 'https://treemale.github.io/Minecraft/images/items/point-green.png';
-        const PENDING_POINT = 'https://treemale.github.io/Minecraft/images/items/point-purple.png';
-
         function resolveTime(ch, key) {
             const raw = ch[key];
             if (!raw) return null;
@@ -1511,7 +1220,6 @@
             challenges.forEach((c, i) => {
                 const isDone = !!c.done;
                 const duration = calcDuration(c);
-                const point = isDone ? DONE_POINT : PENDING_POINT;
                 const status = isDone
                     ? '<span class="status-badge done">Выполнено</span>'
                     : '<span class="status-badge not-done">Не выполнено</span>';
@@ -1533,7 +1241,6 @@
                     <div class="challenge-card" id="ch-card-${i}" onclick="toggleChallenge(${i})" data-done="${isDone}">
                         <div class="challenge-header">
                             <div class="ch-title">
-                                <img src="${point}" class="w-3 h-3 pixel-icon flex-shrink-0" alt="">
                                 <span class="ch-nick">${c.nick}</span>
                                 ${status}
                             </div>
@@ -1557,7 +1264,7 @@
 
         function switchTab(tab) {
             document.getElementById('tab-runs').style.display = tab === 'runs' ? '' : 'none';
-            document.getElementById('mods-section').style.display = tab === 'runs' ? '' : 'none';
+            document.getElementById('tab-mods').style.display = tab === 'mods' ? '' : 'none';
             document.getElementById('tab-challenges').style.display = tab === 'challenges' ? '' : 'none';
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
             window.scrollTo({ top: 0, behavior: 'smooth' });
