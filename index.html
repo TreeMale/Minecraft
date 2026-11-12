@@ -26,12 +26,11 @@
             font-display: swap;
         }
 
-        /* ================= РЕЗЕРВ МЕСТА ПОД СКРОЛЛБАР ================= */
+        /* ================= ФИКС СКРОЛЛБАРА (ПРЕДОТВРАЩЕНИЕ ПРЫЖКОВ) ================= */
         html {
             scrollbar-gutter: stable;
-            overflow-y: scroll;
+            overflow-y: scroll; 
         }
-        /* ================= КОНЕЦ РЕЗЕРВА ================= */
 
         /* ================= КУРСОР (МЕЧ 32x32) ================= */
         #cursor-container {
@@ -721,6 +720,8 @@
             padding: 16px;
             transition: all 0.2s;
             backdrop-filter: blur(10px);
+            user-select: none;
+            -webkit-user-select: none;
         }
         .challenge-card:hover {
             border-color: #4ade80;
@@ -733,7 +734,6 @@
             align-items: center;
             justify-content: space-between;
             gap: 10px;
-            user-select: none;
         }
         .challenge-header .ch-title {
             display: flex;
@@ -1192,7 +1192,7 @@
         </div>
     </section>
 
-    <!-- ================= МОДЫ И РЕСУРС-ПАКИ (скрываются на вкладке испытаний) ================= -->
+    <!-- ================= МОДЫ И РЕСУРС-ПАКИ ================= -->
     <section id="mods-section" class="mb-16">
         <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mb-6 border-b border-slate-700 pb-3">
             <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleSection('mods')">
@@ -1218,7 +1218,7 @@
             <img src="https://treemale.github.io/Minecraft/images/items/point-green.png" class="w-7 h-7 object-contain" alt=""> Испытания от зрителей
             (<span class="mc-green text-lg" id="ch-done-count"></span> из <span class="text-purple-400 text-lg" id="ch-total-count"></span>)
         </h2>
-        <p class="text-slate-400 text-sm text-center mb-6">Зрители покупают испытание и присылают его мне — а я его выполняю. Нажмите на карточку, чтобы раскрыть подробности. Время выполнения считается автоматически по времени начала и конца забега.</p>
+        <p class="text-slate-400 text-sm text-center mb-6">Зрители покупают испытание за баллы канала и присылают его мне — а я его выполняю. Нажмите на карточку, чтобы раскрыть подробности.</p>
         <div id="challenges-grid" class="grid grid-cols-1 gap-4"></div>
     </section>
 
@@ -1250,10 +1250,9 @@
         function getRandomColor() {
             return PARTICLE_COLORS[Math.floor(Math.random() * PARTICLE_COLORS.length)];
         }
-        // ================= КОНЕЦ ДИАПАЗОНА ЦВЕТОВ =================
         
         // ================= ОБВОДКА КУРСОРА ПРИ НАВЕДЕНИИ =================
-        const HOVER_SELECTORS = 'a, button, [onclick], .card, .card-pack, .section-header, .world-name, .comparison-label, .set-btn, .slider-handle, .search-clear, #item-search, .tab-btn, .challenge-header';
+        const HOVER_SELECTORS = 'a, button, [onclick], .card, .card-pack, .section-header, .world-name, .comparison-label, .set-btn, .slider-handle, .search-clear, #item-search, .tab-btn, .challenge-card';
         
         function getClickableParent(el) {
             while (el && el !== document.body) {
@@ -1276,7 +1275,6 @@
                 customCursor.classList.remove('hovering');
             }
         }, { passive: true });
-        // ================= КОНЕЦ ОБВОДКИ =================
 
         // ================= ПИКСЕЛЬНЫЕ ЧАСТИЦЫ ПРИ КЛИКЕ =================
         function createClickPixels(x, y) {
@@ -1311,7 +1309,6 @@
                 setTimeout(() => pixel.remove(), duration * 1000 + 50);
             }
         }
-        // ================= КОНЕЦ ПИКСЕЛЬНЫХ ЧАСТИЦ =================
         
         function initBackgroundSlides() {
             const container = document.getElementById('bg-container');
@@ -1639,12 +1636,10 @@
         const sectionState = { mods: true, packs: true };
         let searchQuery = '';
 
-        // ================= ОБНОВЛЕНИЕ СЧЁТЧИКОВ =================
         function updateCounters(modsVisible, packsVisible) {
             document.getElementById('mod-count').innerText = modsVisible;
             document.getElementById('pack-count').innerText = packsVisible;
         }
-        // ================= КОНЕЦ ОБНОВЛЕНИЯ СЧЁТЧИКОВ =================
 
         function toggleSection(section) {
             sectionState[section] = !sectionState[section];
@@ -1666,13 +1661,11 @@
                 const section = isMod ? 'mods' : 'packs';
                 const sectionOpen = sectionState[section];
 
-                // Если секция свёрнута — скрываем всё в ней
                 if (!sectionOpen) {
                     card.classList.add('hidden');
                     continue;
                 }
 
-                // Секция раскрыта — фильтруем по поиску
                 if (query) {
                     const matches = card.textContent.toLowerCase().includes(query);
                     card.classList.toggle('hidden', !matches);
@@ -1680,7 +1673,6 @@
                     card.classList.remove('hidden');
                 }
 
-                // Считаем видимые
                 if (!card.classList.contains('hidden')) {
                     if (isMod) modsVisible++;
                     else packsVisible++;
@@ -1804,14 +1796,9 @@
             </div>`;
         });
 
-        // Инициализация счётчиков после рендера карточек
         applyFilters();
 
         // ================= ВКЛАДКА: ИСПЫТАНИЯ ОТ ЗРИТЕЛЕЙ =================
-        // Чтобы добавить испытание — скопируйте блок и заполните поля.
-        // У невыполненных поставьте done: null, start: null, end: null.
-        // start и end можно писать как "14:05" (в день выполнения/покупки),
-        // так и полностью: "2026-11-02 14:05".
         const challenges = [
             {
                 nick: "PixelHunter",
@@ -1887,7 +1874,7 @@
             const e = resolveTime(ch, 'end');
             if (!s || !e || isNaN(s) || isNaN(e)) return null;
             let ms = e - s;
-            if (ms < 0) ms += 24 * 60 * 60 * 1000; // забег через полночь
+            if (ms < 0) ms += 24 * 60 * 60 * 1000;
             const totalMin = Math.round(ms / 60000);
             const d = Math.floor(totalMin / 1440);
             const h = Math.floor((totalMin % 1440) / 60);
@@ -1933,10 +1920,9 @@
                         <span class="mc-green font-bold">${duration}</span>
                     </div>` : '';
 
-                // Все карточки изначально свёрнуты — видны только ник и статус
                 grid.innerHTML += `
-                    <div class="challenge-card" id="ch-card-${i}">
-                        <div class="challenge-header" onclick="toggleChallenge(${i})">
+                    <div class="challenge-card" id="ch-card-${i}" onclick="toggleChallenge(${i})">
+                        <div class="challenge-header">
                             <div class="ch-title">
                                 <img src="${point}" class="w-3 h-3 pixel-icon flex-shrink-0" alt="">
                                 <span class="ch-nick">${c.nick}</span>
@@ -1971,7 +1957,6 @@
         }
 
         renderChallenges();
-        // ================= КОНЕЦ ВКЛАДКИ ИСПЫТАНИЙ =================
     </script>
 </body>
 </html>
