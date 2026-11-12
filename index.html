@@ -26,13 +26,11 @@
             font-display: swap;
         }
 
-        /* ================= ФИКС СКРОЛЛБАРА (ПРЕДОТВРАЩЕНИЕ ПРЫЖКОВ) ================= */
         html {
             scrollbar-gutter: stable;
             overflow-y: scroll; 
         }
 
-        /* ================= КУРСОР (МЕЧ 32x32) ================= */
         #cursor-container {
             position: fixed;
             top: 0;
@@ -71,7 +69,6 @@
             animation: swordClick 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        /* ================= ПИКСЕЛЬНЫЕ ЧАСТИЦЫ ПРИ КЛИКЕ ================= */
         .click-pixel {
             position: fixed;
             pointer-events: none;
@@ -81,26 +78,17 @@
         }
 
         @keyframes pixelFly {
-            0% {
-                opacity: 1;
-                transform: translate(0, 0) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(var(--dx), var(--dy)) scale(0.2);
-            }
+            0% { opacity: 1; transform: translate(0, 0) scale(1); }
+            100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.2); }
         }
 
-        /* ================= ПИКСЕЛЬНЫЕ ИКОНКИ ================= */
         .pixel-icon {
             image-rendering: pixelated;
             image-rendering: -moz-crisp-edges;
             image-rendering: crisp-edges;
         }
 
-        * {
-            cursor: none !important;
-        }
+        * { cursor: none !important; }
 
         body { 
             background-color: #0f172a; 
@@ -132,9 +120,7 @@
             will-change: opacity;
         }
 
-        .bg-slide.active {
-            opacity: 1;
-        }
+        .bg-slide.active { opacity: 1; }
 
         body::before {
             content: '';
@@ -236,10 +222,7 @@
             transition: all 0.2s;
             font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
         }
-        .compare-btn:hover {
-            background: rgba(74, 222, 128, 0.4);
-            transform: scale(1.05);
-        }
+        .compare-btn:hover { background: rgba(74, 222, 128, 0.4); transform: scale(1.05); }
         .compare-btn.disabled {
             opacity: 0.4;
             border-color: #64748b;
@@ -248,10 +231,7 @@
             cursor: not-allowed;
             pointer-events: none;
         }
-        .compare-btn.disabled:hover {
-            transform: none;
-            background: rgba(100, 116, 139, 0.2);
-        }
+        .compare-btn.disabled:hover { transform: none; background: rgba(100, 116, 139, 0.2); }
 
         .download-btn {
             position: relative;
@@ -267,11 +247,7 @@
             justify-content: center;
             margin-right: 8px;
         }
-        .download-btn:hover {
-            background: rgba(59, 130, 246, 0.4);
-            transform: scale(1.05);
-            color: #93c5fd;
-        }
+        .download-btn:hover { background: rgba(59, 130, 246, 0.4); transform: scale(1.05); color: #93c5fd; }
         
         .download-btn .tooltip-text {
             visibility: hidden;
@@ -295,16 +271,12 @@
         .download-btn .tooltip-text::after {
             content: '';
             position: absolute;
-            top: 100%;
-            left: 50%;
+            top: 100%; left: 50%;
             transform: translateX(-50%);
             border: 5px solid transparent;
             border-top-color: #334155;
         }
-        .download-btn:hover .tooltip-text {
-            visibility: visible;
-            opacity: 1;
-        }
+        .download-btn:hover .tooltip-text { visibility: visible; opacity: 1; }
 
         .download-btn .icon-default,
         .download-btn .icon-loading,
@@ -313,33 +285,14 @@
             align-items: center;
             justify-content: center;
         }
-        
-        .download-btn .icon-default {
-            display: flex;
-        }
-        
+        .download-btn .icon-default { display: flex; }
         .download-btn.downloading .icon-default,
-        .download-btn.success .icon-default {
-            display: none;
-        }
-        
-        .download-btn.downloading .icon-loading {
-            display: flex;
-        }
-        
-        .download-btn.success .icon-success {
-            display: flex;
-            color: #60a5fa;
-        }
+        .download-btn.success .icon-default { display: none; }
+        .download-btn.downloading .icon-loading { display: flex; }
+        .download-btn.success .icon-success { display: flex; color: #60a5fa; }
 
-        .spinner-icon {
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
+        .spinner-icon { animation: spin 1s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         .comparison-container {
             position: relative;
@@ -378,10 +331,7 @@
         }
         .after-image.loaded, .before-image.loaded { opacity: 1; }
         .after-image { z-index: 1; }
-        .before-image {
-            z-index: 2;
-            clip-path: inset(0 50% 0 0);
-        }
+        .before-image { z-index: 2; clip-path: inset(0 50% 0 0); }
         .slider-handle {
             position: absolute;
             top: 0; left: 50%;
@@ -418,8 +368,7 @@
         
         .comparison-labels {
             position: absolute;
-            top: 16px;
-            left: 0; right: 0;
+            top: 16px; left: 0; right: 0;
             display: flex;
             justify-content: space-between;
             padding: 0 16px;
@@ -477,10 +426,7 @@
             pointer-events: auto;
             font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
         }
-        .set-btn:hover {
-            background: rgba(74, 222, 128, 0.3);
-            transform: translateY(-2px);
-        }
+        .set-btn:hover { background: rgba(74, 222, 128, 0.3); transform: translateY(-2px); }
         .set-btn.active {
             background: rgba(74, 222, 128, 0.5);
             border-color: #22c55e;
@@ -514,13 +460,7 @@
             transition: opacity 0.3s ease;
         }
         .loader.visible { display: flex; opacity: 1; }
-        
-        .loader-blocks {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-        }
-        
+        .loader-blocks { display: flex; gap: 12px; justify-content: center; }
         .loader-block {
             width: 48px; height: 48px;
             image-rendering: pixelated;
@@ -532,7 +472,6 @@
             animation: blockBounce 1.4s ease-in-out infinite;
             animation-fill-mode: both;
         }
-        
         .loader-block.grass {
             background-image: url('https://treemale.github.io/Minecraft/images/loader/grass_block.webp');
             background-size: 100% 100%;
@@ -540,7 +479,6 @@
             background-repeat: no-repeat;
             animation-delay: 0s;
         }
-        
         .loader-block.planks {
             background-image: url('https://treemale.github.io/Minecraft/images/loader/oak_planks.webp');
             background-size: 100% 100%;
@@ -548,7 +486,6 @@
             background-repeat: no-repeat;
             animation-delay: 0.2s;
         }
-        
         .loader-block.cobblestone {
             background-image: url('https://treemale.github.io/Minecraft/images/loader/cobblestone.webp');
             background-size: 100% 100%;
@@ -556,12 +493,10 @@
             background-repeat: no-repeat;
             animation-delay: 0.4s;
         }
-        
         @keyframes blockBounce {
             0%, 100% { transform: translateY(-24px) rotate(-8deg); opacity: 0.4; }
             50% { transform: translateY(0) rotate(8deg); opacity: 1; }
         }
-        
         .loader-text {
             font-size: 14px;
             color: #4ade80;
@@ -580,26 +515,16 @@
             vertical-align: bottom;
         }
         @keyframes dots {
-            0% { content: ''; }
-            25% { content: '.'; }
-            50% { content: '..'; }
-            75% { content: '...'; }
-            100% { content: ''; }
+            0% { content: ''; } 25% { content: '.'; } 50% { content: '..'; } 75% { content: '...'; } 100% { content: ''; }
         }
 
-        .table-container { 
-            width: 100%;
-        }
-        .table-container table { 
-            width: 100%;
-            table-layout: auto;
-        }
+        .table-container { width: 100%; }
+        .table-container table { width: 100%; table-layout: auto; }
         .table-container th, .table-container td {
             text-align: center !important;
             vertical-align: middle !important;
             white-space: nowrap;
         }
-        
         .col-num { width: 50px; min-width: 50px; }
         .col-world { width: 160px; min-width: 160px; }
         .col-lived { width: 170px; min-width: 170px; }
@@ -607,26 +532,12 @@
         .col-death { width: 180px; min-width: 180px; }
         .col-description { width: auto; }
         .col-video { width: 100px; min-width: 100px; }
+        .progress-container { min-width: 150px; background-color: #334155; border-radius: 9999px; height: 4px; }
 
-        .progress-container {
-            min-width: 150px;
-            background-color: #334155;
-            border-radius: 9999px;
-            height: 4px;
-        }
-
-        .section-header {
-            transition: all 0.2s;
-            user-select: none;
-        }
+        .section-header { transition: all 0.2s; user-select: none; }
         .section-header:hover { transform: scale(1.02); opacity: 0.9; }
 
-        .search-box {
-            position: relative;
-            width: 100%;
-            max-width: 340px;
-            margin-top: 4px;
-        }
+        .search-box { position: relative; width: 100%; max-width: 340px; margin-top: 4px; }
         .search-box input {
             width: 100%;
             background: rgba(15, 23, 42, 0.85);
@@ -640,78 +551,33 @@
             font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
         }
         .search-box input::placeholder { color: #64748b; }
-        .search-box input:focus {
-            border-color: #38bdf8;
-            box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
-        }
+        .search-box input:focus { border-color: #38bdf8; box-shadow: 0 0 12px rgba(56, 189, 248, 0.3); }
         .search-box .search-icon {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #64748b;
-            pointer-events: none;
-            transition: color 0.2s;
+            position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+            color: #64748b; pointer-events: none; transition: color 0.2s;
         }
         .search-box input:focus ~ .search-icon { color: #38bdf8; }
         .search-box .search-clear {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #64748b;
-            font-size: 14px;
-            cursor: pointer;
-            user-select: none;
-            transition: color 0.2s;
+            position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+            color: #64748b; font-size: 14px; cursor: pointer; user-select: none; transition: color 0.2s;
         }
         .search-box .search-clear:hover { color: #e2e8f0; }
 
-        /* ================= ВКЛАДКИ ================= */
-        .tab-bar {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
+        .tab-bar { display: flex; justify-content: center; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; }
         .tab-btn {
             font-family: 'Minecraft', 'Segoe UI', system-ui, sans-serif;
-            padding: 10px 22px;
-            border-radius: 8px;
-            border: 2px solid #334155;
-            background: rgba(30, 41, 59, 0.9);
-            color: #e2e8f0;
-            font-weight: 600;
-            font-size: 14px;
-            transition: all 0.2s;
+            padding: 10px 22px; border-radius: 8px; border: 2px solid #334155;
+            background: rgba(30, 41, 59, 0.9); color: #e2e8f0; font-weight: 600; font-size: 14px; transition: all 0.2s;
         }
         .tab-btn:hover { transform: translateY(-2px); border-color: #4ade80; }
         .tab-btn.active {
-            border-color: #4ade80;
-            background: rgba(74, 222, 128, 0.2);
-            color: #4ade80;
+            border-color: #4ade80; background: rgba(74, 222, 128, 0.2); color: #4ade80;
             box-shadow: 0 0 12px rgba(74, 222, 128, 0.4);
         }
 
-        /* ================= ИСПЫТАНИЯ ЗРИТЕЛЕЙ ================= */
-        .status-badge {
-            font-size: 11px;
-            padding: 3px 10px;
-            border-radius: 9999px;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-        .status-badge.done {
-            background: rgba(74, 222, 128, 0.15);
-            border: 1px solid #4ade80;
-            color: #4ade80;
-        }
-        .status-badge.pending {
-            background: rgba(139, 92, 246, 0.15);
-            border: 1px solid #8b5cf6;
-            color: #a78bfa;
-        }
+        .status-badge { font-size: 11px; padding: 3px 10px; border-radius: 9999px; font-weight: 600; white-space: nowrap; }
+        .status-badge.done { background: rgba(74, 222, 128, 0.15); border: 1px solid #4ade80; color: #4ade80; }
+        .status-badge.not-done { background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #ef4444; }
 
         .challenge-card {
             background-color: rgba(30, 41, 59, 0.9);
@@ -729,51 +595,23 @@
             box-shadow: 0 4px 12px rgba(74, 222, 128, 0.2);
         }
 
-        .challenge-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-        }
-        .challenge-header .ch-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            min-width: 0;
-        }
-        .challenge-header .ch-nick {
-            font-weight: bold;
-            color: #e2e8f0;
-            font-size: 15px;
-        }
-        .challenge-arrow {
-            transition: transform 0.2s ease;
-            flex-shrink: 0;
-        }
-        .challenge-card.expanded .challenge-arrow {
-            transform: rotate(180deg);
-        }
+        .challenge-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+        .challenge-header .ch-title { display: flex; align-items: center; gap: 10px; min-width: 0; }
+        .challenge-header .ch-nick { font-weight: bold; color: #e2e8f0; font-size: 15px; }
+        .challenge-arrow { transition: transform 0.2s ease; flex-shrink: 0; }
+        .challenge-card.expanded .challenge-arrow { transform: rotate(180deg); }
 
         .challenge-body {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
+            max-height: 0; opacity: 0; overflow: hidden;
             transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
             margin-top: 0;
         }
-        .challenge-card.expanded .challenge-body {
-            max-height: 600px;
-            opacity: 1;
-            margin-top: 14px;
-        }
+        .challenge-card.expanded .challenge-body { max-height: 600px; opacity: 1; margin-top: 14px; }
     </style>
 </head>
 <body class="p-4 md:p-8 mx-auto">
 
-    <div id="cursor-container">
-        <div id="custom-cursor"></div>
-    </div>
-    
+    <div id="cursor-container"><div id="custom-cursor"></div></div>
     <div class="custom-bg" id="bg-container"></div>
 
     <header class="text-center mb-12">
@@ -798,23 +636,14 @@
         <div class="rounded-lg border border-slate-700 table-container">
             <table class="w-full text-center border-collapse text-sm">
                 <colgroup>
-                    <col class="col-num">
-                    <col class="col-world">
-                    <col class="col-lived">
-                    <col class="col-achievements">
-                    <col class="col-death">
-                    <col class="col-description">
-                    <col class="col-video">
+                    <col class="col-num"><col class="col-world"><col class="col-lived">
+                    <col class="col-achievements"><col class="col-death"><col class="col-description"><col class="col-video">
                 </colgroup>
                 <thead class="bg-slate-800 text-slate-300">
                     <tr>
-                        <th class="p-3">#</th>
-                        <th class="p-3">Мир</th>
-                        <th class="p-3">Прожито</th>
-                        <th class="p-3">Достижения</th>
-                        <th class="p-3">Причина смерти</th>
-                        <th class="p-3">Описание ситуации</th>
-                        <th class="p-3">Видео</th>
+                        <th class="p-3">#</th><th class="p-3">Мир</th><th class="p-3">Прожито</th>
+                        <th class="p-3">Достижения</th><th class="p-3">Причина смерти</th>
+                        <th class="p-3">Описание ситуации</th><th class="p-3">Видео</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-800 bg-slate-900/50">
@@ -827,27 +656,16 @@
                                 <div class="flex items-center">
                                     <a href="https://github.com/TreeMale/Minecraft/releases/download/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B01/1.zip" class="download-btn" title="" download onclick="animateDownloadButton(this)">
                                         <span class="tooltip-text">Скачать мир</span>
-                                        <span class="icon-default">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                                        </span>
-                                        <span class="icon-loading">
-                                            <svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
-                                        </span>
-                                        <span class="icon-success">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                                        </span>
+                                        <span class="icon-default"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+                                        <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
+                                        <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
                                     </a>
                                     <button class="compare-btn" onclick="toggleComparison(1)">Картинки</button>
                                 </div>
                             </div>
                         </td>
                         <td class="p-3">4 ч. 36 мин.</td>
-                        <td class="p-3">
-                            <div class="flex flex-col items-center gap-1">
-                                <span>61 (4,8%)</span>
-                                <div class="progress-container"><div class="progress-bar" style="width: 4.8%"></div></div>
-                            </div>
-                        </td>
+                        <td class="p-3"><div class="flex flex-col items-center gap-1"><span>61 (4,8%)</span><div class="progress-container"><div class="progress-bar" style="width: 4.8%"></div></div></div></td>
                         <td class="p-3 text-red-400 font-semibold">ЭНДЕРМЕН</td>
                         <td class="p-3 text-slate-300">Пошёл искать шахту ночью, а там оно...</td>
                         <td class="p-3 text-slate-500">-</td>
@@ -859,14 +677,7 @@
                                     <img src="" class="after-image" id="after-img-1" alt="После" decoding="async" draggable="false">
                                     <img src="" class="before-image" id="before-img-1" alt="До" decoding="async" draggable="false">
                                     <div class="slider-handle" id="slider-1"></div>
-                                    <div class="loader" id="loader-1">
-                                        <div class="loader-blocks">
-                                            <div class="loader-block grass"></div>
-                                            <div class="loader-block planks"></div>
-                                            <div class="loader-block cobblestone"></div>
-                                        </div>
-                                        <div class="loader-text">ЗАГРУЗКА</div>
-                                    </div>
+                                    <div class="loader" id="loader-1"><div class="loader-blocks"><div class="loader-block grass"></div><div class="loader-block planks"></div><div class="loader-block cobblestone"></div></div><div class="loader-text">ЗАГРУЗКА</div></div>
                                     <div class="comparison-labels">
                                         <span class="comparison-label before" onclick="showFullImage(1, 'before')">До</span>
                                         <span class="comparison-label after" onclick="showFullImage(1, 'after')">После</span>
@@ -890,27 +701,16 @@
                                 <div class="flex items-center">
                                     <a href="https://github.com/TreeMale/Minecraft/releases/download/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B02/2.zip" class="download-btn" title="" download onclick="animateDownloadButton(this)">
                                         <span class="tooltip-text">Скачать мир</span>
-                                        <span class="icon-default">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                                        </span>
-                                        <span class="icon-loading">
-                                            <svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
-                                        </span>
-                                        <span class="icon-success">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                                        </span>
+                                        <span class="icon-default"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+                                        <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
+                                        <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
                                     </a>
                                     <button class="compare-btn" onclick="toggleComparison(2)">Картинки</button>
                                 </div>
                             </div>
                         </td>
                         <td class="p-3">14 ч. 9 мин.</td>
-                        <td class="p-3">
-                            <div class="flex flex-col items-center gap-1">
-                                <span>178 (14,1%)</span>
-                                <div class="progress-container"><div class="progress-bar" style="width: 14.1%"></div></div>
-                            </div>
-                        </td>
+                        <td class="p-3"><div class="flex flex-col items-center gap-1"><span>178 (14,1%)</span><div class="progress-container"><div class="progress-bar" style="width: 14.1%"></div></div></div></td>
                         <td class="p-3 text-red-400 font-semibold">КРИПЕР</td>
                         <td class="p-3 text-slate-300">Взорвал со спины пока рубил дерево, щит не спас.</td>
                         <td class="p-3 text-slate-500">-</td>
@@ -922,14 +722,7 @@
                                     <img src="" class="after-image" id="after-img-2" alt="После" decoding="async" draggable="false">
                                     <img src="" class="before-image" id="before-img-2" alt="До" decoding="async" draggable="false">
                                     <div class="slider-handle" id="slider-2"></div>
-                                    <div class="loader" id="loader-2">
-                                        <div class="loader-blocks">
-                                            <div class="loader-block grass"></div>
-                                            <div class="loader-block planks"></div>
-                                            <div class="loader-block cobblestone"></div>
-                                        </div>
-                                        <div class="loader-text">ЗАГРУЗКА</div>
-                                    </div>
+                                    <div class="loader" id="loader-2"><div class="loader-blocks"><div class="loader-block grass"></div><div class="loader-block planks"></div><div class="loader-block cobblestone"></div></div><div class="loader-text">ЗАГРУЗКА</div></div>
                                     <div class="comparison-labels">
                                         <span class="comparison-label before" onclick="showFullImage(2, 'before')">До</span>
                                         <span class="comparison-label after" onclick="showFullImage(2, 'after')">После</span>
@@ -953,27 +746,16 @@
                                 <div class="flex items-center">
                                     <a href="https://github.com/TreeMale/Minecraft/releases/download/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B03/3.zip" class="download-btn" title="" download onclick="animateDownloadButton(this)">
                                         <span class="tooltip-text">Скачать мир</span>
-                                        <span class="icon-default">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                                        </span>
-                                        <span class="icon-loading">
-                                            <svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
-                                        </span>
-                                        <span class="icon-success">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                                        </span>
+                                        <span class="icon-default"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+                                        <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
+                                        <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
                                     </a>
                                     <button class="compare-btn" onclick="toggleComparison(3)">Картинки</button>
                                 </div>
                             </div>
                         </td>
                         <td class="p-3">19 ч. 55 мин.</td>
-                        <td class="p-3">
-                            <div class="flex flex-col items-center gap-1">
-                                <span>284 (22,5%)</span>
-                                <div class="progress-container"><div class="progress-bar" style="width: 22.5%"></div></div>
-                            </div>
-                        </td>
+                        <td class="p-3"><div class="flex flex-col items-center gap-1"><span>284 (22,5%)</span><div class="progress-container"><div class="progress-bar" style="width: 22.5%"></div></div></div></td>
                         <td class="p-3 text-red-400 font-semibold">ПУСТОТА</td>
                         <td class="p-3 text-slate-300">Настраивал моды, включил читы и упал сквозь мир, ануак.</td>
                         <td class="p-3 text-slate-500">-</td>
@@ -985,14 +767,7 @@
                                     <img src="" class="after-image" id="after-img-3" alt="После" decoding="async" draggable="false">
                                     <img src="" class="before-image" id="before-img-3" alt="До" decoding="async" draggable="false">
                                     <div class="slider-handle" id="slider-3"></div>
-                                    <div class="loader" id="loader-3">
-                                        <div class="loader-blocks">
-                                            <div class="loader-block grass"></div>
-                                            <div class="loader-block planks"></div>
-                                            <div class="loader-block cobblestone"></div>
-                                        </div>
-                                        <div class="loader-text">ЗАГРУЗКА</div>
-                                    </div>
+                                    <div class="loader" id="loader-3"><div class="loader-blocks"><div class="loader-block grass"></div><div class="loader-block planks"></div><div class="loader-block cobblestone"></div></div><div class="loader-text">ЗАГРУЗКА</div></div>
                                     <div class="comparison-labels">
                                         <span class="comparison-label before" onclick="showFullImage(3, 'before')">До</span>
                                         <span class="comparison-label after" onclick="showFullImage(3, 'after')">После</span>
@@ -1017,27 +792,16 @@
                                 <div class="flex items-center">
                                     <a href="https://github.com/TreeMale/Minecraft/releases/download/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B04/4.zip" class="download-btn" title="" download onclick="animateDownloadButton(this)">
                                         <span class="tooltip-text">Скачать мир</span>
-                                        <span class="icon-default">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                                        </span>
-                                        <span class="icon-loading">
-                                            <svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
-                                        </span>
-                                        <span class="icon-success">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                                        </span>
+                                        <span class="icon-default"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+                                        <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
+                                        <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
                                     </a>
                                     <button class="compare-btn" onclick="toggleComparison(4)">Картинки</button>
                                 </div>
                             </div>
                         </td>
                         <td class="p-3">16 ч. 5 мин.</td>
-                        <td class="p-3">
-                            <div class="flex flex-col items-center gap-1">
-                                <span>196 (15,5%)</span>
-                                <div class="progress-container"><div class="progress-bar" style="width: 15.5%"></div></div>
-                            </div>
-                        </td>
+                        <td class="p-3"><div class="flex flex-col items-center gap-1"><span>196 (15,5%)</span><div class="progress-container"><div class="progress-bar" style="width: 15.5%"></div></div></div></td>
                         <td class="p-3 text-red-400 font-semibold">ЗОМБИ-ЖИТЕЛЬ</td>
                         <td class="p-3 text-slate-300">Зашел в иглу, исцелить зомби-жителя, но он отказал.</td>
                         <td class="p-3"><a href="https://www.youtube.com/shorts/w9V0Ip6WojI" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline font-semibold">YouTube</a></td>
@@ -1049,14 +813,7 @@
                                     <img src="" class="after-image" id="after-img-4" alt="После" decoding="async" draggable="false">
                                     <img src="" class="before-image" id="before-img-4" alt="До" decoding="async" draggable="false">
                                     <div class="slider-handle" id="slider-4"></div>
-                                    <div class="loader" id="loader-4">
-                                        <div class="loader-blocks">
-                                            <div class="loader-block grass"></div>
-                                            <div class="loader-block planks"></div>
-                                            <div class="loader-block cobblestone"></div>
-                                        </div>
-                                        <div class="loader-text">ЗАГРУЗКА</div>
-                                    </div>
+                                    <div class="loader" id="loader-4"><div class="loader-blocks"><div class="loader-block grass"></div><div class="loader-block planks"></div><div class="loader-block cobblestone"></div></div><div class="loader-text">ЗАГРУЗКА</div></div>
                                     <div class="comparison-labels">
                                         <span class="comparison-label before" onclick="showFullImage(4, 'before')">До</span>
                                         <span class="comparison-label after" onclick="showFullImage(4, 'after')">После</span>
@@ -1080,27 +837,16 @@
                                 <div class="flex items-center">
                                     <a href="https://github.com/TreeMale/Minecraft/releases/download/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B05/5.zip" class="download-btn" title="" download onclick="animateDownloadButton(this)">
                                         <span class="tooltip-text">Скачать мир</span>
-                                        <span class="icon-default">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                                        </span>
-                                        <span class="icon-loading">
-                                            <svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
-                                        </span>
-                                        <span class="icon-success">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                                        </span>
+                                        <span class="icon-default"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+                                        <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
+                                        <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
                                     </a>
                                     <button class="compare-btn" onclick="toggleComparison(5)">Картинки</button>
                                 </div>
                             </div>
                         </td>
                         <td class="p-3">41 ч. 6 мин.</td>
-                        <td class="p-3">
-                            <div class="flex flex-col items-center gap-1">
-                                <span>320 (25,4%)</span>
-                                <div class="progress-container"><div class="progress-bar" style="width: 25.4%"></div></div>
-                            </div>
-                        </td>
+                        <td class="p-3"><div class="flex flex-col items-center gap-1"><span>320 (25,4%)</span><div class="progress-container"><div class="progress-bar" style="width: 25.4%"></div></div></div></td>
                         <td class="p-3 text-red-400 font-semibold">СКЕЛЕТ-ИССУШИТЕЛЬ</td>
                         <td class="p-3 text-slate-300">Проведал ифритов в аду, но я явно был не готов к НЕМУ...</td>
                         <td class="p-3"><a href="https://youtube.com/shorts/0zNUIQcrzww" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline font-semibold">YouTube</a></td>
@@ -1112,14 +858,7 @@
                                     <img src="" class="after-image" id="after-img-5" alt="После" decoding="async" draggable="false">
                                     <img src="" class="before-image" id="before-img-5" alt="До" decoding="async" draggable="false">
                                     <div class="slider-handle" id="slider-5"></div>
-                                    <div class="loader" id="loader-5">
-                                        <div class="loader-blocks">
-                                            <div class="loader-block grass"></div>
-                                            <div class="loader-block planks"></div>
-                                            <div class="loader-block cobblestone"></div>
-                                        </div>
-                                        <div class="loader-text">ЗАГРУЗКА</div>
-                                    </div>
+                                    <div class="loader" id="loader-5"><div class="loader-blocks"><div class="loader-block grass"></div><div class="loader-block planks"></div><div class="loader-block cobblestone"></div></div><div class="loader-text">ЗАГРУЗКА</div></div>
                                     <div class="comparison-labels">
                                         <span class="comparison-label before" onclick="showFullImage(5, 'before')">До</span>
                                         <span class="comparison-label after" onclick="showFullImage(5, 'after')">После</span>
@@ -1151,12 +890,7 @@
                             </div>
                         </td>
                         <td class="p-3">70 ч. 8 мин.</td>
-                        <td class="p-3">
-                            <div class="flex flex-col items-center gap-1">
-                                <span>434 (34,5%)</span>
-                                <div class="progress-container"><div class="progress-bar" style="width: 34.5%"></div></div>
-                            </div>
-                        </td>
+                        <td class="p-3"><div class="flex flex-col items-center gap-1"><span>434 (34,5%)</span><div class="progress-container"><div class="progress-bar" style="width: 34.5%"></div></div></div></td>
                         <td class="p-3 text-slate-500">-</td>
                         <td class="p-3 text-slate-500">-</td>
                         <td class="p-3 text-slate-500">-</td>
@@ -1168,20 +902,12 @@
                                     <img src="" class="after-image" id="after-img-6" alt="После" decoding="async" draggable="false">
                                     <img src="" class="before-image" id="before-img-6" alt="До" decoding="async" draggable="false">
                                     <div class="slider-handle" id="slider-6"></div>
-                                    <div class="loader" id="loader-6">
-                                        <div class="loader-blocks">
-                                            <div class="loader-block grass"></div>
-                                            <div class="loader-block planks"></div>
-                                            <div class="loader-block cobblestone"></div>
-                                        </div>
-                                        <div class="loader-text">ЗАГРУЗКА</div>
-                                    </div>
+                                    <div class="loader" id="loader-6"><div class="loader-blocks"><div class="loader-block grass"></div><div class="loader-block planks"></div><div class="loader-block cobblestone"></div></div><div class="loader-text">ЗАГРУЗКА</div></div>
                                     <div class="comparison-labels">
                                         <span class="comparison-label before" onclick="showFullImage(6, 'before')">До</span>
                                         <span class="comparison-label after" onclick="showFullImage(6, 'after')">После</span>
                                     </div>
-                                    <div class="image-set-buttons">
-                                    </div>
+                                    <div class="image-set-buttons"></div>
                                 </div>
                             </div>
                         </td>
@@ -1216,44 +942,35 @@
     <section id="tab-challenges" class="mb-16" style="display: none;">
         <h2 class="text-2xl font-bold mb-2 border-b border-slate-700 pb-2 flex items-center justify-center gap-2">
             <img src="https://treemale.github.io/Minecraft/images/items/point-green.png" class="w-7 h-7 object-contain" alt=""> Испытания от зрителей
-            (<span class="mc-green text-lg" id="ch-done-count"></span> из <span class="text-purple-400 text-lg" id="ch-total-count"></span>)
         </h2>
-        <p class="text-slate-400 text-sm text-center mb-6">Зрители покупают испытание за баллы канала и присылают его мне — а я его выполняю. Нажмите на карточку, чтобы раскрыть подробности.</p>
+        <p class="text-slate-400 text-sm text-center mb-4">Зрители покупают испытание за баллы канала и присылают его мне — а я его выполняю. Нажмите на карточку, чтобы раскрыть подробности.</p>
+        <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mb-6 border-b border-slate-700 pb-3">
+            <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleChallengesFilter('done')">
+                <img src="https://treemale.github.io/Minecraft/images/items/point-green.png" class="w-5 h-5 object-contain pixel-icon" alt=""> Выполнено (<span id="ch-done-count" class="mc-green text-lg"></span>)
+                <img src="https://treemale.github.io/Minecraft/images/items/down-arrow-green.png" class="w-4 h-2 flex-shrink-0 align-middle pixel-icon" id="ch-done-toggle" alt="toggle">
+            </h2>
+            <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleChallengesFilter('pending')">
+                <img src="https://treemale.github.io/Minecraft/images/items/point-purple.png" class="w-5 h-5 object-contain pixel-icon" alt=""> <span class="text-red-400">Не выполнено</span> (<span id="ch-pending-count" class="text-red-400 text-lg"></span>)
+                <img src="https://treemale.github.io/Minecraft/images/items/down-arrow-green.png" class="w-4 h-2 flex-shrink-0 align-middle pixel-icon" id="ch-pending-toggle" alt="toggle">
+            </h2>
+        </div>
         <div id="challenges-grid" class="grid grid-cols-1 gap-4"></div>
     </section>
 
     <script>
-        // ================= НАСТРОЙКИ КУРСОРА =================
         const cursorContainer = document.getElementById('cursor-container');
         const customCursor = document.getElementById('custom-cursor');
-        
         let lastMouseX = 0, lastMouseY = 0;
         let isHolding = false;
         let clickInterval = null;
         const CLICK_CYCLE = 250;
-        
         const ARROW_GREEN = 'https://treemale.github.io/Minecraft/images/items/down-arrow-green.png';
         const ARROW_RED = 'https://treemale.github.io/Minecraft/images/items/up-arrow-red.png';
 
-        // ================= ДИАПАЗОН ЦВЕТОВ ЧАСТИЦ =================
-        const PARTICLE_COLORS = [
-            '#ffffff',
-            '#e0f2fe',
-            '#bae6fd',
-            '#7dd3fc',
-            '#38bdf8',
-            '#0ea5e3',
-            '#0284c7',
-            '#0369a1',
-        ];
+        const PARTICLE_COLORS = ['#ffffff','#e0f2fe','#bae6fd','#7dd3fc','#38bdf8','#0ea5e3','#0284c7','#0369a1'];
+        function getRandomColor() { return PARTICLE_COLORS[Math.floor(Math.random() * PARTICLE_COLORS.length)]; }
 
-        function getRandomColor() {
-            return PARTICLE_COLORS[Math.floor(Math.random() * PARTICLE_COLORS.length)];
-        }
-        
-        // ================= ОБВОДКА КУРСОРА ПРИ НАВЕДЕНИИ =================
         const HOVER_SELECTORS = 'a, button, [onclick], .card, .card-pack, .section-header, .world-name, .comparison-label, .set-btn, .slider-handle, .search-clear, #item-search, .tab-btn, .challenge-card';
-        
         function getClickableParent(el) {
             while (el && el !== document.body) {
                 if (el.matches && el.matches(HOVER_SELECTORS)) return el;
@@ -1261,60 +978,45 @@
             }
             return null;
         }
-        
         document.addEventListener('mouseover', (e) => {
             const found = getClickableParent(e.target);
-            
             if (found && found.disabled) return;
             if (found && found.classList && found.classList.contains('disabled')) return;
             if (found && found.style && found.style.pointerEvents === 'none') return;
-            
-            if (found) {
-                customCursor.classList.add('hovering');
-            } else {
-                customCursor.classList.remove('hovering');
-            }
+            if (found) customCursor.classList.add('hovering');
+            else customCursor.classList.remove('hovering');
         }, { passive: true });
 
-        // ================= ПИКСЕЛЬНЫЕ ЧАСТИЦЫ ПРИ КЛИКЕ =================
         function createClickPixels(x, y) {
             const pixelCount = 5 + Math.floor(Math.random() * 4);
-            
             for (let i = 0; i < pixelCount; i++) {
                 const pixel = document.createElement('div');
                 pixel.className = 'click-pixel';
-                
                 const color = getRandomColor();
                 const size = 2 + Math.floor(Math.random() * 3);
-                
                 pixel.style.width = size + 'px';
                 pixel.style.height = size + 'px';
                 pixel.style.backgroundColor = color;
                 pixel.style.boxShadow = `0 0 ${size}px ${color}`;
-                
                 const angle = Math.random() * Math.PI * 2;
                 const distance = 12 + Math.random() * 30;
                 const dx = Math.cos(angle) * distance;
                 const dy = Math.sin(angle) * distance - 8;
-                
                 const duration = 0.2 + Math.random() * 0.2;
-                
                 pixel.style.left = x + 'px';
                 pixel.style.top = y + 'px';
                 pixel.style.setProperty('--dx', dx + 'px');
                 pixel.style.setProperty('--dy', dy + 'px');
                 pixel.style.setProperty('--duration', duration + 's');
-                
                 document.body.appendChild(pixel);
                 setTimeout(() => pixel.remove(), duration * 1000 + 50);
             }
         }
-        
+
         function initBackgroundSlides() {
             const container = document.getElementById('bg-container');
             const backgroundImages = ['https://treemale.github.io/Minecraft/images/bg.webp'];
             const SLIDE_INTERVAL = 10000;
-            
             backgroundImages.forEach((url, index) => {
                 const slide = document.createElement('div');
                 slide.className = 'bg-slide';
@@ -1322,7 +1024,6 @@
                 if (index === 0) slide.classList.add('active');
                 container.appendChild(slide);
             });
-
             if (backgroundImages.length > 1) {
                 const slides = document.querySelectorAll('.bg-slide');
                 let currentIndex = 0;
@@ -1333,12 +1034,10 @@
                 }, SLIDE_INTERVAL);
             }
         }
-
         initBackgroundSlides();
 
         document.addEventListener('mousemove', (e) => {
-            lastMouseX = e.clientX;
-            lastMouseY = e.clientY;
+            lastMouseX = e.clientX; lastMouseY = e.clientY;
             cursorContainer.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
         }, { passive: true });
 
@@ -1348,58 +1047,35 @@
             customCursor.classList.add('sword-clicking');
             createClickPixels(x, y);
         }
-
         document.addEventListener('mousedown', (e) => {
             if (isHolding) return;
             isHolding = true;
             playClickAnimation(e.clientX, e.clientY);
-            clickInterval = setInterval(() => {
-                playClickAnimation(lastMouseX, lastMouseY);
-            }, CLICK_CYCLE);
+            clickInterval = setInterval(() => playClickAnimation(lastMouseX, lastMouseY), CLICK_CYCLE);
         });
-
         window.addEventListener('mouseup', () => {
             if (!isHolding) return;
             isHolding = false;
-            if (clickInterval) {
-                clearInterval(clickInterval);
-                clickInterval = null;
-            }
+            if (clickInterval) { clearInterval(clickInterval); clickInterval = null; }
         });
-
         window.addEventListener('dragend', () => {
             isHolding = false;
-            if (clickInterval) {
-                clearInterval(clickInterval);
-                clickInterval = null;
-            }
+            if (clickInterval) { clearInterval(clickInterval); clickInterval = null; }
         });
-        
         window.addEventListener('mouseleave', () => {
             cursorContainer.style.display = 'none';
             isHolding = false;
-            if (clickInterval) {
-                clearInterval(clickInterval);
-                clickInterval = null;
-            }
+            if (clickInterval) { clearInterval(clickInterval); clickInterval = null; }
         });
-        
-        window.addEventListener('mouseenter', () => {
-            cursorContainer.style.display = 'block';
-        });
+        window.addEventListener('mouseenter', () => { cursorContainer.style.display = 'block'; });
 
         function animateDownloadButton(btn) {
             if (btn.classList.contains('downloading') || btn.classList.contains('success')) return;
-            
             btn.classList.add('downloading');
-            
             setTimeout(() => {
                 btn.classList.remove('downloading');
                 btn.classList.add('success');
-                
-                setTimeout(() => {
-                    btn.classList.remove('success');
-                }, 1500);
+                setTimeout(() => btn.classList.remove('success'), 1500);
             }, 800);
         }
 
@@ -1447,7 +1123,6 @@
 
         let currentSet = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
         const preloadedImages = {};
-
         (function preloadLoaderBlocks() {
             LOADER_BLOCK_URLS.forEach(url => {
                 const img = new Image();
@@ -1525,7 +1200,6 @@
 
         function switchImageSet(worldNum, setNum) {
             if (worldNum === 6) return;
-            
             const beforeImg = document.getElementById('before-img-' + worldNum);
             const afterImg = document.getElementById('after-img-' + worldNum);
             const loader = document.getElementById('loader-' + worldNum);
@@ -1535,7 +1209,6 @@
             else if (worldNum === 3) imageSets = world3ImageSets;
             else if (worldNum === 4) imageSets = world4ImageSets;
             else if (worldNum === 5) imageSets = world5ImageSets;
-            
             const set = imageSets[setNum];
             if (!beforeImg || !afterImg || !set) return;
             if (currentSet[worldNum] === setNum) return;
@@ -1544,11 +1217,7 @@
             if (loader) {
                 loader.classList.add('visible');
                 const blocks = loader.querySelectorAll('.loader-block');
-                blocks.forEach(block => {
-                    block.style.animation = 'none';
-                    block.offsetHeight;
-                    block.style.animation = '';
-                });
+                blocks.forEach(block => { block.style.animation = 'none'; block.offsetHeight; block.style.animation = ''; });
             }
             beforeImg.classList.remove('loaded');
             afterImg.classList.remove('loaded');
@@ -1562,10 +1231,7 @@
                     afterImg.classList.add('loaded');
                     if (loader) loader.classList.remove('visible');
                     const slider = document.getElementById('slider-' + worldNum);
-                    if (slider) {
-                        beforeImg.style.clipPath = 'inset(0 50% 0 0)';
-                        slider.style.left = '50%';
-                    }
+                    if (slider) { beforeImg.style.clipPath = 'inset(0 50% 0 0)'; slider.style.left = '50%'; }
                 });
             };
             if (beforeCached && afterCached) { applyImages(); }
@@ -1585,12 +1251,11 @@
 
         function toggleComparison(num) {
             if (num === 6) return;
-            
             const row = document.getElementById('comp-row-' + num);
             if (row.style.display === 'none' || row.style.display === '') {
                 for (let i = 1; i <= 6; i++) document.getElementById('comp-row-' + i).style.display = 'none';
                 row.style.display = 'table-row';
-                setTimeout(() => { 
+                setTimeout(() => {
                     setupSlider(num);
                     if (num === 1) switchImageSet(1, 1);
                     else if (num === 2) switchImageSet(2, 1);
@@ -1651,50 +1316,27 @@
         function applyFilters() {
             const query = searchQuery.trim().toLowerCase();
             document.getElementById('search-clear').classList.toggle('hidden', !searchQuery);
-
-            let modsVisible = 0;
-            let packsVisible = 0;
-
+            let modsVisible = 0, packsVisible = 0;
             for (let card of allGrid.children) {
                 if (!card.classList.contains('card')) continue;
                 const isMod = !card.classList.contains('card-pack');
                 const section = isMod ? 'mods' : 'packs';
                 const sectionOpen = sectionState[section];
-
-                if (!sectionOpen) {
-                    card.classList.add('hidden');
-                    continue;
-                }
-
+                if (!sectionOpen) { card.classList.add('hidden'); continue; }
                 if (query) {
                     const matches = card.textContent.toLowerCase().includes(query);
                     card.classList.toggle('hidden', !matches);
-                } else {
-                    card.classList.remove('hidden');
-                }
-
-                if (!card.classList.contains('hidden')) {
-                    if (isMod) modsVisible++;
-                    else packsVisible++;
-                }
+                } else { card.classList.remove('hidden'); }
+                if (!card.classList.contains('hidden')) { if (isMod) modsVisible++; else packsVisible++; }
             }
-
             updateCounters(modsVisible, packsVisible);
         }
 
-        document.getElementById('item-search').addEventListener('input', (e) => {
-            searchQuery = e.target.value;
-            applyFilters();
-        });
-
-        document.getElementById('item-search').addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') { e.target.value = ''; searchQuery = ''; applyFilters(); }
-        });
-
+        document.getElementById('item-search').addEventListener('input', (e) => { searchQuery = e.target.value; applyFilters(); });
+        document.getElementById('item-search').addEventListener('keydown', (e) => { if (e.key === 'Escape') { e.target.value = ''; searchQuery = ''; applyFilters(); } });
         document.getElementById('search-clear').addEventListener('click', () => {
             const input = document.getElementById('item-search');
-            input.value = ''; searchQuery = ''; applyFilters();
-            input.focus();
+            input.value = ''; searchQuery = ''; applyFilters(); input.focus();
         });
 
         const mods = [
@@ -1772,22 +1414,13 @@
         ];
 
         const allGrid = document.getElementById('all-grid');
-
-        const allItems = [
-            ...mods.map(m => ({ ...m, type: 'mod' })),
-            ...packs.map(p => ({ ...p, type: 'pack' }))
-        ];
-
+        const allItems = [...mods.map(m => ({ ...m, type: 'mod' })), ...packs.map(p => ({ ...p, type: 'pack' }))];
         allItems.sort((a, b) => a.n.localeCompare(b.n, 'ru'));
-
         allItems.forEach(item => {
             const isMod = item.type === 'mod';
             const cardClass = isMod ? 'card p-4 rounded-lg' : 'card card-pack p-4 rounded-lg';
-            const dotImage = isMod 
-                ? 'https://treemale.github.io/Minecraft/images/items/point-green.png' 
-                : 'https://treemale.github.io/Minecraft/images/items/point-purple.png';
+            const dotImage = isMod ? 'https://treemale.github.io/Minecraft/images/items/point-green.png' : 'https://treemale.github.io/Minecraft/images/items/point-purple.png';
             const title = isMod ? 'Перейти к моду' : 'Перейти к паку';
-            
             allGrid.innerHTML += `<div class="${cardClass}" onclick="window.open('${item.url}', '_blank')" title="${title}">
                 <h3 class="font-bold text-slate-200 mb-2 flex items-center gap-2 text-sm md:text-base">
                     <img src="${dotImage}" class="w-3 h-3 flex-shrink-0 align-middle pixel-icon" alt="icon"> ${item.n}
@@ -1795,65 +1428,16 @@
                 <p class="text-xs md:text-sm text-slate-400 leading-relaxed">${item.d}</p>
             </div>`;
         });
-
         applyFilters();
 
         // ================= ВКЛАДКА: ИСПЫТАНИЯ ОТ ЗРИТЕЛЕЙ =================
         const challenges = [
-            {
-                nick: "PixelHunter",
-                desc: "Победить иссушителя, используя только снежки и лук",
-                world: "#мирвайба5",
-                bought: "2026-10-28",
-                done: "2026-11-02",
-                start: "14:05",
-                end: "19:47"
-            },
-            {
-                nick: "CreeperLover",
-                desc: "Пережить ночь в деревне жителей без брони и щита",
-                world: "#мирвайба2",
-                bought: "2026-09-15",
-                done: "2026-09-17",
-                start: "22:10",
-                end: "05:38"
-            },
-            {
-                nick: "SteveFromMarketing",
-                desc: "Дойти до крепости Энда, не добывая и не используя факелы",
-                world: "#мирвайба4",
-                bought: "2026-11-01",
-                done: "2026-11-05",
-                start: "10:15",
-                end: "13:24"
-            },
-            {
-                nick: "NotchIsMyNeighbor",
-                desc: "Построить дом из обсидиана за один заход (без творческого режима)",
-                world: "#мирвайба1",
-                bought: "2026-08-20",
-                done: "2026-08-21",
-                start: "16:40",
-                end: "21:05"
-            },
-            {
-                nick: "ZombieFan228",
-                desc: "Победить дракона Края в золотой броне",
-                world: "#мирвайба6",
-                bought: "2026-11-10",
-                done: null,
-                start: null,
-                end: null
-            },
-            {
-                nick: "AlexTheBuilder",
-                desc: "Пройти весь Незер пешком, не возвращаясь в обычный мир через портал",
-                world: "#мирвайба6",
-                bought: "2026-11-11",
-                done: null,
-                start: null,
-                end: null
-            }
+            { nick: "PixelHunter", desc: "Победить иссушителя, используя только снежки и лук", world: "#мирвайба5", bought: "2026-10-28", done: "2026-11-02", start: "14:05", end: "19:47" },
+            { nick: "CreeperLover", desc: "Пережить ночь в деревне жителей без брони и щита", world: "#мирвайба2", bought: "2026-09-15", done: "2026-09-17", start: "22:10", end: "05:38" },
+            { nick: "SteveFromMarketing", desc: "Дойти до крепости Энда, не добывая и не используя факелы", world: "#мирвайба4", bought: "2026-11-01", done: "2026-11-05", start: "10:15", end: "13:24" },
+            { nick: "NotchIsMyNeighbor", desc: "Построить дом из обсидиана за один заход (без творческого режима)", world: "#мирвайба1", bought: "2026-08-20", done: "2026-08-21", start: "16:40", end: "21:05" },
+            { nick: "ZombieFan228", desc: "Победить дракона Края в золотой броне", world: "#мирвайба6", bought: "2026-11-10", done: null, start: null, end: null },
+            { nick: "AlexTheBuilder", desc: "Пройти весь Незер пешком, не возвращаясь в обычный мир через портал", world: "#мирвайба6", bought: "2026-11-11", done: null, start: null, end: null }
         ];
 
         const DONE_POINT = 'https://treemale.github.io/Minecraft/images/items/point-green.png';
@@ -1893,19 +1477,44 @@
             return dt.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
         }
 
+        const challengesState = { done: true, pending: true };
+
+        function toggleChallengesFilter(type) {
+            challengesState[type] = !challengesState[type];
+            const toggleIcon = document.getElementById('ch-' + type + '-toggle');
+            toggleIcon.src = challengesState[type] ? ARROW_GREEN : ARROW_RED;
+            applyChallengesFilter();
+        }
+
+        function applyChallengesFilter() {
+            const cards = document.querySelectorAll('.challenge-card');
+            let doneVisible = 0, pendingVisible = 0;
+            cards.forEach(card => {
+                const isDone = card.dataset.done === 'true';
+                if (isDone) {
+                    const visible = challengesState.done;
+                    card.classList.toggle('hidden', !visible);
+                    if (visible) doneVisible++;
+                } else {
+                    const visible = challengesState.pending;
+                    card.classList.toggle('hidden', !visible);
+                    if (visible) pendingVisible++;
+                }
+            });
+            document.getElementById('ch-done-count').innerText = doneVisible;
+            document.getElementById('ch-pending-count').innerText = pendingVisible;
+        }
+
         function renderChallenges() {
             const grid = document.getElementById('challenges-grid');
             grid.innerHTML = '';
-            let doneCount = 0;
-
             challenges.forEach((c, i) => {
                 const isDone = !!c.done;
-                if (isDone) doneCount++;
                 const duration = calcDuration(c);
                 const point = isDone ? DONE_POINT : PENDING_POINT;
                 const status = isDone
                     ? '<span class="status-badge done">Выполнено</span>'
-                    : '<span class="status-badge pending">Ожидает</span>';
+                    : '<span class="status-badge not-done">Не выполнено</span>';
 
                 const info = `
                     <p class="text-sm text-slate-300 leading-relaxed mb-3">${c.desc}</p>
@@ -1921,7 +1530,7 @@
                     </div>` : '';
 
                 grid.innerHTML += `
-                    <div class="challenge-card" id="ch-card-${i}" onclick="toggleChallenge(${i})">
+                    <div class="challenge-card" id="ch-card-${i}" onclick="toggleChallenge(${i})" data-done="${isDone}">
                         <div class="challenge-header">
                             <div class="ch-title">
                                 <img src="${point}" class="w-3 h-3 pixel-icon flex-shrink-0" alt="">
@@ -1936,9 +1545,7 @@
                         </div>
                     </div>`;
             });
-
-            document.getElementById('ch-done-count').innerText = doneCount;
-            document.getElementById('ch-total-count').innerText = challenges.length;
+            applyChallengesFilter();
         }
 
         function toggleChallenge(i) {
