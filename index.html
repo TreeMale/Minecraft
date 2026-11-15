@@ -129,6 +129,7 @@
             position: relative; background: rgba(59, 130, 246, 0.2); border: 1px solid #3b82f6; color: #60a5fa;
             width: 32px; height: 32px; border-radius: 6px; transition: all 0.2s;
             display: flex; align-items: center; justify-content: center; margin-right: 8px;
+            cursor: pointer;
         }
         .download-btn:hover { background: rgba(59, 130, 246, 0.4); transform: scale(1.05); color: #93c5fd; }
         .download-btn .tooltip-text {
@@ -375,8 +376,8 @@
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="1021725279" onclick="copySeed(this)">#мирвайба1</span>
                                 <div class="flex items-center">
-                                    <a href="https://github.com/TreeMale/Minecraft/releases/download/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B01/1.zip" class="download-btn" title="" download onclick="animateDownloadButton(this)">
-                                        <span class="tooltip-text">Скачать мир</span>
+                                    <a href="javascript:void(0)" class="download-btn" title="Перейти к релизу" data-url="https://github.com/TreeMale/Minecraft/releases/tag/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B1%D0%B01" onclick="handleDownloadClick(this)">
+                                        <span class="tooltip-text">Перейти к релизу</span>
                                         <span class="icon-default"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
                                         <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
                                         <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
@@ -420,8 +421,8 @@
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="-2075836568" onclick="copySeed(this)">#мирвайба2</span>
                                 <div class="flex items-center">
-                                    <a href="https://github.com/TreeMale/Minecraft/releases/download/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B02/2.zip" class="download-btn" title="" download onclick="animateDownloadButton(this)">
-                                        <span class="tooltip-text">Скачать мир</span>
+                                    <a href="javascript:void(0)" class="download-btn" title="Перейти к релизу" data-url="https://github.com/TreeMale/Minecraft/releases/tag/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B1%D0%B02" onclick="handleDownloadClick(this)">
+                                        <span class="tooltip-text">Перейти к релизу</span>
                                         <span class="icon-default"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
                                         <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
                                         <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
@@ -465,8 +466,8 @@
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="4008466176163305479" onclick="copySeed(this)">#мирвайба3</span>
                                 <div class="flex items-center">
-                                    <a href="https://github.com/TreeMale/Minecraft/releases/download/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B03/3.zip" class="download-btn" title="" download onclick="animateDownloadButton(this)">
-                                        <span class="tooltip-text">Скачать мир</span>
+                                    <a href="javascript:void(0)" class="download-btn" title="Перейти к релизу" data-url="https://github.com/TreeMale/Minecraft/releases/tag/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B1%D0%B03" onclick="handleDownloadClick(this)">
+                                        <span class="tooltip-text">Перейти к релизу</span>
                                         <span class="icon-default"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
                                         <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
                                         <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
@@ -511,8 +512,8 @@
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="34376356" onclick="copySeed(this)">#мирвайба4</span>
                                 <div class="flex items-center">
-                                    <a href="https://github.com/TreeMale/Minecraft/releases/download/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B04/4.zip" class="download-btn" title="" download onclick="animateDownloadButton(this)">
-                                        <span class="tooltip-text">Скачать мир</span>
+                                    <a href="javascript:void(0)" class="download-btn" title="Перейти к релизу" data-url="https://github.com/TreeMale/Minecraft/releases/tag/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B1%D0%B04" onclick="handleDownloadClick(this)">
+                                        <span class="tooltip-text">Перейти к релизу</span>
                                         <span class="icon-default"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
                                         <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
                                         <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
@@ -556,8 +557,8 @@
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="-6728139250759796146" onclick="copySeed(this)">#мирвайба5</span>
                                 <div class="flex items-center">
-                                    <a href="https://github.com/TreeMale/Minecraft/releases/download/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B05/5.zip" class="download-btn" title="" download onclick="animateDownloadButton(this)">
-                                        <span class="tooltip-text">Скачать мир</span>
+                                    <a href="javascript:void(0)" class="download-btn" title="Перейти к релизу" data-url="https://github.com/TreeMale/Minecraft/releases/tag/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B1%D0%B05" onclick="handleDownloadClick(this)">
+                                        <span class="tooltip-text">Перейти к релизу</span>
                                         <span class="icon-default"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
                                         <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
                                         <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
@@ -603,8 +604,8 @@
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="0" onclick="copySeed(this)">#мирвайба6</span>
                                 <div class="flex items-center">
-                                    <a href="https://github.com/TreeMale/Minecraft/releases/download/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B06/6.zip" class="download-btn" title="" download onclick="animateDownloadButton(this)">
-                                        <span class="tooltip-text">Скачать мир</span>
+                                    <a href="javascript:void(0)" class="download-btn" title="Перейти к релизу" data-url="https://github.com/TreeMale/Minecraft/releases/tag/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B1%D0%B06" onclick="handleDownloadClick(this)">
+                                        <span class="tooltip-text">Перейти к релизу</span>
                                         <span class="icon-default"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
                                         <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
                                         <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
@@ -840,14 +841,26 @@
         });
         window.addEventListener('mouseenter', () => { cursorContainer.style.display = 'block'; });
 
-        function animateDownloadButton(btn) {
+        // Новая функция обработки клика по кнопке скачивания
+        function handleDownloadClick(btn) {
             if (btn.classList.contains('downloading') || btn.classList.contains('success')) return;
+            
             btn.classList.add('downloading');
+            const targetUrl = btn.getAttribute('data-url');
+            
             setTimeout(() => {
                 btn.classList.remove('downloading');
                 btn.classList.add('success');
-                setTimeout(() => btn.classList.remove('success'), 1500);
-            }, 800);
+                
+                // Открываем ссылку на GitHub в новой вкладке
+                if (targetUrl) {
+                    window.open(targetUrl, '_blank');
+                }
+                
+                setTimeout(() => {
+                    btn.classList.remove('success');
+                }, 1500);
+            }, 1500); // Задержка 1.5 секунды перед переходом
         }
 
         const world1ImageSets = {
