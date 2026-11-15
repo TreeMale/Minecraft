@@ -603,17 +603,20 @@
                             <div class="flex flex-col items-center gap-1">
                                 <span class="world-name" data-seed="0" onclick="copySeed(this)">#мирвайба6</span>
                                 <div class="flex items-center">
-                                    <button class="download-btn" disabled title="Скачать мир будет доступно позже" style="opacity: 0.4; cursor: not-allowed; pointer-events: none;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                                    </button>
-                                    <button class="compare-btn disabled" disabled title="Картинки пока не добавлены">Картинки</button>
+                                    <a href="https://github.com/TreeMale/Minecraft/releases/download/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B06/6.zip" class="download-btn" title="" download onclick="animateDownloadButton(this)">
+                                        <span class="tooltip-text">Скачать мир</span>
+                                        <span class="icon-default"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+                                        <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
+                                        <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                                    </a>
+                                    <button class="compare-btn" onclick="toggleComparison(6)">Картинки</button>
                                 </div>
                             </div>
                         </td>
                         <td class="p-3">97 ч. 28 мин.</td>
                         <td class="p-3"><div class="flex flex-col items-center gap-1"><span>473 (37,6%)</span><div class="progress-container"><div class="progress-bar" style="width: 37.6%"></div></div></div></td>
-                        <td class="p-3 text-slate-500">-</td>
-                        <td class="p-3 text-slate-500">-</td>
+                        <td class="p-3 text-red-400 font-semibold">ФАНТОМ</td>
+                        <td class="p-3 text-slate-300">Не удержался на подмостках, будучи на самом верху мира.</td>
                         <td class="p-3 text-slate-500">-</td>
                     </tr>
                     <tr id="comp-row-6" style="display: none;">
@@ -627,6 +630,49 @@
                                     <div class="comparison-labels">
                                         <span class="comparison-label before" onclick="showFullImage(6, 'before')">До</span>
                                         <span class="comparison-label after" onclick="showFullImage(6, 'after')">После</span>
+                                    </div>
+                                    <div class="image-set-buttons">
+                                        <button class="set-btn active" onclick="switchImageSet(6, 1)" onmouseenter="preloadSet(6, 1)">1<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(6, 2)" onmouseenter="preloadSet(6, 2)">2<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(6, 3)" onmouseenter="preloadSet(6, 3)">3<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(6, 4)" onmouseenter="preloadSet(6, 4)">4<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(6, 5)" onmouseenter="preloadSet(6, 5)">5<span class="loading-dot"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr class="hover:bg-slate-800/50 transition">
+                        <td class="p-3 font-bold mc-green">7</td>
+                        <td class="p-3">
+                            <div class="flex flex-col items-center gap-1">
+                                <span class="world-name" data-seed="0" onclick="copySeed(this)">#мирвайба7</span>
+                                <div class="flex items-center">
+                                    <button class="download-btn" disabled title="Скачать мир будет доступно позже" style="opacity: 0.4; cursor: not-allowed; pointer-events: none;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                    </button>
+                                    <button class="compare-btn disabled" disabled title="Картинки пока не добавлены">Картинки</button>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="p-3 text-slate-500">-</td>
+                        <td class="p-3 text-slate-500">-</td>
+                        <td class="p-3 text-slate-500">-</td>
+                        <td class="p-3 text-slate-500">-</td>
+                        <td class="p-3 text-slate-500">-</td>
+                    </tr>
+                    <tr id="comp-row-7" style="display: none;">
+                        <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
+                            <div id="comp-7" class="comparison-container">
+                                <div class="comparison-wrapper" oncontextmenu="return false;">
+                                    <img src="" class="after-image" id="after-img-7" alt="После" decoding="async" draggable="false">
+                                    <img src="" class="before-image" id="before-img-7" alt="До" decoding="async" draggable="false">
+                                    <div class="slider-handle" id="slider-7"></div>
+                                    <div class="loader" id="loader-7"><div class="loader-blocks"><div class="loader-block grass"></div><div class="loader-block planks"></div><div class="loader-block cobblestone"></div></div><div class="loader-text">ЗАГРУЗКА</div></div>
+                                    <div class="comparison-labels">
+                                        <span class="comparison-label before" onclick="showFullImage(7, 'before')">До</span>
+                                        <span class="comparison-label after" onclick="showFullImage(7, 'after')">После</span>
                                     </div>
                                     <div class="image-set-buttons"></div>
                                 </div>
@@ -837,6 +883,13 @@
             5: { before: 'https://treemale.github.io/Minecraft/images/world/5/5_5-0_1915.5-86-2271.5--25.7-11.5.webp', after: 'https://treemale.github.io/Minecraft/images/world/5/5_5-1_1915.5-86-2271.5--25.7-11.5.webp' },
             6: { before: 'https://treemale.github.io/Minecraft/images/world/5/5_6-0_1973.5-119-2231.5-53.2-22.2.webp', after: 'https://treemale.github.io/Minecraft/images/world/5/5_6-1_1973.5-119-2231.5-53.2-22.2.webp' }
         };
+        const world6ImageSets = {
+            1: { before: 'https://treemale.github.io/Minecraft/images/world/6/6_1-0_1129.5-83--172.5--146.2--10.7.webp', after: 'https://treemale.github.io/Minecraft/images/world/6/6_1-1_1129.5-83--172.5--146.2--10.7.webp' },
+            2: { before: 'https://treemale.github.io/Minecraft/images/world/6/6_2-0_1125.5-81--154.5-36.8-17.7.webp', after: 'https://treemale.github.io/Minecraft/images/world/6/6_2-1_1125.5-81--154.5-36.8-17.7.webp' },
+            3: { before: 'https://treemale.github.io/Minecraft/images/world/6/6_3-0_1183.5-70--165.5-28.2-14.0.webp', after: 'https://treemale.github.io/Minecraft/images/world/6/6_3-1_1183.5-70--165.5-28.2-14.0.webp' },
+            4: { before: 'https://treemale.github.io/Minecraft/images/world/6/6_4-0_1199.5-73--158.5--42.2-7.2.webp', after: 'https://treemale.github.io/Minecraft/images/world/6/6_4-1_1199.5-73--158.5--42.2-7.2.webp' },
+            5: { before: 'https://treemale.github.io/Minecraft/images/world/6/6_5-0_1073.5-108--201.5--59.9-20.1.webp', after: 'https://treemale.github.io/Minecraft/images/world/6/6_5-1_1073.5-108--201.5--59.9-20.1.webp' }
+        };
 
         const LOADER_BLOCK_URLS = [
             'https://treemale.github.io/Minecraft/images/loader/grass_block.webp',
@@ -846,7 +899,7 @@
             'https://treemale.github.io/Minecraft/images/cursor/diamond-sword.png'
         ];
 
-        let currentSet = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
+        let currentSet = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0 };
         const preloadedImages = {};
         (function preloadLoaderBlocks() {
             LOADER_BLOCK_URLS.forEach(url => {
@@ -913,7 +966,8 @@
             else if (worldNum === 3) imageSets = world3ImageSets;
             else if (worldNum === 4) imageSets = world4ImageSets;
             else if (worldNum === 5) imageSets = world5ImageSets;
-            else if (worldNum === 6) return;
+            else if (worldNum === 6) imageSets = world6ImageSets;
+            else if (worldNum === 7) return;
             const set = imageSets[setNum];
             if (!set) return;
             const btn = event.target.closest('.set-btn');
@@ -924,7 +978,8 @@
         }
 
         function switchImageSet(worldNum, setNum) {
-            if (worldNum === 6) return;
+            if (worldNum === 7) return;
+            
             const beforeImg = document.getElementById('before-img-' + worldNum);
             const afterImg = document.getElementById('after-img-' + worldNum);
             const loader = document.getElementById('loader-' + worldNum);
@@ -934,7 +989,9 @@
             else if (worldNum === 3) imageSets = world3ImageSets;
             else if (worldNum === 4) imageSets = world4ImageSets;
             else if (worldNum === 5) imageSets = world5ImageSets;
-            const set = imageSets[setNum];
+            else if (worldNum === 6) imageSets = world6ImageSets;
+            
+            const set = imageSets ? imageSets[setNum] : null;
             if (!beforeImg || !afterImg || !set) return;
             if (currentSet[worldNum] === setNum) return;
             updateActiveButton(worldNum, setNum);
@@ -975,18 +1032,20 @@
         }
 
         function toggleComparison(num) {
-            if (num === 6) return;
+            if (num === 7) return;
+            
             const row = document.getElementById('comp-row-' + num);
             if (row.style.display === 'none' || row.style.display === '') {
-                for (let i = 1; i <= 6; i++) document.getElementById('comp-row-' + i).style.display = 'none';
+                for (let i = 1; i <= 7; i++) document.getElementById('comp-row-' + i).style.display = 'none';
                 row.style.display = 'table-row';
-                setTimeout(() => {
+                setTimeout(() => { 
                     setupSlider(num);
                     if (num === 1) switchImageSet(1, 1);
                     else if (num === 2) switchImageSet(2, 1);
                     else if (num === 3) switchImageSet(3, 1);
                     else if (num === 4) switchImageSet(4, 1);
                     else if (num === 5) switchImageSet(5, 1);
+                    else if (num === 6) switchImageSet(6, 1);
                 }, 50);
             } else { row.style.display = 'none'; }
         }
