@@ -618,7 +618,7 @@
                         <td class="p-3"><div class="flex flex-col items-center gap-1"><span>473 (37,6%)</span><div class="progress-container"><div class="progress-bar" style="width: 37.6%"></div></div></div></td>
                         <td class="p-3 text-red-400 font-semibold">ФАНТОМ</td>
                         <td class="p-3 text-slate-300">Не удержался на подмостках, будучи на самом верху мира.</td>
-                        <td class="p-3 text-slate-500">-</td>
+                        <td class="p-3"><a href="https://www.youtube.com/shorts/1EqjeoUXZtA?feature=share" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline font-semibold">YouTube</a></td>
                     </tr>
                     <tr id="comp-row-6" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
@@ -841,7 +841,6 @@
         });
         window.addEventListener('mouseenter', () => { cursorContainer.style.display = 'block'; });
 
-        // Новая функция обработки клика по кнопке скачивания
         function handleDownloadClick(btn) {
             if (btn.classList.contains('downloading') || btn.classList.contains('success')) return;
             
@@ -852,7 +851,6 @@
                 btn.classList.remove('downloading');
                 btn.classList.add('success');
                 
-                // Открываем ссылку на GitHub в новой вкладке
                 if (targetUrl) {
                     window.open(targetUrl, '_blank');
                 }
@@ -860,7 +858,7 @@
                 setTimeout(() => {
                     btn.classList.remove('success');
                 }, 1500);
-            }, 1500); // Задержка 1.5 секунды перед переходом
+            }, 1500);
         }
 
         const world1ImageSets = {
@@ -1231,10 +1229,7 @@
         const challenges = [
             { title: "Золотая чаша", nick: "artiktopik22", desc: "При разграблении любой сокровищницы всегда брать все золото.", world: "#мирвайба6", bought: "2026-11-02", done: "2026-11-02", start: "11:17", end: "13:00" },
             { title: "Атомная бомба", nick: "artiktopik22", desc: "Постройте из динамита и обсидиана атомную бомбу (динамит в обсидиановой оболочке).", world: "#мирвайба6", bought: "2026-11-03", done: "2026-11-15", start: "13:00", end: "16:51" },
-            { title: "Тихий ужас", nick: "3ima_2026", desc: "Убейте Вардена лицом к лицу, не используя ловушки и механизмы.", world: "#мирвайба6", bought: "2026-11-11", done: "2026-11-11", start: "11:05", end: "12:45" },
-            { title: "Нелёгкая доставка", nick: "shutiks00", desc: "Необходимо заманить Гаста в портал и убить его находясь в верхнем мире.", world: "#мирвайба6", bought: "2026-11-12", done: null, start: "10:43", end: null },
-            { title: "Чудо-юдо", nick: "shutiks00", desc: "Призвать Визера.", world: "#мирвайба6", bought: "2026-11-12", done: null, start: "12:05", end: null },
-            { title: "Тяжелый люкс", nick: "3ima_2026", desc: "Создайте две булавы и удвойте тяжесть своих аргументов.", world: "#мирвайба6", bought: "2026-11-12", done: null, start: "12:35", end: null }
+            { title: "Тихий ужас", nick: "3ima_2026", desc: "Убейте Вардена лицом к лицу, не используя ловушки и механизмы.", world: "#мирвайба6", bought: "2026-11-11", done: "2026-11-11", start: "11:05", end: "12:45" }
         ];
 
         function resolveTime(ch, key) {
