@@ -718,12 +718,12 @@
         <p class="text-slate-400 text-sm text-center mb-4">Зрители покупают испытание за баллы канала и присылают его мне — а я его выполняю. Нажмите на карточку, чтобы раскрыть подробности.</p>
         <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mb-6 border-b border-slate-700 pb-3">
             <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleChallengesFilter('done')">
-                <span class="mc-green">Выполнено</span> (<span id="ch-done-count" class="mc-green text-lg"></span>)
-                <img src="https://treemale.github.io/Minecraft/images/items/down-arrow-green.png" class="w-4 h-2 flex-shrink-0 align-middle pixel-icon" id="ch-done-toggle" alt="toggle">
-            </h2>
-            <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleChallengesFilter('pending')">
                 <span class="text-red-400">Не выполнено</span> (<span id="ch-pending-count" class="text-red-400 text-lg"></span>)
                 <img src="https://treemale.github.io/Minecraft/images/items/down-arrow-green.png" class="w-4 h-2 flex-shrink-0 align-middle pixel-icon" id="ch-pending-toggle" alt="toggle">
+            </h2>
+            <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleChallengesFilter('done2')">
+                <span class="mc-green">Выполнено</span> (<span id="ch-done-count" class="mc-green text-lg"></span>)
+                <img src="https://treemale.github.io/Minecraft/images/items/down-arrow-green.png" class="w-4 h-2 flex-shrink-0 align-middle pixel-icon" id="ch-done-toggle" alt="toggle">
             </h2>
         </div>
         <div id="challenges-grid" class="grid grid-cols-1 gap-4"></div>
@@ -1227,64 +1227,56 @@
 
         // ================= ВКЛАДКА: ИСПЫТАНИЯ ОТ ЗРИТЕЛЕЙ =================
         const challenges = [
-            { title: "Мальчiк, который любiл пiсок", nick: "3ima_2026", desc: "Добудьте 5 стаков песка и выделите для них место.", world: "#мирвайба7", bought: "2026-11-10", done: "2026-11-17", start: "10:35", end: "11:10" },
             { title: "Золотая чаша", nick: "artiktopik22", desc: "При разграблении любой сокровищницы всегда брать все золото.", world: "#мирвайба6", bought: "2026-11-02", done: "2026-11-02", start: "11:17", end: "13:00" },
             { title: "Атомная бомба", nick: "artiktopik22", desc: "Постройте из динамита и обсидиана атомную бомбу (динамит в обсидиановой оболочке).", world: "#мирвайба6", bought: "2026-11-03", done: "2026-11-15", start: "13:00", end: "16:51" },
-            { title: "Тихий ужас", nick: "3ima_2026", desc: "Убейте Вардена лицом к лицу, не используя ловушки и механизмы.", world: "#мирвайба6", bought: "2026-11-11", done: "2026-11-11", start: "11:05", end: "12:45" }
+            { title: "Тихий ужас", nick: "3ima_2026", desc: "Убейте Вардена лицом к лицу, не используя ловушки и механизмы.", world: "#мирвайба6", bought: "2026-11-11", done: "2026-11-11", start: "11:05", end: "12:45" },
+            { title: "Мальчiк, который любiл пiсок", nick: "3ima_2026", desc: "Добудьте 5 стаков песка и выделите для них место.", world: "#мирвайба7", bought: "2026-11-10", done: "2026-11-17", start: "10:35", end: "11:10" }
         ];
 
-        // Исправленная функция расчёта времени, которая корректно учитывает дни
+        // Формирует полную дату-время: дата из dateStr + время из timeStr (если timeStr = ЧЧ:ММ)
+        // Если timeStr — это полная дата-время, используем её целиком.
+        function buildDateTime(dateStr, timeStr) {
+            if (!dateStr && !timeStr) return null;
+            let full;
+            if (timeStr && /^\d{1,2}:\d{2}$/.test(timeStr.trim())) {
+                full = (dateStr || new Date().toISOString().slice(0, 10)) + 'T' + timeStr.trim();
+            } else if (timeStr) {
+                full = timeStr.replace(' ', 'T');
+            } else {
+                full = dateStr;
+            }
+            const dt = new Date(full);
+            return isNaN(dt) ? null : dt;
+        }
+
+        // Форматирование "3 ноября 2026 г., 13:00"
+        function fmtDateTime(dateStr, timeStr) {
+            const dt = buildDateTime(dateStr, timeStr);
+            if (!dt) return '—';
+            const datePart = dt.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+            const timePart = dt.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+            return datePart + ', ' + timePart;
+        }
+
+        // Расчёт длительности с учётом дней: дата начала = bought + start, дата конца = done + end
         function calcDuration(ch) {
-            if (!ch.start || !ch.end) return null;
-            
-            let startStr = ch.start.trim();
-            let endStr = ch.end.trim();
-            let refDate = ch.done || ch.bought || new Date().toISOString().slice(0, 10);
-            
-            let startDate, endDate;
-            
-            // Парсинг даты начала
-            if (/^\d{1,2}:\d{2}$/.test(startStr)) {
-                startDate = new Date(refDate + 'T' + startStr);
-            } else {
-                startDate = new Date(startStr.replace(' ', 'T'));
-            }
-            
-            // Парсинг даты конца
-            if (/^\d{1,2}:\d{2}$/.test(endStr)) {
-                endDate = new Date(refDate + 'T' + endStr);
-                // Если время конца меньше времени начала, значит, событие перешло через полночь
-                if (endDate < startDate) {
-                    endDate.setDate(endDate.getDate() + 1);
-                }
-            } else {
-                endDate = new Date(endStr.replace(' ', 'T'));
-            }
-            
+            const startDate = buildDateTime(ch.bought, ch.start);
+            const endDate = buildDateTime(ch.done, ch.end);
+            if (!startDate || !endDate) return null;
             let ms = endDate - startDate;
-            if (ms < 0) return null; // Некорректные данные
-            
+            if (ms < 0) return null;
             const totalMin = Math.round(ms / 60000);
             const d = Math.floor(totalMin / 1440);
             const h = Math.floor((totalMin % 1440) / 60);
             const m = totalMin % 60;
-            
             const parts = [];
             if (d > 0) parts.push(d + ' д.');
             if (h > 0) parts.push(h + ' ч.');
             if (m > 0 || parts.length === 0) parts.push(m + ' мин.');
-            
             return parts.join(' ');
         }
 
-        function fmtDate(str) {
-            if (!str) return '—';
-            const dt = new Date(str.replace(' ', 'T'));
-            if (isNaN(dt)) return str;
-            return dt.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
-        }
-
-        const challengesState = { done: true, pending: true };
+        const challengesState = { pending: true, done2: true };
 
         function toggleChallengesFilter(type) {
             challengesState[type] = !challengesState[type];
@@ -1299,7 +1291,7 @@
             cards.forEach(card => {
                 const isDone = card.dataset.done === 'true';
                 if (isDone) {
-                    const visible = challengesState.done;
+                    const visible = challengesState.done2;
                     card.classList.toggle('hidden', !visible);
                     if (visible) doneVisible++;
                 } else {
@@ -1316,28 +1308,14 @@
             const grid = document.getElementById('challenges-grid');
             grid.innerHTML = '';
             
-            // Сортировка: 
-            // 1. Не выполненные (done === null) идут первыми.
-            // 2. Выполненные идут после.
-            // 3. Внутри каждой группы сортировка по номеру мира по убыванию (7, 6, 5...).
+            // Сортировка: не выполненные сверху, выполненные снизу. Внутри групп — по номеру мира по убыванию.
             const sorted = [...challenges].sort((a, b) => {
                 const aDone = !!a.done;
                 const bDone = !!b.done;
-                
-                if (aDone !== bDone) {
-                    return aDone ? 1 : -1; // Не выполненные (false) идут раньше выполненных (true)
-                }
-                
-                const aWorldMatch = a.world.match(/#мирвайба(\d+)/);
-                const bWorldMatch = b.world.match(/#мирвайба(\d+)/);
-                const aWorldNum = aWorldMatch ? parseInt(aWorldMatch[1], 10) : 0;
-                const bWorldNum = bWorldMatch ? parseInt(bWorldMatch[1], 10) : 0;
-                
-                if (aWorldNum !== bWorldNum) {
-                    return bWorldNum - aWorldNum; // По убыванию номера мира
-                }
-                
-                // Если миры совпадают, сортируем по дате покупки (новые сверху)
+                if (aDone !== bDone) return aDone ? 1 : -1;
+                const aWorldNum = parseInt((a.world.match(/#мирвайба(\d+)/) || [0, 0])[1], 10);
+                const bWorldNum = parseInt((b.world.match(/#мирвайба(\d+)/) || [0, 0])[1], 10);
+                if (aWorldNum !== bWorldNum) return bWorldNum - aWorldNum;
                 return new Date(b.bought) - new Date(a.bought);
             });
 
@@ -1351,8 +1329,8 @@
                 const info = `
                     <p class="text-sm text-slate-300 leading-relaxed mb-3">${c.desc}</p>
                     <div class="text-xs text-slate-400 space-y-1">
-                        <div>Куплено: ${fmtDate(c.bought)}</div>
-                        ${isDone ? `<div>Выполнено: ${fmtDate(c.done)}</div>` : ''}
+                        <div>Начало: ${fmtDateTime(c.bought, c.start)}</div>
+                        ${isDone ? `<div>Конец: ${fmtDateTime(c.done, c.end)}</div>` : ''}
                     </div>`;
 
                 const durationBlock = isDone && duration ? `
@@ -1384,7 +1362,7 @@
 
         function toggleChallenge(i) {
             const card = document.getElementById('ch-card-' + i);
-            const expanded = card.classList.toggle('expanded');
+            card.classList.toggle('expanded');
         }
 
         function switchTab(tab) {
