@@ -352,7 +352,7 @@
     <!-- ================= ВКЛАДКА: ИСТОРИЯ ЗАБЕГОВ ================= -->
     <section id="tab-runs" class="mb-16">
         <h2 class="text-2xl font-bold mb-2 border-b border-slate-700 pb-2 flex items-center justify-center gap-2">
-            <img src="https://treemale.github.io/Minecraft/images/items/lectern.png" class="w-8 h-8 object-contain" alt="lectern"> История забегов и смертей
+            <img src="https://treemale.github.io/Minecraft/images/items/lectern.png" class="w-[150px] h-[150px] object-contain" alt="lectern"> История забегов и смертей
         </h2>
         <p class="text-slate-400 text-sm text-center mb-6">Хронология всех моих прохождений: сколько прожил, какие достижения получил и как именно умер в каждом мире.</p>
         <div class="rounded-lg border border-slate-700 table-container">
@@ -689,7 +689,7 @@
     <!-- ================= ВКЛАДКА: МОДЫ И РЕСУРС-ПАКИ ================= -->
     <section id="tab-mods" class="mb-16" style="display: none;">
         <h2 class="text-2xl font-bold mb-2 border-b border-slate-700 pb-2 flex items-center justify-center gap-2">
-            <img src="https://treemale.github.io/Minecraft/images/items/redstone-block.png" class="w-8 h-8 object-contain" alt=""> Моды и ресурс-паки
+            <img src="https://treemale.github.io/Minecraft/images/items/redstone-block.png" class="w-[150px] h-[150px] object-contain" alt=""> Моды и ресурс-паки
         </h2>
         <p class="text-slate-400 text-sm text-center mb-6">Полный список модификаций и ресурс-паков, которые я использую в игре — от визуальных улучшений до оптимизации производительности.</p>
         <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mb-6 border-b border-slate-700 pb-3">
@@ -713,17 +713,17 @@
     <!-- ================= ВКЛАДКА: ИСПЫТАНИЯ ОТ ЗРИТЕЛЕЙ ================= -->
     <section id="tab-challenges" class="mb-16" style="display: none;">
         <h2 class="text-2xl font-bold mb-2 border-b border-slate-700 pb-2 flex items-center justify-center gap-2">
-            <img src="https://treemale.github.io/Minecraft/images/items/trial-spawn.png" class="w-7 h-7 object-contain" alt="trial-spawn"> Испытания от зрителей
+            <img src="https://treemale.github.io/Minecraft/images/items/trial-spawn.png" class="w-[150px] h-[150px] object-contain" alt="trial-spawn"> Испытания от зрителей
         </h2>
         <p class="text-slate-400 text-sm text-center mb-4">Зрители покупают испытание за баллы канала и присылают его мне — а я его выполняю. Нажмите на карточку, чтобы раскрыть подробности.</p>
         <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mb-6 border-b border-slate-700 pb-3">
             <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleChallengesFilter('done')">
-                <span class="text-red-400">Не выполнено</span> (<span id="ch-pending-count" class="text-red-400 text-lg"></span>)
-                <img src="https://treemale.github.io/Minecraft/images/items/down-arrow-green.png" class="w-4 h-2 flex-shrink-0 align-middle pixel-icon" id="ch-pending-toggle" alt="toggle">
-            </h2>
-            <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleChallengesFilter('done2')">
                 <span class="mc-green">Выполнено</span> (<span id="ch-done-count" class="mc-green text-lg"></span>)
                 <img src="https://treemale.github.io/Minecraft/images/items/down-arrow-green.png" class="w-4 h-2 flex-shrink-0 align-middle pixel-icon" id="ch-done-toggle" alt="toggle">
+            </h2>
+            <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleChallengesFilter('pending')">
+                <span class="text-red-400">Не выполнено</span> (<span id="ch-pending-count" class="text-red-400 text-lg"></span>)
+                <img src="https://treemale.github.io/Minecraft/images/items/down-arrow-green.png" class="w-4 h-2 flex-shrink-0 align-middle pixel-icon" id="ch-pending-toggle" alt="toggle">
             </h2>
         </div>
         <div id="challenges-grid" class="grid grid-cols-1 gap-4"></div>
@@ -1233,8 +1233,6 @@
             { title: "Мальчiк, который любiл пiсок", nick: "3ima_2026", desc: "Добудьте 5 стаков песка и выделите для них место.", world: "#мирвайба7", bought: "2026-11-10", done: "2026-11-17", start: "10:35", end: "11:10" }
         ];
 
-        // Формирует полную дату-время: дата из dateStr + время из timeStr (если timeStr = ЧЧ:ММ)
-        // Если timeStr — это полная дата-время, используем её целиком.
         function buildDateTime(dateStr, timeStr) {
             if (!dateStr && !timeStr) return null;
             let full;
@@ -1249,7 +1247,6 @@
             return isNaN(dt) ? null : dt;
         }
 
-        // Форматирование "3 ноября 2026 г., 13:00"
         function fmtDateTime(dateStr, timeStr) {
             const dt = buildDateTime(dateStr, timeStr);
             if (!dt) return '—';
@@ -1258,7 +1255,6 @@
             return datePart + ', ' + timePart;
         }
 
-        // Расчёт длительности с учётом дней: дата начала = bought + start, дата конца = done + end
         function calcDuration(ch) {
             const startDate = buildDateTime(ch.bought, ch.start);
             const endDate = buildDateTime(ch.done, ch.end);
@@ -1276,7 +1272,7 @@
             return parts.join(' ');
         }
 
-        const challengesState = { pending: true, done2: true };
+        const challengesState = { done: true, pending: true };
 
         function toggleChallengesFilter(type) {
             challengesState[type] = !challengesState[type];
@@ -1291,7 +1287,7 @@
             cards.forEach(card => {
                 const isDone = card.dataset.done === 'true';
                 if (isDone) {
-                    const visible = challengesState.done2;
+                    const visible = challengesState.done;
                     card.classList.toggle('hidden', !visible);
                     if (visible) doneVisible++;
                 } else {
@@ -1308,7 +1304,6 @@
             const grid = document.getElementById('challenges-grid');
             grid.innerHTML = '';
             
-            // Сортировка: не выполненные сверху, выполненные снизу. Внутри групп — по номеру мира по убыванию.
             const sorted = [...challenges].sort((a, b) => {
                 const aDone = !!a.done;
                 const bDone = !!b.done;
