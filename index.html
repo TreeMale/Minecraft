@@ -1227,36 +1227,53 @@
 
         // ================= ВКЛАДКА: ИСПЫТАНИЯ ОТ ЗРИТЕЛЕЙ =================
         const challenges = [
+            { title: "Мальчiк, который любiл пiсок", nick: "3ima_2026", desc: "Добудьте 5 стаков песка и выделите для них место.", world: "#мирвайба7", bought: "2026-11-10", done: "2026-11-17", start: "10:35", end: "11:10" },
             { title: "Золотая чаша", nick: "artiktopik22", desc: "При разграблении любой сокровищницы всегда брать все золото.", world: "#мирвайба6", bought: "2026-11-02", done: "2026-11-02", start: "11:17", end: "13:00" },
             { title: "Атомная бомба", nick: "artiktopik22", desc: "Постройте из динамита и обсидиана атомную бомбу (динамит в обсидиановой оболочке).", world: "#мирвайба6", bought: "2026-11-03", done: "2026-11-15", start: "13:00", end: "16:51" },
-            { title: "Тихий ужас", nick: "3ima_2026", desc: "Убейте Вардена лицом к лицу, не используя ловушки и механизмы.", world: "#мирвайба6", bought: "2026-11-11", done: "2026-11-11", start: "11:05", end: "12:45" },
-            { title: "Мальчiк, который любiл пiсок", nick: "3ima_2026", desc: "Добудьте 5 стаков песка и выделите для них место.", world: "#мирвайба7", bought: "2026-11-17", done: "2026-11-11", start: "10:35", end: "11:10" }
+            { title: "Тихий ужас", nick: "3ima_2026", desc: "Убейте Вардена лицом к лицу, не используя ловушки и механизмы.", world: "#мирвайба6", bought: "2026-11-11", done: "2026-11-11", start: "11:05", end: "12:45" }
         ];
 
-        function resolveTime(ch, key) {
-            const raw = ch[key];
-            if (!raw) return null;
-            if (/^\d{1,2}:\d{2}$/.test(raw.trim())) {
-                const day = ch.done || ch.bought || new Date().toISOString().slice(0, 10);
-                return new Date(day + 'T' + raw.trim());
-            }
-            return new Date(raw.trim().replace(' ', 'T'));
-        }
-
+        // Исправленная функция расчёта времени, которая корректно учитывает дни
         function calcDuration(ch) {
-            const s = resolveTime(ch, 'start');
-            const e = resolveTime(ch, 'end');
-            if (!s || !e || isNaN(s) || isNaN(e)) return null;
-            let ms = e - s;
-            if (ms < 0) ms += 24 * 60 * 60 * 1000;
+            if (!ch.start || !ch.end) return null;
+            
+            let startStr = ch.start.trim();
+            let endStr = ch.end.trim();
+            let refDate = ch.done || ch.bought || new Date().toISOString().slice(0, 10);
+            
+            let startDate, endDate;
+            
+            // Парсинг даты начала
+            if (/^\d{1,2}:\d{2}$/.test(startStr)) {
+                startDate = new Date(refDate + 'T' + startStr);
+            } else {
+                startDate = new Date(startStr.replace(' ', 'T'));
+            }
+            
+            // Парсинг даты конца
+            if (/^\d{1,2}:\d{2}$/.test(endStr)) {
+                endDate = new Date(refDate + 'T' + endStr);
+                // Если время конца меньше времени начала, значит, событие перешло через полночь
+                if (endDate < startDate) {
+                    endDate.setDate(endDate.getDate() + 1);
+                }
+            } else {
+                endDate = new Date(endStr.replace(' ', 'T'));
+            }
+            
+            let ms = endDate - startDate;
+            if (ms < 0) return null; // Некорректные данные
+            
             const totalMin = Math.round(ms / 60000);
             const d = Math.floor(totalMin / 1440);
             const h = Math.floor((totalMin % 1440) / 60);
             const m = totalMin % 60;
+            
             const parts = [];
-            if (d) parts.push(d + ' д.');
-            if (h) parts.push(h + ' ч.');
-            if (m || !parts.length) parts.push(m + ' мин.');
+            if (d > 0) parts.push(d + ' д.');
+            if (h > 0) parts.push(h + ' ч.');
+            if (m > 0 || parts.length === 0) parts.push(m + ' мин.');
+            
             return parts.join(' ');
         }
 
@@ -1298,7 +1315,33 @@
         function renderChallenges() {
             const grid = document.getElementById('challenges-grid');
             grid.innerHTML = '';
-            challenges.forEach((c, i) => {
+            
+            // Сортировка: 
+            // 1. Не выполненные (done === null) идут первыми.
+            // 2. Выполненные идут после.
+            // 3. Внутри каждой группы сортировка по номеру мира по убыванию (7, 6, 5...).
+            const sorted = [...challenges].sort((a, b) => {
+                const aDone = !!a.done;
+                const bDone = !!b.done;
+                
+                if (aDone !== bDone) {
+                    return aDone ? 1 : -1; // Не выполненные (false) идут раньше выполненных (true)
+                }
+                
+                const aWorldMatch = a.world.match(/#мирвайба(\d+)/);
+                const bWorldMatch = b.world.match(/#мирвайба(\d+)/);
+                const aWorldNum = aWorldMatch ? parseInt(aWorldMatch[1], 10) : 0;
+                const bWorldNum = bWorldMatch ? parseInt(bWorldMatch[1], 10) : 0;
+                
+                if (aWorldNum !== bWorldNum) {
+                    return bWorldNum - aWorldNum; // По убыванию номера мира
+                }
+                
+                // Если миры совпадают, сортируем по дате покупки (новые сверху)
+                return new Date(b.bought) - new Date(a.bought);
+            });
+
+            sorted.forEach((c, i) => {
                 const isDone = !!c.done;
                 const duration = calcDuration(c);
                 const status = isDone
