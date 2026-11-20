@@ -1237,17 +1237,19 @@
         ];
 
         function renderStars(difficulty) {
+            const base = 'https://treemale.github.io/Minecraft/images/items/';
             let html = '';
-            const starPath = 'M8 1 L10 6 L15 6 L11 9 L12 14 L8 11 L4 14 L5 9 L1 6 L6 6 Z';
             for (let i = 1; i <= 5; i++) {
                 const val = difficulty - (i - 1) * 2;
-                if (val >= 2) {
-                    html += `<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><path d="${starPath}" fill="#fbbf24" /></svg>`;
-                } else if (val >= 1) {
-                    html += `<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" style="clip-path: inset(0 50% 0 0);"><path d="${starPath}" fill="#fbbf24" /><path d="${starPath}" fill="none" stroke="#475569" stroke-width="1.5" /></svg>`;
-                } else {
-                    html += `<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><path d="${starPath}" fill="none" stroke="#475569" stroke-width="1.5" /></svg>`;
-                }
+                let img;
+                if (val >= 2)      img = 'star-full.png';
+                else if (val === 1) img = 'star-half.png';
+                else                img = 'star-empty.png';
+                
+                // Используем flex-контейнер 20x20 для идеального центрирования картинки 20x18
+                html += `<div class="w-[20px] h-[20px] flex items-center justify-center">
+                            <img src="${base}${img}" class="w-[20px] h-[18px] pixel-icon" alt="">
+                         </div>`;
             }
             return html;
         }
