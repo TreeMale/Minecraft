@@ -1227,14 +1227,30 @@
 
         // ================= ВКЛАДКА: ИСПЫТАНИЯ ОТ ЗРИТЕЛЕЙ =================
         const challenges = [
-            { title: "Золотая чаша", nick: "artiktopik22", desc: "При разграблении любой сокровищницы всегда брать все золото.", world: "#мирвайба6", bought: "2026-11-02", done: "2026-11-02", start: "11:17", end: "13:00" },
-            { title: "Атомная бомба", nick: "artiktopik22", desc: "Постройте из динамита и обсидиана атомную бомбу (динамит в обсидиановой оболочке).", world: "#мирвайба6", bought: "2026-11-03", done: "2026-11-15", start: "13:00", end: "16:51" },
-            { title: "Тихий ужас", nick: "3ima_2026", desc: "Убейте Вардена лицом к лицу, не используя ловушки и механизмы.", world: "#мирвайба6", bought: "2026-11-11", done: "2026-11-11", start: "11:05", end: "12:45" },
-            { title: "Мальчiк, который любiл пiсок", nick: "3ima_2026", desc: "Добудьте 5 стаков песка и выделите для них место.", world: "#мирвайба7", bought: "2026-11-17", done: "2026-11-17", start: "10:35", end: "11:10" },
-            { title: "Мечта Mr.Beast", nick: "3ima_2026", desc: "Добудьте достаточно Древних обломков, чтобы сделать стак Незеритовых блоков.", world: "#мирвайба7", bought: "2026-11-18", done: null, start: "12:30", end: null },
-            { title: "Легенда деревни", nick: "uzumagma365", desc: "Увековечь имя игрока в мире, построив ему статую по центру деревни с табличкой.", world: "#мирвайба7", bought: "2026-11-18", done: "2026-11-18", start: "13:30", end: "14:05" },
-            { title: "Идеальный пируэт", nick: "gooser61616161", desc: "Совершите полный оборот на 360 градусов в прыжке и добей зомби киркой. Геометрия ещё никого не подводила!", world: "#мирвайба7", bought: "2026-11-20", done: "2026-11-20", start: "11:15", end: "11:30" }
+            { title: "Золотая чаша", nick: "artiktopik22", desc: "При разграблении любой сокровищницы всегда брать все золото.", world: "#мирвайба6", bought: "2026-11-02", done: "2026-11-02", start: "11:17", end: "13:00", difficulty: 4 },
+            { title: "Атомная бомба", nick: "artiktopik22", desc: "Постройте из динамита и обсидиана атомную бомбу (динамит в обсидиановой оболочке).", world: "#мирвайба6", bought: "2026-11-03", done: "2026-11-15", start: "13:00", end: "16:51", difficulty: 8 },
+            { title: "Тихий ужас", nick: "3ima_2026", desc: "Убейте Вардена лицом к лицу, не используя ловушки и механизмы.", world: "#мирвайба6", bought: "2026-11-11", done: "2026-11-11", start: "11:05", end: "12:45", difficulty: 7 },
+            { title: "Мальчiк, который любiл пiсок", nick: "3ima_2026", desc: "Добудьте 5 стаков песка и выделите для них место.", world: "#мирвайба7", bought: "2026-11-17", done: "2026-11-17", start: "10:35", end: "11:10", difficulty: 2 },
+            { title: "Мечта Mr.Beast", nick: "3ima_2026", desc: "Добудьте достаточно Древних обломков, чтобы сделать стак Незеритовых блоков.", world: "#мирвайба7", bought: "2026-11-18", done: null, start: "12:30", end: null, difficulty: 9 },
+            { title: "Легенда деревни", nick: "uzumagma365", desc: "Увековечь имя игрока в мире, построив ему статую по центру деревни с табличкой.", world: "#мирвайба7", bought: "2026-11-18", done: "2026-11-18", start: "13:30", end: "14:05", difficulty: 3 },
+            { title: "Идеальный пируэт", nick: "gooser61616161", desc: "Совершите полный оборот на 360 градусов в прыжке и добей зомби киркой. Геометрия ещё никого не подводила!", world: "#мирвайба7", bought: "2026-11-20", done: "2026-11-20", start: "11:15", end: "11:30", difficulty: 5 }
         ];
+
+        function renderStars(difficulty) {
+            let html = '';
+            const starPath = 'M8 1 L10 6 L15 6 L11 9 L12 14 L8 11 L4 14 L5 9 L1 6 L6 6 Z';
+            for (let i = 1; i <= 5; i++) {
+                const val = difficulty - (i - 1) * 2;
+                if (val >= 2) {
+                    html += `<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><path d="${starPath}" fill="#fbbf24" /></svg>`;
+                } else if (val >= 1) {
+                    html += `<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" style="clip-path: inset(0 50% 0 0);"><path d="${starPath}" fill="#fbbf24" /><path d="${starPath}" fill="none" stroke="#475569" stroke-width="1.5" /></svg>`;
+                } else {
+                    html += `<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><path d="${starPath}" fill="none" stroke="#475569" stroke-width="1.5" /></svg>`;
+                }
+            }
+            return html;
+        }
 
         function buildDateTime(dateStr, timeStr) {
             if (!dateStr && !timeStr) return null;
@@ -1341,7 +1357,13 @@
                     <div class="challenge-card ${isDone ? 'done' : 'not-done'}" id="ch-card-${i}" onclick="toggleChallenge(${i})" data-done="${isDone}">
                         <div class="challenge-header">
                             <div class="ch-left">
-                                <span class="ch-title-text">${c.title} — ${c.nick}</span>
+                                <div class="flex flex-col gap-1 flex-1">
+                                    <span class="ch-title-text">${c.title} — ${c.nick}</span>
+                                    <div class="flex items-center gap-1">
+                                        <span class="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Сложность:</span>
+                                        ${renderStars(c.difficulty)}
+                                    </div>
+                                </div>
                                 ${status}
                             </div>
                             <div class="ch-right">
