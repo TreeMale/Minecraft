@@ -227,6 +227,25 @@ body::before { content: none; }
     #cursor-container { display: none; }
 }
 
+
+@media (min-width: 961px) {
+    .table-container { overflow-x: auto; }
+    .table-container th, .table-container .world-row td {
+        padding: 10px 5px;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+    .world-row td:nth-child(2) > div,
+    .world-row td:nth-child(4) > div { flex-direction: row; justify-content: center; gap: 8px; }
+    .world-row td:nth-child(2) .flex.items-center { flex-wrap: nowrap; }
+    .world-row .download-btn, .world-row .compare-btn {
+        min-height: 32px;
+        padding: 4px 7px;
+        font-size: 12px;
+    }
+    .world-row .progress-container { min-width: 0; width: 36px; }
+}
+
 @media (max-width: 960px) {
     .table-container { background: none; border: 0; }
     .table-container table, .table-container tbody { display: block; }
