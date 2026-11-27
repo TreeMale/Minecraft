@@ -81,7 +81,7 @@ body::before { content: none; }
 }
 .hero-stats { display: flex; flex-wrap: wrap; gap: 8px 24px; font-weight: 650; }
 .hero-stats > span > span:first-child { color: #f4cc78; padding-right: 4px; }
-.runs-hero .progress-container { width: min(100%, 355px); min-width: 0; height: 9px; margin-top: 16px; }
+.runs-hero .progress-container { width: min(100%, 355px); min-width: 0; height: 9px; margin-bottom: 10px; }
 .runs-hero .progress-bar { height: 100%; }
 .progress-container { min-width: 95px; background: #4b493e; }
 .progress-bar { background: var(--accent); border-radius: inherit; }
@@ -235,15 +235,14 @@ body::before { content: none; }
         font-size: 13px;
         white-space: nowrap;
     }
-    .world-row td:nth-child(2) > div,
-    .world-row td:nth-child(4) > div { flex-direction: row; justify-content: center; gap: 8px; }
+    .world-row td:nth-child(2) > div { flex-direction: row; justify-content: center; gap: 8px; }
     .world-row td:nth-child(2) .flex.items-center { flex-wrap: nowrap; }
     .world-row .download-btn, .world-row .compare-btn {
         min-height: 32px;
         padding: 4px 7px;
         font-size: 12px;
     }
-    .world-row .progress-container { min-width: 0; width: 36px; }
+    .world-row td:nth-child(4) > div { gap: 4px; }
 }
 
 @media (max-width: 960px) {
