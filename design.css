@@ -81,7 +81,7 @@ body::before { content: none; }
 }
 .hero-stats { display: flex; flex-wrap: wrap; gap: 8px 24px; font-weight: 650; }
 .hero-stats > span > span:first-child { color: #f4cc78; padding-right: 4px; }
-.runs-hero .progress-container { width: min(100%, 355px); min-width: 0; height: 9px; margin-bottom: 10px; }
+.runs-hero .progress-container { width: min(100%, 355px); min-width: 0; height: 9px; margin-top: 16px; }
 .runs-hero .progress-bar { height: 100%; }
 .progress-container { min-width: 95px; background: #4b493e; }
 .progress-bar { background: var(--accent); border-radius: inherit; }
