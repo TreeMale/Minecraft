@@ -44,15 +44,6 @@
         @keyframes swordClick { 0% { transform: rotate(0deg); } 40% { transform: rotate(-35deg); } 100% { transform: rotate(0deg); } }
         .sword-clicking { animation: swordClick 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
 
-        .click-pixel {
-            position: fixed; pointer-events: none; z-index: 99998; image-rendering: pixelated;
-            animation: pixelFly var(--duration, 0.3s) ease-out forwards;
-        }
-        @keyframes pixelFly {
-            0% { opacity: 1; transform: translate(0, 0) scale(1); }
-            100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.2); }
-        }
-
         .pixel-icon { image-rendering: pixelated; image-rendering: -moz-crisp-edges; image-rendering: crisp-edges; }
         * { cursor: none !important; }
 
@@ -386,7 +377,7 @@
                                         <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
                                         <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
                                     </a>
-                                    <button class="compare-btn" onclick="toggleComparison(7)">До и после</button>
+                                    <button class="compare-btn" onclick="toggleComparison(7)">Картинки</button>
                                 </div>
                             </div>
                         </td>
@@ -433,7 +424,7 @@
                                         <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
                                         <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
                                     </a>
-                                    <button class="compare-btn" onclick="toggleComparison(6)">До и после</button>
+                                    <button class="compare-btn" onclick="toggleComparison(6)">Картинки</button>
                                 </div>
                             </div>
                         </td>
@@ -480,7 +471,7 @@
                                         <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
                                         <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
                                     </a>
-                                    <button class="compare-btn" onclick="toggleComparison(5)">До и после</button>
+                                    <button class="compare-btn" onclick="toggleComparison(5)">Картинки</button>
                                 </div>
                             </div>
                         </td>
@@ -528,7 +519,7 @@
                                         <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
                                         <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
                                     </a>
-                                    <button class="compare-btn" onclick="toggleComparison(4)">До и после</button>
+                                    <button class="compare-btn" onclick="toggleComparison(4)">Картинки</button>
                                 </div>
                             </div>
                         </td>
@@ -574,7 +565,7 @@
                                         <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
                                         <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
                                     </a>
-                                    <button class="compare-btn" onclick="toggleComparison(3)">До и после</button>
+                                    <button class="compare-btn" onclick="toggleComparison(3)">Картинки</button>
                                 </div>
                             </div>
                         </td>
@@ -621,7 +612,7 @@
                                         <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
                                         <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
                                     </a>
-                                    <button class="compare-btn" onclick="toggleComparison(2)">До и после</button>
+                                    <button class="compare-btn" onclick="toggleComparison(2)">Картинки</button>
                                 </div>
                             </div>
                         </td>
@@ -667,7 +658,7 @@
                                         <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
                                         <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
                                     </a>
-                                    <button class="compare-btn" onclick="toggleComparison(1)">До и после</button>
+                                    <button class="compare-btn" onclick="toggleComparison(1)">Картинки</button>
                                 </div>
                             </div>
                         </td>
@@ -767,14 +758,10 @@
     <script>
         const cursorContainer = document.getElementById('cursor-container');
         const customCursor = document.getElementById('custom-cursor');
-        let lastMouseX = 0, lastMouseY = 0;
         let isHolding = false;
         let clickInterval = null;
         const CLICK_CYCLE = 250;
         const ARROW_GREEN = 'https://treemale.github.io/Minecraft/images/items/down-arrow-green.png';
-
-        const PARTICLE_COLORS = ['#ffffff','#e0f2fe','#bae6fd','#7dd3fc','#38bdf8','#0ea5e3','#0284c7','#0369a1'];
-        function getRandomColor() { return PARTICLE_COLORS[Math.floor(Math.random() * PARTICLE_COLORS.length)]; }
 
         const HOVER_SELECTORS = 'a, button, [onclick], .card, .card-pack, .section-header, .world-name, .comparison-label, .set-btn, .slider-handle, .search-clear, #item-search, .tab-btn, .challenge-card';
         function getClickableParent(el) {
@@ -793,50 +780,20 @@
             else customCursor.classList.remove('hovering');
         }, { passive: true });
 
-        function createClickPixels(x, y) {
-            const pixelCount = 5 + Math.floor(Math.random() * 4);
-            for (let i = 0; i < pixelCount; i++) {
-                const pixel = document.createElement('div');
-                pixel.className = 'click-pixel';
-                const color = getRandomColor();
-                const size = 2 + Math.floor(Math.random() * 3);
-                pixel.style.width = size + 'px';
-                pixel.style.height = size + 'px';
-                pixel.style.backgroundColor = color;
-                pixel.style.boxShadow = `0 0 ${size}px ${color}`;
-                const angle = Math.random() * Math.PI * 2;
-                const distance = 12 + Math.random() * 30;
-                const dx = Math.cos(angle) * distance;
-                const dy = Math.sin(angle) * distance - 8;
-                const duration = 0.2 + Math.random() * 0.2;
-                pixel.style.left = x + 'px';
-                pixel.style.top = y + 'px';
-                pixel.style.setProperty('--dx', dx + 'px');
-                pixel.style.setProperty('--dy', dy + 'px');
-                pixel.style.setProperty('--duration', duration + 's');
-                document.body.appendChild(pixel);
-                setTimeout(() => pixel.remove(), duration * 1000 + 50);
-            }
-        }
-
-
-
         document.addEventListener('mousemove', (e) => {
-            lastMouseX = e.clientX; lastMouseY = e.clientY;
             cursorContainer.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
         }, { passive: true });
 
-        function playClickAnimation(x, y) {
+        function playClickAnimation() {
             customCursor.classList.remove('sword-clicking');
             void customCursor.offsetWidth;
             customCursor.classList.add('sword-clicking');
-            createClickPixels(x, y);
         }
         document.addEventListener('mousedown', (e) => {
             if (isHolding) return;
             isHolding = true;
-            playClickAnimation(e.clientX, e.clientY);
-            clickInterval = setInterval(() => playClickAnimation(lastMouseX, lastMouseY), CLICK_CYCLE);
+            playClickAnimation();
+            clickInterval = setInterval(playClickAnimation, CLICK_CYCLE);
         });
         window.addEventListener('mouseup', () => {
             if (!isHolding) return;
