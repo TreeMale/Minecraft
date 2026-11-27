@@ -329,32 +329,35 @@
         }
         .challenge-card.expanded .challenge-body { max-height: 600px; opacity: 1; margin-top: 14px; }
     </style>
+    <link rel="stylesheet" href="design.css">
 </head>
 <body class="p-4 md:p-8 mx-auto">
 
     <div id="cursor-container"><div id="custom-cursor"></div></div>
-    <div class="custom-bg" id="bg-container"></div>
 
-    <header class="text-center mb-12">
-        <div class="flex justify-center">
-            <h1 class="text-4xl md:text-5xl gradient-title mb-3">МАЙНКРАФТ ВАЙБИК | ДОП. ДОСТИЖЕНИЯ</h1>
-        </div>
+    <header class="site-header">
+        <h1 class="brand"><img src="images/icon.png" alt="">TreeMale</h1>
+        <nav class="tab-bar" aria-label="Разделы сайта">
+            <button class="tab-btn active" aria-pressed="true" data-tab="runs" onclick="switchTab('runs')">Забеги</button>
+            <button class="tab-btn" aria-pressed="false" data-tab="mods" onclick="switchTab('mods')">Моды</button>
+            <button class="tab-btn" aria-pressed="false" data-tab="challenges" onclick="switchTab('challenges')">Челленджи</button>
+        </nav>
     </header>
-
-    <nav class="tab-bar">
-        <button class="tab-btn active" data-tab="runs" onclick="switchTab('runs')">История забегов и смертей</button>
-        <button class="tab-btn" data-tab="mods" onclick="switchTab('mods')">Моды и ресур-паки</button>
-        <button class="tab-btn" data-tab="challenges" onclick="switchTab('challenges')">Испытания от зрителей</button>
-    </nav>
 
     <div id="global-tooltip" class="tooltip">Скопировать сид</div>
 
     <!-- ================= ВКЛАДКА: ИСТОРИЯ ЗАБЕГОВ ================= -->
     <section id="tab-runs" class="mb-16">
-        <h2 class="text-2xl font-bold mb-2 border-b border-slate-700 pb-2 flex items-center justify-center gap-2">
-            <img src="https://treemale.github.io/Minecraft/images/items/lectern.png" class="w-[50px] h-[50px] object-contain" alt="lectern"> История забегов и смертей
-        </h2>
-        <p class="text-slate-400 text-sm text-center mb-6">Хронология всех моих прохождений: сколько прожил, какие достижения получил и как именно умер в каждом мире.</p>
+        <div class="runs-hero">
+            <h2>История забегов</h2>
+            <p>Текущий мир</p>
+            <h3>#мирвайба8</h3>
+            <div class="hero-stats">
+                <span><span aria-hidden="true">◷</span> <span class="sr-only">Прожито:</span> 12 ч. 27 мин.</span>
+                <span><span aria-hidden="true">🏆</span> <span class="sr-only">Достижения:</span> 206 (16,3%)</span>
+            </div>
+            <div class="progress-container" aria-hidden="true"><div class="progress-bar" style="width: 16.3%"></div></div>
+        </div>
         <div class="rounded-lg border border-slate-700 table-container">
             <table class="w-full text-center border-collapse text-sm">
                 <colgroup>
@@ -370,188 +373,101 @@
                 </thead>
                 <tbody class="divide-y divide-slate-800 bg-slate-900/50">
 
-                    <tr class="hover:bg-slate-800/50 transition">
-                        <td class="p-3 font-bold mc-green">1</td>
+                    <tr class="world-row">
+                        <td class="p-3 font-bold mc-green">7</td>
                         <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
-                                <span class="world-name" data-seed="1021725279" onclick="copySeed(this)">#мирвайба1</span>
+                                <span class="world-name" data-seed="65945742" onclick="copySeed(this)">#мирвайба7</span>
                                 <div class="flex items-center">
-                                    <a href="javascript:void(0)" class="download-btn" title="Перейти к релизу" data-url="https://github.com/TreeMale/Minecraft/releases/tag/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B1%D0%B01" onclick="handleDownloadClick(this)">
+                                    <a href="javascript:void(0)" class="download-btn" title="Перейти к релизу" data-url="https://github.com/TreeMale/Minecraft/releases/tag/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B1%D0%B07" onclick="handleDownloadClick(this)">
                                         <span class="tooltip-text">Перейти к релизу</span>
+                                        <span class="download-label">Скачать</span>
                                         <span class="icon-default"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
                                         <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
                                         <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
                                     </a>
-                                    <button class="compare-btn" onclick="toggleComparison(1)">Картинки</button>
+                                    <button class="compare-btn" onclick="toggleComparison(7)">До и после</button>
                                 </div>
                             </div>
                         </td>
-                        <td class="p-3">4 ч. 36 мин.</td>
-                        <td class="p-3"><div class="flex flex-col items-center gap-1"><span>61 (4,8%)</span><div class="progress-container"><div class="progress-bar" style="width: 4.8%"></div></div></div></td>
-                        <td class="p-3 text-red-400 font-semibold">ЭНДЕРМЕН</td>
-                        <td class="p-3 text-slate-300">Пошёл искать шахту ночью, а там оно...</td>
-                        <td class="p-3 text-slate-500">-</td>
+                        <td data-label="Прожито" class="p-3">26 ч. 40 мин.</td>
+                        <td data-label="Достижения" class="p-3"><div class="flex flex-col items-center gap-1"><span>276 (21,9%)</span><div class="progress-container"><div class="progress-bar" style="width: 21.9%"></div></div></div></td>
+                        <td data-label="Причина смерти" class="p-3 text-red-400 font-semibold">КРИПЕР</td>
+                        <td data-label="Описание" class="p-3 text-slate-300">Я думал, что был охотником, но похоже был жертвой.</td>
+                        <td data-label="Видео" class="p-3"><a href="https://www.youtube.com/shorts/q2PiBeR6JPw" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline font-semibold">YouTube</a></td>
                     </tr>
-                    <tr id="comp-row-1" style="display: none;">
+                    <tr id="comp-row-7" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
-                            <div id="comp-1" class="comparison-container">
+                            <div id="comp-7" class="comparison-container">
                                 <div class="comparison-wrapper" oncontextmenu="return false;">
-                                    <img src="" class="after-image" id="after-img-1" alt="После" decoding="async" draggable="false">
-                                    <img src="" class="before-image" id="before-img-1" alt="До" decoding="async" draggable="false">
-                                    <div class="slider-handle" id="slider-1"></div>
-                                    <div class="loader" id="loader-1"><div class="loader-blocks"><div class="loader-block grass"></div><div class="loader-block planks"></div><div class="loader-block cobblestone"></div></div><div class="loader-text">ЗАГРУЗКА</div></div>
+                                    <img src="" class="after-image" id="after-img-7" alt="После" decoding="async" draggable="false">
+                                    <img src="" class="before-image" id="before-img-7" alt="До" decoding="async" draggable="false">
+                                    <div class="slider-handle" id="slider-7"></div>
+                                    <div class="loader" id="loader-7"><div class="loader-blocks"><div class="loader-block grass"></div><div class="loader-block planks"></div><div class="loader-block cobblestone"></div></div><div class="loader-text">ЗАГРУЗКА</div></div>
                                     <div class="comparison-labels">
-                                        <span class="comparison-label before" onclick="showFullImage(1, 'before')">До</span>
-                                        <span class="comparison-label after" onclick="showFullImage(1, 'after')">После</span>
+                                        <span class="comparison-label before" onclick="showFullImage(7, 'before')">До</span>
+                                        <span class="comparison-label after" onclick="showFullImage(7, 'after')">После</span>
                                     </div>
                                     <div class="image-set-buttons">
-                                        <button class="set-btn active" onclick="switchImageSet(1, 1)" onmouseenter="preloadSet(1, 1)">1<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(1, 2)" onmouseenter="preloadSet(1, 2)">2<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(1, 3)" onmouseenter="preloadSet(1, 3)">3<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(1, 4)" onmouseenter="preloadSet(1, 4)">4<span class="loading-dot"></span></button>
+                                        <button class="set-btn active" onclick="switchImageSet(7, 1)" onmouseenter="preloadSet(7, 1)">1<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(7, 2)" onmouseenter="preloadSet(7, 2)">2<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(7, 3)" onmouseenter="preloadSet(7, 3)">3<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(7, 4)" onmouseenter="preloadSet(7, 4)">4<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(7, 5)" onmouseenter="preloadSet(7, 5)">5<span class="loading-dot"></span></button>
                                     </div>
                                 </div>
                             </div>
                         </td>
                     </tr>
 
-                    <tr class="hover:bg-slate-800/50 transition">
-                        <td class="p-3 font-bold mc-green">2</td>
+                    <tr class="world-row">
+                        <td class="p-3 font-bold mc-green">6</td>
                         <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
-                                <span class="world-name" data-seed="-2075836568" onclick="copySeed(this)">#мирвайба2</span>
+                                <span class="world-name" data-seed="1991679496" onclick="copySeed(this)">#мирвайба6</span>
                                 <div class="flex items-center">
-                                    <a href="javascript:void(0)" class="download-btn" title="Перейти к релизу" data-url="https://github.com/TreeMale/Minecraft/releases/tag/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B1%D0%B02" onclick="handleDownloadClick(this)">
+                                    <a href="javascript:void(0)" class="download-btn" title="Перейти к релизу" data-url="https://github.com/TreeMale/Minecraft/releases/tag/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B1%D0%B06" onclick="handleDownloadClick(this)">
                                         <span class="tooltip-text">Перейти к релизу</span>
+                                        <span class="download-label">Скачать</span>
                                         <span class="icon-default"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
                                         <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
                                         <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
                                     </a>
-                                    <button class="compare-btn" onclick="toggleComparison(2)">Картинки</button>
+                                    <button class="compare-btn" onclick="toggleComparison(6)">До и после</button>
                                 </div>
                             </div>
                         </td>
-                        <td class="p-3">14 ч. 9 мин.</td>
-                        <td class="p-3"><div class="flex flex-col items-center gap-1"><span>178 (14,1%)</span><div class="progress-container"><div class="progress-bar" style="width: 14.1%"></div></div></div></td>
-                        <td class="p-3 text-red-400 font-semibold">КРИПЕР</td>
-                        <td class="p-3 text-slate-300">Взорвал со спины пока рубил дерево, щит не спас.</td>
-                        <td class="p-3 text-slate-500">-</td>
+                        <td data-label="Прожито" class="p-3">97 ч. 28 мин.</td>
+                        <td data-label="Достижения" class="p-3"><div class="flex flex-col items-center gap-1"><span>473 (37,6%)</span><div class="progress-container"><div class="progress-bar" style="width: 37.6%"></div></div></div></td>
+                        <td data-label="Причина смерти" class="p-3 text-red-400 font-semibold">ФАНТОМ</td>
+                        <td data-label="Описание" class="p-3 text-slate-300">Не удержался на подмостках, будучи на самом верху мира.</td>
+                        <td data-label="Видео" class="p-3"><a href="https://www.youtube.com/shorts/1EqjeoUXZtA?feature=share" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline font-semibold">YouTube</a></td>
                     </tr>
-                    <tr id="comp-row-2" style="display: none;">
+                    <tr id="comp-row-6" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
-                            <div id="comp-2" class="comparison-container">
+                            <div id="comp-6" class="comparison-container">
                                 <div class="comparison-wrapper" oncontextmenu="return false;">
-                                    <img src="" class="after-image" id="after-img-2" alt="После" decoding="async" draggable="false">
-                                    <img src="" class="before-image" id="before-img-2" alt="До" decoding="async" draggable="false">
-                                    <div class="slider-handle" id="slider-2"></div>
-                                    <div class="loader" id="loader-2"><div class="loader-blocks"><div class="loader-block grass"></div><div class="loader-block planks"></div><div class="loader-block cobblestone"></div></div><div class="loader-text">ЗАГРУЗКА</div></div>
+                                    <img src="" class="after-image" id="after-img-6" alt="После" decoding="async" draggable="false">
+                                    <img src="" class="before-image" id="before-img-6" alt="До" decoding="async" draggable="false">
+                                    <div class="slider-handle" id="slider-6"></div>
+                                    <div class="loader" id="loader-6"><div class="loader-blocks"><div class="loader-block grass"></div><div class="loader-block planks"></div><div class="loader-block cobblestone"></div></div><div class="loader-text">ЗАГРУЗКА</div></div>
                                     <div class="comparison-labels">
-                                        <span class="comparison-label before" onclick="showFullImage(2, 'before')">До</span>
-                                        <span class="comparison-label after" onclick="showFullImage(2, 'after')">После</span>
+                                        <span class="comparison-label before" onclick="showFullImage(6, 'before')">До</span>
+                                        <span class="comparison-label after" onclick="showFullImage(6, 'after')">После</span>
                                     </div>
                                     <div class="image-set-buttons">
-                                        <button class="set-btn active" onclick="switchImageSet(2, 1)" onmouseenter="preloadSet(2, 1)">1<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(2, 2)" onmouseenter="preloadSet(2, 2)">2<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(2, 3)" onmouseenter="preloadSet(2, 3)">3<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(2, 4)" onmouseenter="preloadSet(2, 4)">4<span class="loading-dot"></span></button>
+                                        <button class="set-btn active" onclick="switchImageSet(6, 1)" onmouseenter="preloadSet(6, 1)">1<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(6, 2)" onmouseenter="preloadSet(6, 2)">2<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(6, 3)" onmouseenter="preloadSet(6, 3)">3<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(6, 4)" onmouseenter="preloadSet(6, 4)">4<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(6, 5)" onmouseenter="preloadSet(6, 5)">5<span class="loading-dot"></span></button>
                                     </div>
                                 </div>
                             </div>
                         </td>
                     </tr>
 
-                    <tr class="hover:bg-slate-800/50 transition">
-                        <td class="p-3 font-bold mc-green">3</td>
-                        <td class="p-3">
-                            <div class="flex flex-col items-center gap-1">
-                                <span class="world-name" data-seed="4008466176163305479" onclick="copySeed(this)">#мирвайба3</span>
-                                <div class="flex items-center">
-                                    <a href="javascript:void(0)" class="download-btn" title="Перейти к релизу" data-url="https://github.com/TreeMale/Minecraft/releases/tag/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B1%D0%B03" onclick="handleDownloadClick(this)">
-                                        <span class="tooltip-text">Перейти к релизу</span>
-                                        <span class="icon-default"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
-                                        <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
-                                        <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
-                                    </a>
-                                    <button class="compare-btn" onclick="toggleComparison(3)">Картинки</button>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="p-3">19 ч. 55 мин.</td>
-                        <td class="p-3"><div class="flex flex-col items-center gap-1"><span>284 (22,5%)</span><div class="progress-container"><div class="progress-bar" style="width: 22.5%"></div></div></div></td>
-                        <td class="p-3 text-red-400 font-semibold">ПУСТОТА</td>
-                        <td class="p-3 text-slate-300">Настраивал моды, включил читы и упал сквозь мир, ануак.</td>
-                        <td class="p-3 text-slate-500">-</td>
-                    </tr>
-                    <tr id="comp-row-3" style="display: none;">
-                        <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
-                            <div id="comp-3" class="comparison-container">
-                                <div class="comparison-wrapper" oncontextmenu="return false;">
-                                    <img src="" class="after-image" id="after-img-3" alt="После" decoding="async" draggable="false">
-                                    <img src="" class="before-image" id="before-img-3" alt="До" decoding="async" draggable="false">
-                                    <div class="slider-handle" id="slider-3"></div>
-                                    <div class="loader" id="loader-3"><div class="loader-blocks"><div class="loader-block grass"></div><div class="loader-block planks"></div><div class="loader-block cobblestone"></div></div><div class="loader-text">ЗАГРУЗКА</div></div>
-                                    <div class="comparison-labels">
-                                        <span class="comparison-label before" onclick="showFullImage(3, 'before')">До</span>
-                                        <span class="comparison-label after" onclick="showFullImage(3, 'after')">После</span>
-                                    </div>
-                                    <div class="image-set-buttons">
-                                        <button class="set-btn active" onclick="switchImageSet(3, 1)" onmouseenter="preloadSet(3, 1)">1<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(3, 2)" onmouseenter="preloadSet(3, 2)">2<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(3, 3)" onmouseenter="preloadSet(3, 3)">3<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(3, 4)" onmouseenter="preloadSet(3, 4)">4<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(3, 5)" onmouseenter="preloadSet(3, 5)">5<span class="loading-dot"></span></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr class="hover:bg-slate-800/50 transition">
-                        <td class="p-3 font-bold mc-green">4</td>
-                        <td class="p-3">
-                            <div class="flex flex-col items-center gap-1">
-                                <span class="world-name" data-seed="34376356" onclick="copySeed(this)">#мирвайба4</span>
-                                <div class="flex items-center">
-                                    <a href="javascript:void(0)" class="download-btn" title="Перейти к релизу" data-url="https://github.com/TreeMale/Minecraft/releases/tag/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B1%D0%B04" onclick="handleDownloadClick(this)">
-                                        <span class="tooltip-text">Перейти к релизу</span>
-                                        <span class="icon-default"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
-                                        <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
-                                        <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
-                                    </a>
-                                    <button class="compare-btn" onclick="toggleComparison(4)">Картинки</button>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="p-3">16 ч. 5 мин.</td>
-                        <td class="p-3"><div class="flex flex-col items-center gap-1"><span>196 (15,5%)</span><div class="progress-container"><div class="progress-bar" style="width: 15.5%"></div></div></div></td>
-                        <td class="p-3 text-red-400 font-semibold">ЗОМБИ-ЖИТЕЛЬ</td>
-                        <td class="p-3 text-slate-300">Зашел в иглу, исцелить зомби-жителя, но он отказал.</td>
-                        <td class="p-3"><a href="https://www.youtube.com/shorts/w9V0Ip6WojI" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline font-semibold">YouTube</a></td>
-                    </tr>
-                    <tr id="comp-row-4" style="display: none;">
-                        <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
-                            <div id="comp-4" class="comparison-container">
-                                <div class="comparison-wrapper" oncontextmenu="return false;">
-                                    <img src="" class="after-image" id="after-img-4" alt="После" decoding="async" draggable="false">
-                                    <img src="" class="before-image" id="before-img-4" alt="До" decoding="async" draggable="false">
-                                    <div class="slider-handle" id="slider-4"></div>
-                                    <div class="loader" id="loader-4"><div class="loader-blocks"><div class="loader-block grass"></div><div class="loader-block planks"></div><div class="loader-block cobblestone"></div></div><div class="loader-text">ЗАГРУЗКА</div></div>
-                                    <div class="comparison-labels">
-                                        <span class="comparison-label before" onclick="showFullImage(4, 'before')">До</span>
-                                        <span class="comparison-label after" onclick="showFullImage(4, 'after')">После</span>
-                                    </div>
-                                    <div class="image-set-buttons">
-                                        <button class="set-btn active" onclick="switchImageSet(4, 1)" onmouseenter="preloadSet(4, 1)">1<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(4, 2)" onmouseenter="preloadSet(4, 2)">2<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(4, 3)" onmouseenter="preloadSet(4, 3)">3<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(4, 4)" onmouseenter="preloadSet(4, 4)">4<span class="loading-dot"></span></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr class="hover:bg-slate-800/50 transition">
+                    <tr class="world-row">
                         <td class="p-3 font-bold mc-green">5</td>
                         <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
@@ -559,19 +475,20 @@
                                 <div class="flex items-center">
                                     <a href="javascript:void(0)" class="download-btn" title="Перейти к релизу" data-url="https://github.com/TreeMale/Minecraft/releases/tag/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B1%D0%B05" onclick="handleDownloadClick(this)">
                                         <span class="tooltip-text">Перейти к релизу</span>
+                                        <span class="download-label">Скачать</span>
                                         <span class="icon-default"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
                                         <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
                                         <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
                                     </a>
-                                    <button class="compare-btn" onclick="toggleComparison(5)">Картинки</button>
+                                    <button class="compare-btn" onclick="toggleComparison(5)">До и после</button>
                                 </div>
                             </div>
                         </td>
-                        <td class="p-3">41 ч. 6 мин.</td>
-                        <td class="p-3"><div class="flex flex-col items-center gap-1"><span>320 (25,4%)</span><div class="progress-container"><div class="progress-bar" style="width: 25.4%"></div></div></div></td>
-                        <td class="p-3 text-red-400 font-semibold">СКЕЛЕТ-ИССУШИТЕЛЬ</td>
-                        <td class="p-3 text-slate-300">Проведал ифритов в аду, но я явно был не готов к НЕМУ...</td>
-                        <td class="p-3"><a href="https://youtube.com/shorts/0zNUIQcrzww" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline font-semibold">YouTube</a></td>
+                        <td data-label="Прожито" class="p-3">41 ч. 6 мин.</td>
+                        <td data-label="Достижения" class="p-3"><div class="flex flex-col items-center gap-1"><span>320 (25,4%)</span><div class="progress-container"><div class="progress-bar" style="width: 25.4%"></div></div></div></td>
+                        <td data-label="Причина смерти" class="p-3 text-red-400 font-semibold">СКЕЛЕТ-ИССУШИТЕЛЬ</td>
+                        <td data-label="Описание" class="p-3 text-slate-300">Проведал ифритов в аду, но я явно был не готов к НЕМУ...</td>
+                        <td data-label="Видео" class="p-3"><a href="https://youtube.com/shorts/0zNUIQcrzww" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline font-semibold">YouTube</a></td>
                     </tr>
                     <tr id="comp-row-5" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
@@ -598,117 +515,191 @@
                         </td>
                     </tr>
 
-                    <tr class="hover:bg-slate-800/50 transition">
-                        <td class="p-3 font-bold mc-green">6</td>
+                    <tr class="world-row">
+                        <td class="p-3 font-bold mc-green">4</td>
                         <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
-                                <span class="world-name" data-seed="1991679496" onclick="copySeed(this)">#мирвайба6</span>
+                                <span class="world-name" data-seed="34376356" onclick="copySeed(this)">#мирвайба4</span>
                                 <div class="flex items-center">
-                                    <a href="javascript:void(0)" class="download-btn" title="Перейти к релизу" data-url="https://github.com/TreeMale/Minecraft/releases/tag/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B1%D0%B06" onclick="handleDownloadClick(this)">
+                                    <a href="javascript:void(0)" class="download-btn" title="Перейти к релизу" data-url="https://github.com/TreeMale/Minecraft/releases/tag/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B1%D0%B04" onclick="handleDownloadClick(this)">
                                         <span class="tooltip-text">Перейти к релизу</span>
+                                        <span class="download-label">Скачать</span>
                                         <span class="icon-default"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
                                         <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
                                         <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
                                     </a>
-                                    <button class="compare-btn" onclick="toggleComparison(6)">Картинки</button>
+                                    <button class="compare-btn" onclick="toggleComparison(4)">До и после</button>
                                 </div>
                             </div>
                         </td>
-                        <td class="p-3">97 ч. 28 мин.</td>
-                        <td class="p-3"><div class="flex flex-col items-center gap-1"><span>473 (37,6%)</span><div class="progress-container"><div class="progress-bar" style="width: 37.6%"></div></div></div></td>
-                        <td class="p-3 text-red-400 font-semibold">ФАНТОМ</td>
-                        <td class="p-3 text-slate-300">Не удержался на подмостках, будучи на самом верху мира.</td>
-                        <td class="p-3"><a href="https://www.youtube.com/shorts/1EqjeoUXZtA?feature=share" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline font-semibold">YouTube</a></td>
+                        <td data-label="Прожито" class="p-3">16 ч. 5 мин.</td>
+                        <td data-label="Достижения" class="p-3"><div class="flex flex-col items-center gap-1"><span>196 (15,5%)</span><div class="progress-container"><div class="progress-bar" style="width: 15.5%"></div></div></div></td>
+                        <td data-label="Причина смерти" class="p-3 text-red-400 font-semibold">ЗОМБИ-ЖИТЕЛЬ</td>
+                        <td data-label="Описание" class="p-3 text-slate-300">Зашел в иглу, исцелить зомби-жителя, но он отказал.</td>
+                        <td data-label="Видео" class="p-3"><a href="https://www.youtube.com/shorts/w9V0Ip6WojI" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline font-semibold">YouTube</a></td>
                     </tr>
-                    <tr id="comp-row-6" style="display: none;">
+                    <tr id="comp-row-4" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
-                            <div id="comp-6" class="comparison-container">
+                            <div id="comp-4" class="comparison-container">
                                 <div class="comparison-wrapper" oncontextmenu="return false;">
-                                    <img src="" class="after-image" id="after-img-6" alt="После" decoding="async" draggable="false">
-                                    <img src="" class="before-image" id="before-img-6" alt="До" decoding="async" draggable="false">
-                                    <div class="slider-handle" id="slider-6"></div>
-                                    <div class="loader" id="loader-6"><div class="loader-blocks"><div class="loader-block grass"></div><div class="loader-block planks"></div><div class="loader-block cobblestone"></div></div><div class="loader-text">ЗАГРУЗКА</div></div>
+                                    <img src="" class="after-image" id="after-img-4" alt="После" decoding="async" draggable="false">
+                                    <img src="" class="before-image" id="before-img-4" alt="До" decoding="async" draggable="false">
+                                    <div class="slider-handle" id="slider-4"></div>
+                                    <div class="loader" id="loader-4"><div class="loader-blocks"><div class="loader-block grass"></div><div class="loader-block planks"></div><div class="loader-block cobblestone"></div></div><div class="loader-text">ЗАГРУЗКА</div></div>
                                     <div class="comparison-labels">
-                                        <span class="comparison-label before" onclick="showFullImage(6, 'before')">До</span>
-                                        <span class="comparison-label after" onclick="showFullImage(6, 'after')">После</span>
+                                        <span class="comparison-label before" onclick="showFullImage(4, 'before')">До</span>
+                                        <span class="comparison-label after" onclick="showFullImage(4, 'after')">После</span>
                                     </div>
                                     <div class="image-set-buttons">
-                                        <button class="set-btn active" onclick="switchImageSet(6, 1)" onmouseenter="preloadSet(6, 1)">1<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(6, 2)" onmouseenter="preloadSet(6, 2)">2<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(6, 3)" onmouseenter="preloadSet(6, 3)">3<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(6, 4)" onmouseenter="preloadSet(6, 4)">4<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(6, 5)" onmouseenter="preloadSet(6, 5)">5<span class="loading-dot"></span></button>
+                                        <button class="set-btn active" onclick="switchImageSet(4, 1)" onmouseenter="preloadSet(4, 1)">1<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(4, 2)" onmouseenter="preloadSet(4, 2)">2<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(4, 3)" onmouseenter="preloadSet(4, 3)">3<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(4, 4)" onmouseenter="preloadSet(4, 4)">4<span class="loading-dot"></span></button>
                                     </div>
                                 </div>
                             </div>
                         </td>
                     </tr>
 
-                    <tr class="hover:bg-slate-800/50 transition">
-                        <td class="p-3 font-bold mc-green">7</td>
+                    <tr class="world-row">
+                        <td class="p-3 font-bold mc-green">3</td>
                         <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
-                                <span class="world-name" data-seed="65945742" onclick="copySeed(this)">#мирвайба7</span>
+                                <span class="world-name" data-seed="4008466176163305479" onclick="copySeed(this)">#мирвайба3</span>
                                 <div class="flex items-center">
-                                    <a href="javascript:void(0)" class="download-btn" title="Перейти к релизу" data-url="https://github.com/TreeMale/Minecraft/releases/tag/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B1%D0%B07" onclick="handleDownloadClick(this)">
+                                    <a href="javascript:void(0)" class="download-btn" title="Перейти к релизу" data-url="https://github.com/TreeMale/Minecraft/releases/tag/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B1%D0%B03" onclick="handleDownloadClick(this)">
                                         <span class="tooltip-text">Перейти к релизу</span>
+                                        <span class="download-label">Скачать</span>
                                         <span class="icon-default"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
                                         <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
                                         <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
                                     </a>
-                                    <button class="compare-btn" onclick="toggleComparison(7)">Картинки</button>
+                                    <button class="compare-btn" onclick="toggleComparison(3)">До и после</button>
                                 </div>
                             </div>
                         </td>
-                        <td class="p-3">26 ч. 40 мин.</td>
-                        <td class="p-3"><div class="flex flex-col items-center gap-1"><span>276 (21,9%)</span><div class="progress-container"><div class="progress-bar" style="width: 21.9%"></div></div></div></td>
-                        <td class="p-3 text-red-400 font-semibold">КРИПЕР</td>
-                        <td class="p-3 text-slate-300">Я думал, что был охотником, но похоже был жертвой.</td>
-                        <td class="p-3"><a href="https://www.youtube.com/shorts/q2PiBeR6JPw" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline font-semibold">YouTube</a></td>
+                        <td data-label="Прожито" class="p-3">19 ч. 55 мин.</td>
+                        <td data-label="Достижения" class="p-3"><div class="flex flex-col items-center gap-1"><span>284 (22,5%)</span><div class="progress-container"><div class="progress-bar" style="width: 22.5%"></div></div></div></td>
+                        <td data-label="Причина смерти" class="p-3 text-red-400 font-semibold">ПУСТОТА</td>
+                        <td data-label="Описание" class="p-3 text-slate-300">Настраивал моды, включил читы и упал сквозь мир, ануак.</td>
+                        <td data-label="Видео" class="p-3 text-slate-500">-</td>
                     </tr>
-                    <tr id="comp-row-7" style="display: none;">
+                    <tr id="comp-row-3" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
-                            <div id="comp-7" class="comparison-container">
+                            <div id="comp-3" class="comparison-container">
                                 <div class="comparison-wrapper" oncontextmenu="return false;">
-                                    <img src="" class="after-image" id="after-img-7" alt="После" decoding="async" draggable="false">
-                                    <img src="" class="before-image" id="before-img-7" alt="До" decoding="async" draggable="false">
-                                    <div class="slider-handle" id="slider-7"></div>
-                                    <div class="loader" id="loader-7"><div class="loader-blocks"><div class="loader-block grass"></div><div class="loader-block planks"></div><div class="loader-block cobblestone"></div></div><div class="loader-text">ЗАГРУЗКА</div></div>
+                                    <img src="" class="after-image" id="after-img-3" alt="После" decoding="async" draggable="false">
+                                    <img src="" class="before-image" id="before-img-3" alt="До" decoding="async" draggable="false">
+                                    <div class="slider-handle" id="slider-3"></div>
+                                    <div class="loader" id="loader-3"><div class="loader-blocks"><div class="loader-block grass"></div><div class="loader-block planks"></div><div class="loader-block cobblestone"></div></div><div class="loader-text">ЗАГРУЗКА</div></div>
                                     <div class="comparison-labels">
-                                        <span class="comparison-label before" onclick="showFullImage(7, 'before')">До</span>
-                                        <span class="comparison-label after" onclick="showFullImage(7, 'after')">После</span>
+                                        <span class="comparison-label before" onclick="showFullImage(3, 'before')">До</span>
+                                        <span class="comparison-label after" onclick="showFullImage(3, 'after')">После</span>
                                     </div>
                                     <div class="image-set-buttons">
-                                        <button class="set-btn active" onclick="switchImageSet(7, 1)" onmouseenter="preloadSet(7, 1)">1<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(7, 2)" onmouseenter="preloadSet(7, 2)">2<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(7, 3)" onmouseenter="preloadSet(7, 3)">3<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(7, 4)" onmouseenter="preloadSet(7, 4)">4<span class="loading-dot"></span></button>
-                                        <button class="set-btn" onclick="switchImageSet(7, 5)" onmouseenter="preloadSet(7, 5)">5<span class="loading-dot"></span></button>
+                                        <button class="set-btn active" onclick="switchImageSet(3, 1)" onmouseenter="preloadSet(3, 1)">1<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(3, 2)" onmouseenter="preloadSet(3, 2)">2<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(3, 3)" onmouseenter="preloadSet(3, 3)">3<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(3, 4)" onmouseenter="preloadSet(3, 4)">4<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(3, 5)" onmouseenter="preloadSet(3, 5)">5<span class="loading-dot"></span></button>
                                     </div>
                                 </div>
                             </div>
                         </td>
                     </tr>
 
-                    <tr class="hover:bg-slate-800/50 transition">
-                        <td class="p-3 font-bold mc-green">8</td>
+                    <tr class="world-row">
+                        <td class="p-3 font-bold mc-green">2</td>
                         <td class="p-3">
                             <div class="flex flex-col items-center gap-1">
-                                <span class="world-name" data-seed="0" onclick="copySeed(this)">#мирвайба8</span>
+                                <span class="world-name" data-seed="-2075836568" onclick="copySeed(this)">#мирвайба2</span>
                                 <div class="flex items-center">
-                                    <button class="download-btn" disabled title="Скачать мир будет доступно позже" style="opacity: 0.4; cursor: not-allowed; pointer-events: none;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                                    </button>
-                                    <button class="compare-btn disabled" disabled title="Картинки пока не добавлены">Картинки</button>
+                                    <a href="javascript:void(0)" class="download-btn" title="Перейти к релизу" data-url="https://github.com/TreeMale/Minecraft/releases/tag/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B1%D0%B02" onclick="handleDownloadClick(this)">
+                                        <span class="tooltip-text">Перейти к релизу</span>
+                                        <span class="download-label">Скачать</span>
+                                        <span class="icon-default"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+                                        <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
+                                        <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                                    </a>
+                                    <button class="compare-btn" onclick="toggleComparison(2)">До и после</button>
                                 </div>
                             </div>
                         </td>
-                        <td class="p-3">12 ч. 27 мин.</td>
-                        <td class="p-3"><div class="flex flex-col items-center gap-1"><span>206 (16,3%)</span><div class="progress-container"><div class="progress-bar" style="width: 16.3%"></div></div></div></td>
-                        <td class="p-3 text-slate-500">-</td>
-                        <td class="p-3 text-slate-500">-</td>
-                        <td class="p-3 text-slate-500">-</td>
+                        <td data-label="Прожито" class="p-3">14 ч. 9 мин.</td>
+                        <td data-label="Достижения" class="p-3"><div class="flex flex-col items-center gap-1"><span>178 (14,1%)</span><div class="progress-container"><div class="progress-bar" style="width: 14.1%"></div></div></div></td>
+                        <td data-label="Причина смерти" class="p-3 text-red-400 font-semibold">КРИПЕР</td>
+                        <td data-label="Описание" class="p-3 text-slate-300">Взорвал со спины пока рубил дерево, щит не спас.</td>
+                        <td data-label="Видео" class="p-3 text-slate-500">-</td>
                     </tr>
+                    <tr id="comp-row-2" style="display: none;">
+                        <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
+                            <div id="comp-2" class="comparison-container">
+                                <div class="comparison-wrapper" oncontextmenu="return false;">
+                                    <img src="" class="after-image" id="after-img-2" alt="После" decoding="async" draggable="false">
+                                    <img src="" class="before-image" id="before-img-2" alt="До" decoding="async" draggable="false">
+                                    <div class="slider-handle" id="slider-2"></div>
+                                    <div class="loader" id="loader-2"><div class="loader-blocks"><div class="loader-block grass"></div><div class="loader-block planks"></div><div class="loader-block cobblestone"></div></div><div class="loader-text">ЗАГРУЗКА</div></div>
+                                    <div class="comparison-labels">
+                                        <span class="comparison-label before" onclick="showFullImage(2, 'before')">До</span>
+                                        <span class="comparison-label after" onclick="showFullImage(2, 'after')">После</span>
+                                    </div>
+                                    <div class="image-set-buttons">
+                                        <button class="set-btn active" onclick="switchImageSet(2, 1)" onmouseenter="preloadSet(2, 1)">1<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(2, 2)" onmouseenter="preloadSet(2, 2)">2<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(2, 3)" onmouseenter="preloadSet(2, 3)">3<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(2, 4)" onmouseenter="preloadSet(2, 4)">4<span class="loading-dot"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr class="world-row">
+                        <td class="p-3 font-bold mc-green">1</td>
+                        <td class="p-3">
+                            <div class="flex flex-col items-center gap-1">
+                                <span class="world-name" data-seed="1021725279" onclick="copySeed(this)">#мирвайба1</span>
+                                <div class="flex items-center">
+                                    <a href="javascript:void(0)" class="download-btn" title="Перейти к релизу" data-url="https://github.com/TreeMale/Minecraft/releases/tag/%23%D0%BC%D0%B8%D1%80%D0%B2%D0%B0%D0%B9%D0%B1%D0%B01" onclick="handleDownloadClick(this)">
+                                        <span class="tooltip-text">Перейти к релизу</span>
+                                        <span class="download-label">Скачать</span>
+                                        <span class="icon-default"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+                                        <span class="icon-loading"><svg class="spinner-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></span>
+                                        <span class="icon-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                                    </a>
+                                    <button class="compare-btn" onclick="toggleComparison(1)">До и после</button>
+                                </div>
+                            </div>
+                        </td>
+                        <td data-label="Прожито" class="p-3">4 ч. 36 мин.</td>
+                        <td data-label="Достижения" class="p-3"><div class="flex flex-col items-center gap-1"><span>61 (4,8%)</span><div class="progress-container"><div class="progress-bar" style="width: 4.8%"></div></div></div></td>
+                        <td data-label="Причина смерти" class="p-3 text-red-400 font-semibold">ЭНДЕРМЕН</td>
+                        <td data-label="Описание" class="p-3 text-slate-300">Пошёл искать шахту ночью, а там оно...</td>
+                        <td data-label="Видео" class="p-3 text-slate-500">-</td>
+                    </tr>
+                    <tr id="comp-row-1" style="display: none;">
+                        <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
+                            <div id="comp-1" class="comparison-container">
+                                <div class="comparison-wrapper" oncontextmenu="return false;">
+                                    <img src="" class="after-image" id="after-img-1" alt="После" decoding="async" draggable="false">
+                                    <img src="" class="before-image" id="before-img-1" alt="До" decoding="async" draggable="false">
+                                    <div class="slider-handle" id="slider-1"></div>
+                                    <div class="loader" id="loader-1"><div class="loader-blocks"><div class="loader-block grass"></div><div class="loader-block planks"></div><div class="loader-block cobblestone"></div></div><div class="loader-text">ЗАГРУЗКА</div></div>
+                                    <div class="comparison-labels">
+                                        <span class="comparison-label before" onclick="showFullImage(1, 'before')">До</span>
+                                        <span class="comparison-label after" onclick="showFullImage(1, 'after')">После</span>
+                                    </div>
+                                    <div class="image-set-buttons">
+                                        <button class="set-btn active" onclick="switchImageSet(1, 1)" onmouseenter="preloadSet(1, 1)">1<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(1, 2)" onmouseenter="preloadSet(1, 2)">2<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(1, 3)" onmouseenter="preloadSet(1, 3)">3<span class="loading-dot"></span></button>
+                                        <button class="set-btn" onclick="switchImageSet(1, 4)" onmouseenter="preloadSet(1, 4)">4<span class="loading-dot"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
                     <tr id="comp-row-8" style="display: none;">
                         <td colspan="7" style="padding: 20px; background: rgba(15, 23, 42, 0.5);">
                             <div id="comp-8" class="comparison-container">
@@ -738,22 +729,21 @@
             <img src="https://treemale.github.io/Minecraft/images/items/redstone-block.png" class="w-[50px] h-[50px] object-contain" alt=""> Моды и ресурс-паки
         </h2>
         <p class="text-slate-400 text-sm text-center mb-6">Полный список модификаций и ресурс-паков, которые я использую в игре — от визуальных улучшений до оптимизации производительности.</p>
-        <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mb-6 border-b border-slate-700 pb-3">
-            <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleSection('mods')">
-                Моды (<span id="mod-count" class="mc-green text-lg"></span>)
-                <img src="https://treemale.github.io/Minecraft/images/items/down-arrow-green.png" class="w-4 h-2 flex-shrink-0 align-middle pixel-icon" id="mods-toggle" alt="toggle">
-            </h2>
-            <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleSection('packs')">
-                Ресурс-паки (<span id="pack-count" class="text-purple-400 text-lg"></span>)
-                <img src="https://treemale.github.io/Minecraft/images/items/down-arrow-green.png" class="w-4 h-2 flex-shrink-0 align-middle pixel-icon" id="packs-toggle" alt="toggle">
-            </h2>
+        <div class="mod-toolbar">
             <div class="search-box">
-                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                <input id="item-search" type="text" placeholder="Поиск мода или ресурс-пака..." autocomplete="off">
-                <span id="search-clear" class="search-clear hidden">✕</span>
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m17 17 5 5"/></svg>
+                <input id="item-search" type="search" aria-label="Поиск модов и паков" placeholder="Найти мод или пак" autocomplete="off">
+                <button id="search-clear" type="button" class="search-clear hidden" aria-label="Очистить поиск">✕</button>
+            </div>
+            <div class="filter-bar" role="group" aria-label="Категория">
+                <button class="filter-btn" data-category="all" aria-pressed="true">Все</button>
+                <button class="filter-btn" data-category="mod" aria-pressed="false">Моды</button>
+                <button class="filter-btn" data-category="datapack" aria-pressed="false">Датапаки</button>
+                <button class="filter-btn" data-category="resourcepack" aria-pressed="false">Ресурспаки</button>
             </div>
         </div>
-        <div id="all-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
+        <p id="item-empty" class="empty-state hidden" role="status">Ничего не найдено.</p>
+        <div id="all-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-3"></div>
     </section>
 
     <!-- ================= ВКЛАДКА: ИСПЫТАНИЯ ОТ ЗРИТЕЛЕЙ ================= -->
@@ -762,16 +752,16 @@
             <img src="https://treemale.github.io/Minecraft/images/items/trial-spawn.png" class="w-[50px] h-[50px] object-contain" alt="trial-spawn"> Испытания от зрителей
         </h2>
         <p class="text-slate-400 text-sm text-center mb-4">Зрители покупают испытание за баллы канала и присылают его мне — а я его выполняю. Нажмите на карточку, чтобы раскрыть подробности.</p>
-        <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mb-6 border-b border-slate-700 pb-3">
-            <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleChallengesFilter('done')">
-                <span class="mc-green">Выполнено</span> (<span id="ch-done-count" class="mc-green text-lg"></span>)
-                <img src="https://treemale.github.io/Minecraft/images/items/down-arrow-green.png" class="w-4 h-2 flex-shrink-0 align-middle pixel-icon" id="ch-done-toggle" alt="toggle">
-            </h2>
-            <h2 class="text-2xl font-bold flex items-center gap-2 section-header" onclick="toggleChallengesFilter('pending')">
-                <span class="text-red-400">Не выполнено</span> (<span id="ch-pending-count" class="text-red-400 text-lg"></span>)
-                <img src="https://treemale.github.io/Minecraft/images/items/down-arrow-green.png" class="w-4 h-2 flex-shrink-0 align-middle pixel-icon" id="ch-pending-toggle" alt="toggle">
-            </h2>
+        <div class="challenge-toolbar">
+            <div class="filter-bar" role="group" aria-label="Статус челленджа">
+                <button class="filter-btn" data-status="all" aria-pressed="true">Все</button>
+                <button class="filter-btn" data-status="true" aria-pressed="false">Выполнено</button>
+                <button class="filter-btn" data-status="false" aria-pressed="false">В процессе</button>
+            </div>
+            <label for="challenge-difficulty">Сложность</label>
+            <select id="challenge-difficulty"></select>
         </div>
+        <p id="challenge-empty" class="empty-state hidden" role="status">Нет челленджей с такими условиями.</p>
         <div id="challenges-grid" class="grid grid-cols-1 gap-4"></div>
     </section>
 
@@ -783,7 +773,6 @@
         let clickInterval = null;
         const CLICK_CYCLE = 250;
         const ARROW_GREEN = 'https://treemale.github.io/Minecraft/images/items/down-arrow-green.png';
-        const ARROW_RED = 'https://treemale.github.io/Minecraft/images/items/up-arrow-red.png';
 
         const PARTICLE_COLORS = ['#ffffff','#e0f2fe','#bae6fd','#7dd3fc','#38bdf8','#0ea5e3','#0284c7','#0369a1'];
         function getRandomColor() { return PARTICLE_COLORS[Math.floor(Math.random() * PARTICLE_COLORS.length)]; }
@@ -831,28 +820,7 @@
             }
         }
 
-        function initBackgroundSlides() {
-            const container = document.getElementById('bg-container');
-            const backgroundImages = ['https://treemale.github.io/Minecraft/images/bg.webp'];
-            const SLIDE_INTERVAL = 10000;
-            backgroundImages.forEach((url, index) => {
-                const slide = document.createElement('div');
-                slide.className = 'bg-slide';
-                slide.style.backgroundImage = `url('${url}')`;
-                if (index === 0) slide.classList.add('active');
-                container.appendChild(slide);
-            });
-            if (backgroundImages.length > 1) {
-                const slides = document.querySelectorAll('.bg-slide');
-                let currentIndex = 0;
-                setInterval(() => {
-                    slides[currentIndex].classList.remove('active');
-                    currentIndex = (currentIndex + 1) % slides.length;
-                    slides[currentIndex].classList.add('active');
-                }, SLIDE_INTERVAL);
-            }
-        }
-        initBackgroundSlides();
+
 
         document.addEventListener('mousemove', (e) => {
             lastMouseX = e.clientX; lastMouseY = e.clientY;
@@ -1149,46 +1117,13 @@
             else { beforeImg.style.clipPath = 'inset(0 100% 0 0)'; slider.style.left = '0%'; }
         }
 
-        const sectionState = { mods: true, packs: true };
-        let searchQuery = '';
-
-        function updateCounters(modsVisible, packsVisible) {
-            document.getElementById('mod-count').innerText = modsVisible;
-            document.getElementById('pack-count').innerText = packsVisible;
+        function bindFilterButtons(selector, onChange) {
+            const buttons = document.querySelectorAll(selector);
+            buttons.forEach(button => button.addEventListener('click', () => {
+                buttons.forEach(option => option.setAttribute('aria-pressed', option === button));
+                onChange(button);
+            }));
         }
-
-        function toggleSection(section) {
-            sectionState[section] = !sectionState[section];
-            const toggleIcon = document.getElementById(section + '-toggle');
-            toggleIcon.src = sectionState[section] ? ARROW_GREEN : ARROW_RED;
-            applyFilters();
-        }
-
-        function applyFilters() {
-            const query = searchQuery.trim().toLowerCase();
-            document.getElementById('search-clear').classList.toggle('hidden', !searchQuery);
-            let modsVisible = 0, packsVisible = 0;
-            for (let card of allGrid.children) {
-                if (!card.classList.contains('card')) continue;
-                const isMod = !card.classList.contains('card-pack');
-                const section = isMod ? 'mods' : 'packs';
-                const sectionOpen = sectionState[section];
-                if (!sectionOpen) { card.classList.add('hidden'); continue; }
-                if (query) {
-                    const matches = card.textContent.toLowerCase().includes(query);
-                    card.classList.toggle('hidden', !matches);
-                } else { card.classList.remove('hidden'); }
-                if (!card.classList.contains('hidden')) { if (isMod) modsVisible++; else packsVisible++; }
-            }
-            updateCounters(modsVisible, packsVisible);
-        }
-
-        document.getElementById('item-search').addEventListener('input', (e) => { searchQuery = e.target.value; applyFilters(); });
-        document.getElementById('item-search').addEventListener('keydown', (e) => { if (e.key === 'Escape') { e.target.value = ''; searchQuery = ''; applyFilters(); } });
-        document.getElementById('search-clear').addEventListener('click', () => {
-            const input = document.getElementById('item-search');
-            input.value = ''; searchQuery = ''; applyFilters(); input.focus();
-        });
 
         const mods = [
             {n: "Animated Mojang Logo", d: "Заменяет старый скучный экран загрузки Minecraft на приятную анимацию.", url: "https://modrinth.com/mod/animated-mojang-logo"},
@@ -1257,9 +1192,9 @@
         ];
 
         const packs = [
-            {n: "BlazeandCave's Advancements Pack", d: "Пак добавляет в игру более 1000 новых достижений различной сложности.", url: "https://www.planetminecraft.com/data-pack/blazeandcave-s-advancements-pack-1-12/"},
+            {n: "BlazeandCave's Advancements Pack", d: "Пак добавляет в игру более 1000 новых достижений различной сложности.", url: "https://www.planetminecraft.com/data-pack/blazeandcave-s-advancements-pack-1-12/", type: "datapack"},
             {n: "BlazeandCave's Advancements Pack Bossbar", d: "Вводит команды и создает полоску прогресса для достижений.", url: "https://www.google.com/"},
-            {n: "BlazeandCave's Advancements Pack Hardcore", d: "Убирает достижения, которые нельзя выполнить без смерти.", url: "https://www.planetminecraft.com/data-pack/blazeandcave-s-advancements-pack-hardcore-version/"},
+            {n: "BlazeandCave's Advancements Pack Hardcore", d: "Убирает достижения, которые нельзя выполнить без смерти.", url: "https://www.planetminecraft.com/data-pack/blazeandcave-s-advancements-pack-hardcore-version/", type: "datapack"},
             {n: "BlazeandCave's Advancements Pack Language Pack", d: "Переводит описание у достижений на другой язык.", url: "https://www.planetminecraft.com/texture-pack/bacap-language-pack/"},
             {n: "Better Leaves", d: "Изменяет текстуры листвы, добавляя больше пышности по краям блока.", url: "https://www.curseforge.com/minecraft/texture-packs/motschens-better-leaves"},
             {n: "Round Trees", d: "Изменяет текстуры блоков древесины, делает их круглыми.", url: "https://www.curseforge.com/minecraft/texture-packs/round-trees-mc-vanilla-1-8-1-13"},
@@ -1269,20 +1204,62 @@
         ];
 
         const allGrid = document.getElementById('all-grid');
-        const allItems = [...mods.map(m => ({ ...m, type: 'mod' })), ...packs.map(p => ({ ...p, type: 'pack' }))];
-        allItems.sort((a, b) => a.n.localeCompare(b.n, 'ru'));
-        allItems.forEach(item => {
-            const isMod = item.type === 'mod';
-            const cardClass = isMod ? 'card p-4 rounded-lg' : 'card card-pack p-4 rounded-lg';
-            const dotImage = isMod ? 'https://treemale.github.io/Minecraft/images/items/point-green.png' : 'https://treemale.github.io/Minecraft/images/items/point-purple.png';
-            const title = isMod ? 'Перейти к моду' : 'Перейти к паку';
-            allGrid.innerHTML += `<div class="${cardClass}" onclick="window.open('${item.url}', '_blank')" title="${title}">
-                <h3 class="font-bold text-slate-200 mb-2 flex items-center gap-2 text-sm md:text-base">
-                    <img src="${dotImage}" class="w-3 h-3 flex-shrink-0 align-middle pixel-icon" alt="icon"> ${item.n}
-                </h3>
-                <p class="text-xs md:text-sm text-slate-400 leading-relaxed">${item.d}</p>
-            </div>`;
+        const search = document.getElementById('item-search');
+        const clearSearch = document.getElementById('search-clear');
+        let category = 'all';
+        const itemTypes = {
+            mod: { label: 'Мод', icon: 'redstone-block.png' },
+            datapack: { label: 'Датапак', icon: 'copper-chest.png' },
+            resourcepack: { label: 'Ресурспак', icon: 'lectern.png' }
+        };
+        const allItems = [
+            ...mods.map(item => ({ ...item, type: 'mod' })),
+            ...packs.map(item => ({ ...item, type: item.type ?? 'resourcepack' }))
+        ].sort((a, b) => a.n.localeCompare(b.n, 'ru'));
+
+        allGrid.innerHTML = allItems.map(item => {
+            const { label, icon } = itemTypes[item.type];
+            const link = item.url ? `<a class="item-link" href="${item.url}" target="_blank" rel="noopener noreferrer" aria-label="Открыть ${item.n}">Открыть ↗</a>` : "";
+            return `<article class="card mod-card" data-category="${item.type}">
+                <img class="mod-icon pixel-icon" src="images/items/${icon}" alt="">
+                <div class="mod-info">
+                    <h3>${item.n}</h3>
+                    <p>${item.d}</p>
+                    <span class="item-kind">${label}</span>
+                </div>
+                ${link}
+            </article>`;
+        }).join('');
+
+        function applyFilters() {
+            const query = search.value.trim().toLowerCase();
+            clearSearch.classList.toggle('hidden', !search.value);
+            let visible = 0;
+            Array.from(allGrid.children).forEach((card, index) => {
+                const item = allItems[index];
+                const matches = (category === 'all' || item.type === category)
+                    && (item.n + ' ' + item.d).toLowerCase().includes(query);
+                card.hidden = !matches;
+                if (matches) visible++;
+            });
+            document.getElementById('item-empty').classList.toggle('hidden', visible > 0);
+        }
+
+        function resetSearch() {
+            search.value = '';
+            search.focus();
+            applyFilters();
+        }
+
+        bindFilterButtons('[data-category].filter-btn', button => {
+            category = button.dataset.category;
+            applyFilters();
         });
+        search.addEventListener('input', applyFilters);
+        search.addEventListener('keydown', event => {
+            if (event.key === 'Escape') resetSearch();
+        });
+        clearSearch.addEventListener('click', resetSearch);
         applyFilters();
 
         // ================= ВКЛАДКА: ИСПЫТАНИЯ ОТ ЗРИТЕЛЕЙ =================
@@ -1352,33 +1329,28 @@
             return parts.join(' ');
         }
 
-        const challengesState = { done: true, pending: true };
-
-        function toggleChallengesFilter(type) {
-            challengesState[type] = !challengesState[type];
-            const toggleIcon = document.getElementById('ch-' + type + '-toggle');
-            toggleIcon.src = challengesState[type] ? ARROW_GREEN : ARROW_RED;
-            applyChallengesFilter();
-        }
+        let challengeStatus = 'all';
+        const difficultyFilter = document.getElementById('challenge-difficulty');
+        const difficulties = [...new Set(challenges.map(challenge => challenge.difficulty))].sort((a, b) => a - b);
+        difficultyFilter.innerHTML = '<option value="">Любая</option>'
+            + difficulties.map(value => `<option value="${value}">${value}</option>`).join('');
 
         function applyChallengesFilter() {
-            const cards = document.querySelectorAll('.challenge-card');
-            let doneVisible = 0, pendingVisible = 0;
-            cards.forEach(card => {
-                const isDone = card.dataset.done === 'true';
-                if (isDone) {
-                    const visible = challengesState.done;
-                    card.classList.toggle('hidden', !visible);
-                    if (visible) doneVisible++;
-                } else {
-                    const visible = challengesState.pending;
-                    card.classList.toggle('hidden', !visible);
-                    if (visible) pendingVisible++;
-                }
+            let visible = 0;
+            document.querySelectorAll('.challenge-card').forEach(card => {
+                const matches = (challengeStatus === 'all' || card.dataset.done === challengeStatus)
+                    && (!difficultyFilter.value || card.dataset.difficulty === difficultyFilter.value);
+                card.hidden = !matches;
+                if (matches) visible++;
             });
-            document.getElementById('ch-done-count').innerText = doneVisible;
-            document.getElementById('ch-pending-count').innerText = pendingVisible;
+            document.getElementById('challenge-empty').classList.toggle('hidden', visible > 0);
         }
+
+        bindFilterButtons('[data-status]', button => {
+            challengeStatus = button.dataset.status;
+            applyChallengesFilter();
+        });
+        difficultyFilter.addEventListener('change', applyChallengesFilter);
 
         function renderChallenges() {
             const grid = document.getElementById('challenges-grid');
@@ -1399,7 +1371,7 @@
                 const duration = calcDuration(c);
                 const status = isDone
                     ? '<span class="status-badge done">Выполнено</span>'
-                    : '<span class="status-badge not-done">Не выполнено</span>';
+                    : '<span class="status-badge not-done">В процессе</span>';
 
                 const info = `
                     <p class="text-sm text-slate-300 leading-relaxed mb-3">${c.desc}</p>
@@ -1415,8 +1387,8 @@
                     </div>` : '';
 
                 grid.innerHTML += `
-                    <div class="challenge-card ${isDone ? 'done' : 'not-done'}" id="ch-card-${i}" onclick="toggleChallenge(${i})" data-done="${isDone}">
-                        <div class="challenge-header">
+                    <div class="challenge-card ${isDone ? 'done' : 'not-done'}" id="ch-card-${i}" data-done="${isDone}" data-difficulty="${c.difficulty}">
+                        <button type="button" class="challenge-header" aria-expanded="false" aria-controls="ch-body-${i}" onclick="toggleChallenge(${i})">
                             <div class="ch-left">
                                 <div class="flex flex-col gap-1 flex-1">
                                     <span class="ch-title-text">${c.title} — ${c.nick}</span>
@@ -1431,8 +1403,8 @@
                                 <span class="ch-world">${c.world}</span>
                                 <img src="${ARROW_GREEN}" class="w-4 h-2 pixel-icon challenge-arrow" id="ch-arrow-${i}" alt="">
                             </div>
-                        </div>
-                        <div class="challenge-body">
+                        </button>
+                        <div class="challenge-body" id="ch-body-${i}">
                             ${info}
                             ${durationBlock}
                         </div>
@@ -1443,14 +1415,19 @@
 
         function toggleChallenge(i) {
             const card = document.getElementById('ch-card-' + i);
-            card.classList.toggle('expanded');
+            const expanded = card.classList.toggle('expanded');
+            card.querySelector('.challenge-header').setAttribute('aria-expanded', expanded);
         }
 
         function switchTab(tab) {
             document.getElementById('tab-runs').style.display = tab === 'runs' ? '' : 'none';
             document.getElementById('tab-mods').style.display = tab === 'mods' ? '' : 'none';
             document.getElementById('tab-challenges').style.display = tab === 'challenges' ? '' : 'none';
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+            document.querySelectorAll('.tab-btn').forEach(button => {
+                const active = button.dataset.tab === tab;
+                button.classList.toggle('active', active);
+                button.setAttribute('aria-pressed', active);
+            });
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
