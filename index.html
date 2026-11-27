@@ -329,7 +329,7 @@
         }
         .challenge-card.expanded .challenge-body { max-height: 600px; opacity: 1; margin-top: 14px; }
     </style>
-    <link rel="stylesheet" href="design.css">
+    <link rel="stylesheet" href="design.css?v=2">
 </head>
 <body class="p-4 md:p-8 mx-auto">
 
@@ -736,10 +736,10 @@
                 <button id="search-clear" type="button" class="search-clear hidden" aria-label="Очистить поиск">✕</button>
             </div>
             <div class="filter-bar" role="group" aria-label="Категория">
-                <button class="filter-btn" data-category="all" aria-pressed="true">Все</button>
-                <button class="filter-btn" data-category="mod" aria-pressed="false">Моды</button>
-                <button class="filter-btn" data-category="datapack" aria-pressed="false">Датапаки</button>
-                <button class="filter-btn" data-category="resourcepack" aria-pressed="false">Ресурспаки</button>
+                <button class="filter-btn" data-category="all" aria-pressed="true">Все <span class="filter-count"></span></button>
+                <button class="filter-btn" data-category="mod" aria-pressed="false">Моды <span class="filter-count"></span></button>
+                <button class="filter-btn" data-category="datapack" aria-pressed="false">Датапаки <span class="filter-count"></span></button>
+                <button class="filter-btn" data-category="resourcepack" aria-pressed="false">Ресурспаки <span class="filter-count"></span></button>
             </div>
         </div>
         <p id="item-empty" class="empty-state hidden" role="status">Ничего не найдено.</p>
@@ -1126,81 +1126,81 @@
         }
 
         const mods = [
-            {n: "Animated Mojang Logo", d: "Заменяет старый скучный экран загрузки Minecraft на приятную анимацию.", url: "https://modrinth.com/mod/animated-mojang-logo"},
-            {n: "Visual Health", d: "Добавляет наглядные визуальные повреждения (раны и синяки) на модели существ.", url: "https://modrinth.com/mod/visualhealth"},
-            {n: "Vanilla Outsider Bed Chat Hider", d: "Отключает автоматический фокус чата во время сна.", url: "https://www.curseforge.com/minecraft/mc-mods/vo-bed-chat-hider"},
-            {n: "Uku's Armor HUD", d: "Добавляет виджет HUD, отображающий текущий набор предметов брони.", url: "https://modrinth.com/mod/ukus-armor-hud"},
-            {n: "Fancy World Animations", d: "Добавляет анимацию при взаимодействии для некоторых предметов.", url: "https://modrinth.com/mod/fwa"},
-            {n: "Surface Particles", d: "Делает частицы блоков при взаимодействии текстурированными в соответствии с тем, что вы видите.", url: "https://modrinth.com/mod/surface-particles"},
-            {n: "Status Effect Bars", d: "Добавляет полосы наложения эффектов состояния, отображающие оставшееся время действия.", url: "https://modrinth.com/mod/status-effect-bars"},
-            {n: "Sound Physics Remastered", d: "Обеспечивает реалистичное затухание, реверберацию и поглощение звука блоками.", url: "https://modrinth.com/mod/sound-physics-remastered"},
-            {n: "Smooth Swapping", d: "Плавная анимация при перекладывании предметов.", url: "https://modrinth.com/mod/smooth-swapping"},
-            {n: "Smooth Scrolling", d: "Плавная анимация при пролистывании графического интерфейса.", url: "https://modrinth.com/mod/smooth-scroll"},
-            {n: "Smooth GUI", d: "Плавная анимация при открытии графического интерфейса.", url: "https://modrinth.com/mod/smooth-gui"},
-            {n: "Skin Layers 3D", d: "Отображает слой скина игрока в 3D.", url: "https://modrinth.com/mod/3dskinlayers"},
-            {n: "Real Arrow Tip", d: "Исправляет визуальное отображение стрел, заставляя лук и арбалет показывать правильный наконечник.", url: "https://modrinth.com/mod/real-arrow-tip"},
-            {n: "Pickup Notifications", d: "Показывает всплывающие уведомления при получении предметов.", url: "https://modrinth.com/mod/pickup-notifications"},
-            {n: "Particle Effects", d: "Добавляет уникальные текстурированные частицы для каждого эффекта зелий.", url: "https://modrinth.com/mod/particle-effects"},
-            {n: "No More Pop-ups", d: "Удаляет все встроенные уведомления в Minecraft (предупреждения, рецепты крафта и советы).", url: "https://modrinth.com/mod/no-more-popups"},
-            {n: "My Totem Doll", d: "Заменяет стандартные тотемы на 2D или 3D тотемы со скином игрока.", url: "https://modrinth.com/mod/my_totem_doll"},
-            {n: "Modern Advancements", d: "Увеличивает окно достижений, считает прогресс и позволяет закреплять достижения как цели на экране.", url: "https://www.curseforge.com/minecraft/mc-mods/modern-advancements"},
-            {n: "Mod Menu", d: "Добавляет удобный GUI интерфейс для просмотра и управления всеми установленными в игре модами.", url: "https://modrinth.com/mod/modmenu"},
-            {n: "Lambda Better Grass", d: "Добавляет в игру улучшенную траву и снег при их переходе.", url: "https://modrinth.com/mod/lambdabettergrass"},
-            {n: "Inventory Particles", d: "Красивые эффекты для предметов вашего инвентаря при перемещении.", url: "https://modrinth.com/mod/inventory-particles"},
-            {n: "Particle Rain", d: "Заменяет погодные условия на более красивые эффекты частиц.", url: "https://modrinth.com/mod/particle-rain"},
-            {n: "Imprint", d: "Добавляет частицы следов на земле от шагов игроков и мобов.", url: "https://modrinth.com/mod/imprint"},
-            {n: "Immersive Hotbar", d: "Добавляет анимацию к панели быстрого доступа.", url: "https://modrinth.com/mod/immersive-hotbar"},
-            {n: "Hover Items", d: "Добавляет небольшую анимацию при наведении курсора на элементы.", url: "https://modrinth.com/mod/hover-items"},
-            {n: "Held Item Info", d: "Отображает информацию (например, о зачарованиях) об удерживаемом предмете под его названием.", url: "https://modrinth.com/mod/held-item-info"},
-            {n: "Fancy Toasts", d: "Добавляет функционал позволяющий изменить анимацию и звуки у выполненных достижений, испытаний и целей.", url: "https://modrinth.com/mod/fancy-toasts"},
-            {n: "Fancy Block Particles Reforged", d: "Изменяет эффекты частиц для разрушающихся блоков (3D-частицы).", url: "https://www.curseforge.com/minecraft/mc-mods/fancy-block-particles-reforged"},
-            {n: "Falling Leaves", d: "Добавляет эффект падающих листьев из блоков листвы.", url: "https://modrinth.com/mod/fallingleaves"},
-            {n: "Durability Tooltip", d: "Добавляет цифровой показатель прочности для всех инструментов, брони и оружия.", url: "https://modrinth.com/mod/durability-tooltip"},
-            {n: "Dark Loading Screen", d: "Делает экран загрузки Mojang темнее.", url: "https://modrinth.com/mod/dark-loading-screen"},
-            {n: "Cursors Extended", d: "Меняет стандартный курсор на стилизованный под игру.", url: "https://modrinth.com/mod/minecraft-cursor"},
-            {n: "Chat Signing Hider", d: "Скрывает все, что связано с подписыванием чата (уведомления в углу).", url: "https://modrinth.com/mod/chat-signing-hider"},
-            {n: "Blur+", d: "Оживляет скучный стандартный эффект размытия с помощью анимации.", url: "https://modrinth.com/mod/blur-plus"},
-            {n: "Better Statistics Screen", d: "Заменяет стандартный экран статистики игры, делает его более наглядным, понятным и простым.", url: "https://modrinth.com/mod/better-stats"},
-            {n: "Apple Skin", d: "Добавляет полезную информацию о еде/голоде в интерфейс пользователя (отображает уровень насыщения).", url: "https://modrinth.com/mod/appleskin"},
-            {n: "Smart Particles", d: "Оптимизация производительности, которая улучшает отрисовку частиц и настраивает их лимиты.", url: "https://modrinth.com/mod/smart-particles"},
-            {n: "TCD Commons API", d: "Библиотека API для моддинга Minecraft, которая включает в себя собственную систему GUI.", url: "https://modrinth.com/mod/tcdcommons"},
-            {n: "Sodium", d: "Высокопроизводительная замена движка рендеринга для Minecraft, которая повышает частоту кадров.", url: "https://modrinth.com/mod/sodium"},
-            {n: "Entity Culling", d: "Повышает производительность, позволяя не прогружать невидимые игроку объекты в игре.", url: "https://modrinth.com/mod/entityculling"},
-            {n: "SuperMartijn642's Config Lib", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/supermartijn642s-config-lib"},
-            {n: "Lithium", d: "Набор функций, улучшающий производительность сервера игры.", url: "https://modrinth.com/mod/lithium"},
-            {n: "Yet Another Config Lib", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/yacl"},
-            {n: "Ferrite Core", d: "Оптимизация использования оперативной памяти.", url: "https://modrinth.com/mod/ferrite-core"},
-            {n: "Cloth Config API", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/cloth-config"},
-            {n: "Placeholder API", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/plugin/placeholderapi"},
-            {n: "Creative Core", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/creativecore"},
-            {n: "Timeless Lib", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/timelesslib"},
-            {n: "Fabric API", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/fabric-api"},
-            {n: "Collective", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/collective"},
-            {n: "Mossy Lib", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/mossylib"},
-            {n: "Dasik Lib", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/dasik-library"},
-            {n: "Uku Lib", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/ukulib"},
-            {n: "Debugify", d: "Исправление ошибок в Minecraft, обнаруженные в системе отслеживания ошибок.", url: "https://modrinth.com/mod/debugify"},
-            {n: "Make Bubbles Pop", d: "Заставляет пузырьки лопаться и реалистично подниматься к поверхности воды.", url: "https://modrinth.com/mod/make_bubbles_pop"},
-            {n: "Wavey Capes", d: "Плащи и элитры колышутся на ветру с физикой.", url: "https://modrinth.com/mod/wavey-capes"},
-            {n: "Ping Wheel", d: "Позволяет игрокам временно отмечать местоположения и объекты издалека (метки).", url: "https://modrinth.com/mod/ping-wheel"},
-            {n: "Spark", d: "Инструмент для профилирования производительности клиентов, серверов и прокси-серверов.", url: "https://modrinth.com/mod/spark"},
-            {n: "Litematica", d: "Технический мод, который позволяет создавать, импортировать и отображать 3D-голограммы построек.", url: "https://modrinth.com/mod/litematica"},
-            {n: "Mali Lib", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/malilib"},
-            {n: "Better Block Entities", d: "Мод для оптимизации, который повышает частоту кадров за счет улучшения рендеринга блочных сущностей.", url: "https://modrinth.com/mod/better-block-entities"},
-            {n: "Immediately Fast", d: "Ускоряет рендеринг в режиме непосредственного отображения в Minecraft.", url: "https://modrinth.com/mod/immediatelyfast/versions"},
+            {n: "Animated Mojang Logo", d: "Заменяет старый скучный экран загрузки Minecraft на приятную анимацию.", url: "https://modrinth.com/mod/animated-mojang-logo", icon: "https://cdn.modrinth.com/data/dWUOweyL/726c918e8d65aa7d788d4115852055a16b4e570f_96.webp"},
+            {n: "Visual Health", d: "Добавляет наглядные визуальные повреждения (раны и синяки) на модели существ.", url: "https://modrinth.com/mod/visualhealth", icon: "https://cdn.modrinth.com/data/X01iuqRJ/756e4eaf4ad04093a1eb887afd960b6909961b22.gif"},
+            {n: "Vanilla Outsider Bed Chat Hider", d: "Отключает автоматический фокус чата во время сна.", url: "https://www.curseforge.com/minecraft/mc-mods/vo-bed-chat-hider", icon: "https://media.forgecdn.net/avatars/thumbnails/1919/288/256/256/639196265101546372.webp"},
+            {n: "Uku's Armor HUD", d: "Добавляет виджет HUD, отображающий текущий набор предметов брони.", url: "https://modrinth.com/mod/ukus-armor-hud", icon: "https://cdn.modrinth.com/data/wF189hn9/a790ea8edc940ba6fd6bb92f298a19e438904e4a.png"},
+            {n: "Fancy World Animations", d: "Добавляет анимацию при взаимодействии для некоторых предметов.", url: "https://modrinth.com/mod/fwa", icon: "https://cdn.modrinth.com/data/IAzUFvS6/d4d09297c301994b44fdd6fbdfe7468aeb476beb_96.webp"},
+            {n: "Surface Particles", d: "Делает частицы блоков при взаимодействии текстурированными в соответствии с тем, что вы видите.", url: "https://modrinth.com/mod/surface-particles", icon: "https://cdn.modrinth.com/data/Y6J2jpQC/6ff3b67b37f037f55e39522eb6c744021ebcca18.png"},
+            {n: "Status Effect Bars", d: "Добавляет полосы наложения эффектов состояния, отображающие оставшееся время действия.", url: "https://modrinth.com/mod/status-effect-bars", icon: "https://cdn.modrinth.com/data/x02cBj9Y/7ee93fac37512f4f04aa82f15deada7b2ca9269f.png"},
+            {n: "Sound Physics Remastered", d: "Обеспечивает реалистичное затухание, реверберацию и поглощение звука блоками.", url: "https://modrinth.com/mod/sound-physics-remastered", icon: "https://cdn.modrinth.com/data/qyVF9oeo/798fbfae58ec95ad51f3e1d522b43227306c326c.png"},
+            {n: "Smooth Swapping", d: "Плавная анимация при перекладывании предметов.", url: "https://modrinth.com/mod/smooth-swapping", icon: "https://cdn.modrinth.com/data/ydZic5r4/2d949628d59149ec28c08f50f61d2984dd81ecbb_96.webp"},
+            {n: "Smooth Scrolling", d: "Плавная анимация при пролистывании графического интерфейса.", url: "https://modrinth.com/mod/smooth-scroll", icon: "https://cdn.modrinth.com/data/CllP7wW0/6d787d5cd5fface4fe9a5f6ce0770576bca09132.png"},
+            {n: "Smooth GUI", d: "Плавная анимация при открытии графического интерфейса.", url: "https://modrinth.com/mod/smooth-gui", icon: "https://cdn.modrinth.com/data/j6yrZogB/513135473a86464be6f7e3f1218942f142698545_96.webp"},
+            {n: "Skin Layers 3D", d: "Отображает слой скина игрока в 3D.", url: "https://modrinth.com/mod/3dskinlayers", icon: "https://cdn.modrinth.com/data/zV5r3pPn/ff7010d4ec0275609866c8b0f603b25e25949c08_96.webp"},
+            {n: "Real Arrow Tip", d: "Исправляет визуальное отображение стрел, заставляя лук и арбалет показывать правильный наконечник.", url: "https://modrinth.com/mod/real-arrow-tip", icon: "https://cdn.modrinth.com/data/vgVfk0m2/229b86aa99be7ca47987c72d87338808171d1563.png"},
+            {n: "Pickup Notifications", d: "Показывает всплывающие уведомления при получении предметов.", url: "https://modrinth.com/mod/pickup-notifications", icon: "https://cdn.modrinth.com/data/wWiJfmyy/088756c990194872c2e8827b3d4333f81eaec640_96.webp"},
+            {n: "Particle Effects", d: "Добавляет уникальные текстурированные частицы для каждого эффекта зелий.", url: "https://modrinth.com/mod/particle-effects", icon: "https://cdn.modrinth.com/data/PLAGcSFJ/a1c206381f51a0fb2bf5e5e38bb850392b31141b_96.webp"},
+            {n: "No More Pop-ups", d: "Удаляет все встроенные уведомления в Minecraft (предупреждения, рецепты крафта и советы).", url: "https://modrinth.com/mod/no-more-popups", icon: "https://cdn.modrinth.com/data/sAdB6HVW/929774f3846acdbb44e30ded380e853d53e013a4.png"},
+            {n: "My Totem Doll", d: "Заменяет стандартные тотемы на 2D или 3D тотемы со скином игрока.", url: "https://modrinth.com/mod/my_totem_doll", icon: "https://cdn.modrinth.com/data/ygYU16dG/6ec5f4add75569ceef806fa15f63017de511c381_96.webp"},
+            {n: "Modern Advancements", d: "Увеличивает окно достижений, считает прогресс и позволяет закреплять достижения как цели на экране.", url: "https://www.curseforge.com/minecraft/mc-mods/modern-advancements", icon: "https://media.forgecdn.net/avatars/thumbnails/2049/17/256/256/639250804802342209.png"},
+            {n: "Mod Menu", d: "Добавляет удобный GUI интерфейс для просмотра и управления всеми установленными в игре модами.", url: "https://modrinth.com/mod/modmenu", icon: "https://cdn.modrinth.com/data/mOgUt4GM/5a20ed1450a0e1e79a1fe04e61bb4e5878bf1d20.png"},
+            {n: "Lambda Better Grass", d: "Добавляет в игру улучшенную траву и снег при их переходе.", url: "https://modrinth.com/mod/lambdabettergrass", icon: "https://cdn.modrinth.com/data/2Uev7LdA/icon.png"},
+            {n: "Inventory Particles", d: "Красивые эффекты для предметов вашего инвентаря при перемещении.", url: "https://modrinth.com/mod/inventory-particles", icon: "https://cdn.modrinth.com/data/XYnKrsxH/e6973926d0f896e2bf7df8d69a7e53e78502606f_96.webp"},
+            {n: "Particle Rain", d: "Заменяет погодные условия на более красивые эффекты частиц.", url: "https://modrinth.com/mod/particle-rain", icon: "https://cdn.modrinth.com/data/nrikgvxm/e637304d1bec07c39e833d810aa4bdbb9703bf95_96.webp"},
+            {n: "Imprint", d: "Добавляет частицы следов на земле от шагов игроков и мобов.", url: "https://modrinth.com/mod/imprint", icon: "https://cdn.modrinth.com/data/vej1VqC3/bbf4789f6b10c79d6c7e0c5c92de4e3a225ba9fc_96.webp"},
+            {n: "Immersive Hotbar", d: "Добавляет анимацию к панели быстрого доступа.", url: "https://modrinth.com/mod/immersive-hotbar", icon: "https://cdn.modrinth.com/data/hsPB5xMD/49a1d507980ca08381ae2742db4d674d1e6238c9_96.webp"},
+            {n: "Hover Items", d: "Добавляет небольшую анимацию при наведении курсора на элементы.", url: "https://modrinth.com/mod/hover-items", icon: "https://cdn.modrinth.com/data/mPPc1NjY/9466d44b9aed3d91c531a48f2781d2b844b5570b_96.webp"},
+            {n: "Held Item Info", d: "Отображает информацию (например, о зачарованиях) об удерживаемом предмете под его названием.", url: "https://modrinth.com/mod/held-item-info", icon: "https://cdn.modrinth.com/data/tEcWzCZz/39f285a000b8685703bfc5e6939f3f2fb49634f5.png"},
+            {n: "Fancy Toasts", d: "Добавляет функционал позволяющий изменить анимацию и звуки у выполненных достижений, испытаний и целей.", url: "https://modrinth.com/mod/fancy-toasts", icon: "https://cdn.modrinth.com/data/eUziWqPC/845868e9551bd3b0c781dccbd0554da835589002_96.webp"},
+            {n: "Fancy Block Particles Reforged", d: "Изменяет эффекты частиц для разрушающихся блоков (3D-частицы).", url: "https://www.curseforge.com/minecraft/mc-mods/fancy-block-particles-reforged", icon: "https://media.forgecdn.net/avatars/thumbnails/2049/353/256/256/639250904135469023.png"},
+            {n: "Falling Leaves", d: "Добавляет эффект падающих листьев из блоков листвы.", url: "https://modrinth.com/mod/fallingleaves", icon: "https://cdn.modrinth.com/data/WhbRG4iK/58f5b66cb54787d9c25228d667f61144371c3867_96.webp"},
+            {n: "Durability Tooltip", d: "Добавляет цифровой показатель прочности для всех инструментов, брони и оружия.", url: "https://modrinth.com/mod/durability-tooltip", icon: "https://cdn.modrinth.com/data/smUP7V3r/icon.png"},
+            {n: "Dark Loading Screen", d: "Делает экран загрузки Mojang темнее.", url: "https://modrinth.com/mod/dark-loading-screen", icon: "https://cdn.modrinth.com/data/h3XWIuzM/icon.png"},
+            {n: "Cursors Extended", d: "Меняет стандартный курсор на стилизованный под игру.", url: "https://modrinth.com/mod/minecraft-cursor", icon: "https://cdn.modrinth.com/data/o5fhgLeQ/ef9ca61affa94e89e03d7a28323e4102841ae2e6.png"},
+            {n: "Chat Signing Hider", d: "Скрывает все, что связано с подписыванием чата (уведомления в углу).", url: "https://modrinth.com/mod/chat-signing-hider", icon: "https://cdn.modrinth.com/data/6KrNtW32/0856db3321d4ececbbbf98f2fa46620414a50688.png"},
+            {n: "Blur+", d: "Оживляет скучный стандартный эффект размытия с помощью анимации.", url: "https://modrinth.com/mod/blur-plus", icon: "https://cdn.modrinth.com/data/NK39zBp2/1bb976c95042f20f26e27e6c4eb9e359e45d5002.webp"},
+            {n: "Better Statistics Screen", d: "Заменяет стандартный экран статистики игры, делает его более наглядным, понятным и простым.", url: "https://modrinth.com/mod/better-stats", icon: "https://cdn.modrinth.com/data/n6PXGAoM/c5a85914f01be35575abe61c2d19d48e08581034_96.webp"},
+            {n: "Apple Skin", d: "Добавляет полезную информацию о еде/голоде в интерфейс пользователя (отображает уровень насыщения).", url: "https://modrinth.com/mod/appleskin", icon: "https://cdn.modrinth.com/data/EsAfCjCV/icon.png"},
+            {n: "Smart Particles", d: "Оптимизация производительности, которая улучшает отрисовку частиц и настраивает их лимиты.", url: "https://modrinth.com/mod/smart-particles", icon: "https://cdn.modrinth.com/data/l8rWP4Tc/57f5774fa5c3eb82cb5500f899eed5fd9c592bc3_96.webp"},
+            {n: "TCD Commons API", d: "Библиотека API для моддинга Minecraft, которая включает в себя собственную систему GUI.", url: "https://modrinth.com/mod/tcdcommons", icon: "https://cdn.modrinth.com/data/Eldc1g37/36f2c7c76a7fc63e827bc20657853b7f1d9e4060.png"},
+            {n: "Sodium", d: "Высокопроизводительная замена движка рендеринга для Minecraft, которая повышает частоту кадров.", url: "https://modrinth.com/mod/sodium", icon: "https://cdn.modrinth.com/data/AANobbMI/295862f4724dc3f78df3447ad6072b2dcd3ef0c9_96.webp"},
+            {n: "Entity Culling", d: "Повышает производительность, позволяя не прогружать невидимые игроку объекты в игре.", url: "https://modrinth.com/mod/entityculling", icon: "https://cdn.modrinth.com/data/NNAgCjsB/7873452d6cede4daed12da3d7d8c193ab88b4fd6_96.webp"},
+            {n: "SuperMartijn642's Config Lib", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/supermartijn642s-config-lib", icon: "https://cdn.modrinth.com/data/LN9BxssP/ad25597dd1b10b49cdfbc97c70d401e3158000f7_96.webp"},
+            {n: "Lithium", d: "Набор функций, улучшающий производительность сервера игры.", url: "https://modrinth.com/mod/lithium", icon: "https://cdn.modrinth.com/data/gvQqBUqZ/bcc8686c13af0143adf4285d741256af824f70b7_96.webp"},
+            {n: "Yet Another Config Lib", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/yacl", icon: "https://cdn.modrinth.com/data/1eAoo2KR/08c0cd32515e260f4bb20bbc0696510041523f9a_96.webp"},
+            {n: "Ferrite Core", d: "Оптимизация использования оперативной памяти.", url: "https://modrinth.com/mod/ferrite-core", icon: "https://cdn.modrinth.com/data/uXXizFIs/222a126f26f8f9ae1eb339f3b767677f18bff31f_96.webp"},
+            {n: "Cloth Config API", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/cloth-config", icon: "https://cdn.modrinth.com/data/9s6osm5g/ed8a2316cbb6f4fc5f510e8e13a59a85cbbbff4d_96.webp"},
+            {n: "Placeholder API", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/plugin/placeholderapi", icon: "https://cdn.modrinth.com/data/eXts2L7r/e9c9990896e6422bffc5f73d2c41b8f077348f83.png"},
+            {n: "Creative Core", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/creativecore", icon: "https://cdn.modrinth.com/data/OsZiaDHq/4953ecd3c0c8b185b2a56d64cdb104b03f3e5038_96.webp"},
+            {n: "Timeless Lib", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/timelesslib", icon: "https://cdn.modrinth.com/data/vKDSSPpv/148aa96343164e75f6d2c04a71ca81a2b188355c.png"},
+            {n: "Fabric API", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/fabric-api", icon: "https://cdn.modrinth.com/data/P7dR8mSH/icon.png"},
+            {n: "Collective", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/collective", icon: "https://cdn.modrinth.com/data/e0M1UDsY/f5e4fe9ac298e2c14591920d6bda937c566accd0_96.webp"},
+            {n: "Mossy Lib", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/mossylib", icon: "https://cdn.modrinth.com/data/ffLDUGbm/1787470c1ca81b2d0e0b3a9370d6f039d4f13207_96.webp"},
+            {n: "Dasik Lib", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/dasik-library", icon: "https://cdn.modrinth.com/data/JVMIalSJ/6a1b2be9f2de0bdc021934a0a354631b74f222c4_96.webp"},
+            {n: "Uku Lib", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/ukulib", icon: "https://cdn.modrinth.com/data/Y8uFrUil/3306adc6d3ba21b11bb14f06f00c21cd5f47e506.webp"},
+            {n: "Debugify", d: "Исправление ошибок в Minecraft, обнаруженные в системе отслеживания ошибок.", url: "https://modrinth.com/mod/debugify", icon: "https://cdn.modrinth.com/data/QwxR6Gcd/d16ec025a7f2d9908248bb4d1477e3e624a2f17f_96.webp"},
+            {n: "Make Bubbles Pop", d: "Заставляет пузырьки лопаться и реалистично подниматься к поверхности воды.", url: "https://modrinth.com/mod/make_bubbles_pop", icon: "https://cdn.modrinth.com/data/gPCdW0Wr/4616c50230e3e716f02127a0e74f250470a07e85.png"},
+            {n: "Wavey Capes", d: "Плащи и элитры колышутся на ветру с физикой.", url: "https://modrinth.com/mod/wavey-capes", icon: "https://cdn.modrinth.com/data/kYuIpRLv/a51c297bdaf9685a23cc9994372fa8d45852b98b_96.webp"},
+            {n: "Ping Wheel", d: "Позволяет игрокам временно отмечать местоположения и объекты издалека (метки).", url: "https://modrinth.com/mod/ping-wheel", icon: "https://cdn.modrinth.com/data/QQXAdCzh/6d15088ddd1e07abcba1a2e796d1f9c7a3138b1d_96.webp"},
+            {n: "Spark", d: "Инструмент для профилирования производительности клиентов, серверов и прокси-серверов.", url: "https://modrinth.com/mod/spark", icon: "https://cdn.modrinth.com/data/l6YH9Als/61a777dd08a8447ac93e8b6372e6d27d48cd1e1a_96.webp"},
+            {n: "Litematica", d: "Технический мод, который позволяет создавать, импортировать и отображать 3D-голограммы построек.", url: "https://modrinth.com/mod/litematica", icon: "https://cdn.modrinth.com/data/bEpr0Arc/25b5529d7a3b030ac136a6ce879d8ed2a1aa4a8d.png"},
+            {n: "Mali Lib", d: "Библиотека инструментов для работы модов.", url: "https://modrinth.com/mod/malilib", icon: "https://cdn.modrinth.com/data/GcWjdA9I/a530ae55df5e0c405f5cf1b3e4fd6163a398bdc3.png"},
+            {n: "Better Block Entities", d: "Мод для оптимизации, который повышает частоту кадров за счет улучшения рендеринга блочных сущностей.", url: "https://modrinth.com/mod/better-block-entities", icon: "https://cdn.modrinth.com/data/ONZm0H7Y/5ff4f3ad6948a0bf185f641c407878932bae3dcf.png"},
+            {n: "Immediately Fast", d: "Ускоряет рендеринг в режиме непосредственного отображения в Minecraft.", url: "https://modrinth.com/mod/immediatelyfast/versions", icon: "https://cdn.modrinth.com/data/5ZwdcRci/e57b6b451425692ac17ad322d5e14bea686a383a_96.webp"},
             {n: "BACAP Stream Title", d: "Мой простой мод, который связан с моим ресурс паком BACAP Bossbar и обновляет мне название стрима.", url: ""}
         ];
 
         const packs = [
-            {n: "BlazeandCave's Advancements Pack", d: "Пак добавляет в игру более 1000 новых достижений различной сложности.", url: "https://www.planetminecraft.com/data-pack/blazeandcave-s-advancements-pack-1-12/", type: "datapack"},
-            {n: "BlazeandCave's Advancements Pack Bossbar", d: "Вводит команды и создает полоску прогресса для достижений.", url: "https://www.google.com/"},
-            {n: "BlazeandCave's Advancements Pack Hardcore", d: "Убирает достижения, которые нельзя выполнить без смерти.", url: "https://www.planetminecraft.com/data-pack/blazeandcave-s-advancements-pack-hardcore-version/", type: "datapack"},
-            {n: "BlazeandCave's Advancements Pack Language Pack", d: "Переводит описание у достижений на другой язык.", url: "https://www.planetminecraft.com/texture-pack/bacap-language-pack/"},
-            {n: "Better Leaves", d: "Изменяет текстуры листвы, добавляя больше пышности по краям блока.", url: "https://www.curseforge.com/minecraft/texture-packs/motschens-better-leaves"},
-            {n: "Round Trees", d: "Изменяет текстуры блоков древесины, делает их круглыми.", url: "https://www.curseforge.com/minecraft/texture-packs/round-trees-mc-vanilla-1-8-1-13"},
-            {n: "Crops 3D", d: "Добавляет 3D текстуры для всех растений на грядках и грибов.", url: "https://www.curseforge.com/minecraft/texture-packs/crops-3d"},
-            {n: "Tasty Items", d: "Добавляет анимацию при поедании чего-либо.", url: "https://modrinth.com/resourcepack/tasty-items"},
-            {n: "Ricardo Golem", d: "Меняет текстуру железного голема на Рикардо Милоса.", url: "https://modrinth.com/resourcepack/ricardogolem/versions"}
+            {n: "BlazeandCave's Advancements Pack", d: "Пак добавляет в игру более 1000 новых достижений различной сложности.", url: "https://www.planetminecraft.com/data-pack/blazeandcave-s-advancements-pack-1-12/", icon: "https://cdn.modrinth.com/data/VoVJ47kN/88a39593e6ef876d0a22ebb3fcfa398c223bea3c.png", type: "datapack"},
+            {n: "BlazeandCave's Advancements Pack Bossbar", d: "Вводит команды и создает полоску прогресса для достижений.", url: "https://www.google.com/", icon: "https://cdn.modrinth.com/data/Z76umwHg/d9454670fd454e186a52ec400db3082f7f302e8a.png"},
+            {n: "BlazeandCave's Advancements Pack Hardcore", d: "Убирает достижения, которые нельзя выполнить без смерти.", url: "https://www.planetminecraft.com/data-pack/blazeandcave-s-advancements-pack-hardcore-version/", icon: "https://cdn.modrinth.com/data/QEv1xmKi/a1abc2550b166f2ba820001bf94230c7d5f3a152.png", type: "datapack"},
+            {n: "BlazeandCave's Advancements Pack Language Pack", d: "Переводит описание у достижений на другой язык.", url: "https://www.planetminecraft.com/texture-pack/bacap-language-pack/", icon: "https://cdn.modrinth.com/data/YX5bAAJN/88a39593e6ef876d0a22ebb3fcfa398c223bea3c.png"},
+            {n: "Better Leaves", d: "Изменяет текстуры листвы, добавляя больше пышности по краям блока.", url: "https://www.curseforge.com/minecraft/texture-packs/motschens-better-leaves", icon: "https://media.forgecdn.net/avatars/thumbnails/317/448/256/256/637421878980974791.png"},
+            {n: "Round Trees", d: "Изменяет текстуры блоков древесины, делает их круглыми.", url: "https://www.curseforge.com/minecraft/texture-packs/round-trees-mc-vanilla-1-8-1-13", icon: "https://media.forgecdn.net/avatars/thumbnails/240/251/256/256/637119835795720422.png"},
+            {n: "Crops 3D", d: "Добавляет 3D текстуры для всех растений на грядках и грибов.", url: "https://www.curseforge.com/minecraft/texture-packs/crops-3d", icon: "https://media.forgecdn.net/avatars/thumbnails/250/811/256/256/637180378912502171.png"},
+            {n: "Tasty Items", d: "Добавляет анимацию при поедании чего-либо.", url: "https://modrinth.com/resourcepack/tasty-items", icon: "https://cdn.modrinth.com/data/yVNZK7l2/89f0562be26337e06c8d984712c636d6736cfa67.png"},
+            {n: "Ricardo Golem", d: "Меняет текстуру железного голема на Рикардо Милоса.", url: "https://modrinth.com/resourcepack/ricardogolem/versions", icon: "https://cdn.modrinth.com/data/HKeUwuIP/5522d104c1beb07d1a36a66a0f112d5732f03523_96.webp"}
         ];
 
         const allGrid = document.getElementById('all-grid');
@@ -1217,11 +1217,17 @@
             ...packs.map(item => ({ ...item, type: item.type ?? 'resourcepack' }))
         ].sort((a, b) => a.n.localeCompare(b.n, 'ru'));
 
+        const itemCounts = { all: allItems.length, mod: 0, datapack: 0, resourcepack: 0 };
+        allItems.forEach(item => itemCounts[item.type]++);
+        document.querySelectorAll('.filter-btn[data-category]').forEach(button => {
+            button.querySelector('.filter-count').textContent = itemCounts[button.dataset.category];
+        });
+
         allGrid.innerHTML = allItems.map(item => {
             const { label, icon } = itemTypes[item.type];
             const link = item.url ? `<a class="item-link" href="${item.url}" target="_blank" rel="noopener noreferrer" aria-label="Открыть ${item.n}">Открыть ↗</a>` : "";
             return `<article class="card mod-card" data-category="${item.type}">
-                <img class="mod-icon pixel-icon" src="images/items/${icon}" alt="">
+                <img class="mod-icon" src="${item.icon || 'images/items/' + icon}" data-fallback="images/items/${icon}" loading="lazy" decoding="async" alt="">
                 <div class="mod-info">
                     <h3>${item.n}</h3>
                     <p>${item.d}</p>
@@ -1230,6 +1236,13 @@
                 ${link}
             </article>`;
         }).join('');
+        allGrid.addEventListener('error', event => {
+            const image = event.target;
+            if (!image.matches('.mod-icon[data-fallback]')) return;
+            const fallback = image.dataset.fallback;
+            delete image.dataset.fallback;
+            if (image.getAttribute('src') !== fallback) image.src = fallback;
+        }, true);
 
         function applyFilters() {
             const query = search.value.trim().toLowerCase();
