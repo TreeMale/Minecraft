@@ -109,6 +109,8 @@ body::before { content: none; }
 .stream-status[data-state="live"] { color: #ff9399; }
 #twitch-player {
     height: 300px;
+    overflow: hidden;
+    border-radius: 6px;
     margin-top: 8px;
     background: #10100f;
 }

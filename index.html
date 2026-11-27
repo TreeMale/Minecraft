@@ -320,7 +320,7 @@
         }
         .challenge-card.expanded .challenge-body { max-height: 600px; opacity: 1; margin-top: 14px; }
     </style>
-    <link rel="stylesheet" href="design.css?v=7">
+    <link rel="stylesheet" href="design.css?v=8">
 </head>
 <body class="p-4 md:p-8 mx-auto">
 
@@ -352,7 +352,7 @@
             </div>
             <div class="hero-stream">
                 <div class="stream-status" id="stream-status" role="status" data-state="unknown">Статус эфира — на Twitch</div>
-                <div id="twitch-player" hidden></div>
+                <div id="twitch-player"></div>
                 <a class="stream-link" href="https://www.twitch.tv/treemale" target="_blank" rel="noopener noreferrer">Открыть на Twitch ↗</a>
             </div>
         </div>
@@ -1411,6 +1411,6 @@
 
         renderChallenges();
     </script>
-<script src="twitch-stream.js" defer></script>
+<script src="twitch-stream.js?v=2" defer></script>
 </body>
 </html>
