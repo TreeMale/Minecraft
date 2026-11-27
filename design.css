@@ -56,9 +56,10 @@ body::before { content: none; }
 .tab-btn:hover, .tab-btn.active { color: var(--text); border-bottom-color: var(--accent); }
 
 .runs-hero {
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(400px, 46%);
+    align-items: end;
+    gap: 24px;
     min-height: clamp(285px, 37vw, 425px);
     padding: clamp(20px, 5vw, 64px);
     border: 1px solid var(--border);
@@ -83,6 +84,44 @@ body::before { content: none; }
 .hero-stats > span > span:first-child { color: #f4cc78; padding-right: 4px; }
 .runs-hero .progress-container { width: min(100%, 355px); min-width: 0; height: 9px; margin-top: 16px; }
 .runs-hero .progress-bar { height: 100%; }
+.hero-stream {
+    width: min(100%, 500px);
+    justify-self: end;
+    padding: 12px;
+    background: #161713ed;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+.stream-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 13px;
+}
+.stream-status::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+}
+.stream-status[data-state="live"] { color: #ff9399; }
+#twitch-player {
+    height: 300px;
+    margin-top: 8px;
+    background: #10100f;
+}
+#twitch-player iframe { display: block; width: 100%; height: 100%; border: 0; }
+.stream-link { display: inline-block; margin-top: 8px; color: #d6b6ff; font-size: 13px; }
+.stream-link:hover { text-decoration: underline; }
+@media (max-width: 860px) {
+    .runs-hero { grid-template-columns: minmax(0, 1fr); }
+    .hero-stream { justify-self: start; }
+}
+@media (max-width: 539px) {
+    #twitch-player { display: none; }
+}
 .progress-container { min-width: 95px; background: #4b493e; }
 .progress-bar { background: var(--accent); border-radius: inherit; }
 .mc-green, .world-name { color: var(--accent); }

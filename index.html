@@ -320,7 +320,7 @@
         }
         .challenge-card.expanded .challenge-body { max-height: 600px; opacity: 1; margin-top: 14px; }
     </style>
-    <link rel="stylesheet" href="design.css?v=6">
+    <link rel="stylesheet" href="design.css?v=7">
 </head>
 <body class="p-4 md:p-8 mx-auto">
 
@@ -340,14 +340,21 @@
     <!-- ================= ВКЛАДКА: ИСТОРИЯ ЗАБЕГОВ ================= -->
     <section id="tab-runs" class="mb-16">
         <div class="runs-hero">
-            <h2>История забегов</h2>
-            <p>Текущий мир</p>
-            <h3>#мирвайба8</h3>
-            <div class="hero-stats">
-                <span><span aria-hidden="true">◷</span> <span class="sr-only">Прожито:</span> 12 ч. 27 мин.</span>
-                <span><span aria-hidden="true">🏆</span> <span class="sr-only">Достижения:</span> 206 (16,3%)</span>
+            <div class="hero-world">
+                <h2>История забегов</h2>
+                <p>Текущий мир</p>
+                <h3>#мирвайба8</h3>
+                <div class="hero-stats">
+                    <span><span aria-hidden="true">◷</span> <span class="sr-only">Прожито:</span> 12 ч. 27 мин.</span>
+                    <span><span aria-hidden="true">🏆</span> <span class="sr-only">Достижения:</span> 206 (16,3%)</span>
+                </div>
+                <div class="progress-container" aria-hidden="true"><div class="progress-bar" style="width: 16.3%"></div></div>
             </div>
-            <div class="progress-container" aria-hidden="true"><div class="progress-bar" style="width: 16.3%"></div></div>
+            <div class="hero-stream">
+                <div class="stream-status" id="stream-status" role="status" data-state="unknown">Статус эфира — на Twitch</div>
+                <div id="twitch-player" hidden></div>
+                <a class="stream-link" href="https://www.twitch.tv/treemale" target="_blank" rel="noopener noreferrer">Открыть на Twitch ↗</a>
+            </div>
         </div>
         <div class="rounded-lg border border-slate-700 table-container">
             <table class="w-full text-center border-collapse text-sm">
@@ -1404,5 +1411,6 @@
 
         renderChallenges();
     </script>
+<script src="twitch-stream.js" defer></script>
 </body>
 </html>
